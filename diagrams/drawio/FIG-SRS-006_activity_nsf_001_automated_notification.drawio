@@ -1,0 +1,54 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="FIG-SRS-006 - NSF Automated Notification">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="1050" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="FIG-SRS-006 - Non-Screen Function Flow: Automated Notification" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="480" y="30" width="940" height="40" as="geometry"/></mxCell>
+        <mxCell id="lane_trigger" value="Triggering Actor or Event" style="swimlane;horizontal=0;startSize=130;fillColor=#f5f5f5;html=1;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="100" width="350" height="850" as="geometry"/></mxCell>
+        <mxCell id="lane_system" value="Hotel Management System" style="swimlane;horizontal=0;startSize=130;fillColor=#ffffff;html=1;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="400" y="100" width="520" height="850" as="geometry"/></mxCell>
+        <mxCell id="lane_records" value="Affected Business Records" style="swimlane;horizontal=0;startSize=130;fillColor=#f5f5f5;html=1;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="920" y="100" width="360" height="850" as="geometry"/></mxCell>
+        <mxCell id="lane_channel" value="Notification Channel" style="swimlane;horizontal=0;startSize=130;fillColor=#ffffff;html=1;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="1280" y="100" width="300" height="850" as="geometry"/></mxCell>
+        <mxCell id="lane_result" value="Audit and Observable Result" style="swimlane;horizontal=0;startSize=130;fillColor=#f5f5f5;html=1;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="1580" y="100" width="270" height="850" as="geometry"/></mxCell>
+        <mxCell id="start" value="" style="ellipse;html=1;shape=ellipse;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="lane_trigger"><mxGeometry x="155" y="70" width="28" height="28" as="geometry"/></mxCell>
+        <mxCell id="trigger_event" value="Business event occurs&#xa;booking, cancellation, staff invitation, room task, reminder" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;" vertex="1" parent="lane_trigger"><mxGeometry x="65" y="145" width="220" height="90" as="geometry"/></mxCell>
+        <mxCell id="scheduled_event" value="System Scheduler reaches notification time" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;dashed=1;" vertex="1" parent="lane_trigger"><mxGeometry x="65" y="300" width="220" height="70" as="geometry"/></mxCell>
+        <mxCell id="classify" value="Classify UC-024 notification trigger" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;" vertex="1" parent="lane_system"><mxGeometry x="145" y="145" width="230" height="70" as="geometry"/></mxCell>
+        <mxCell id="resolve_recipient" value="Resolve recipient, hotel scope, and role permission" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;" vertex="1" parent="lane_system"><mxGeometry x="135" y="265" width="250" height="70" as="geometry"/></mxCell>
+        <mxCell id="decision_allowed" value="Recipient valid and notification allowed?" style="rhombus;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="lane_system"><mxGeometry x="160" y="385" width="200" height="105" as="geometry"/></mxCell>
+        <mxCell id="compose" value="Render notification content from business event" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;" vertex="1" parent="lane_system"><mxGeometry x="135" y="550" width="250" height="70" as="geometry"/></mxCell>
+        <mxCell id="dispatch" value="Dispatch notification through configured channel" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;" vertex="1" parent="lane_system"><mxGeometry x="135" y="690" width="250" height="70" as="geometry"/></mxCell>
+        <mxCell id="link_entity" value="Link affected entity&#xa;Booking, StaffInvitation, HousekeepingTask, MaintenanceRequest, HotelProperty, UserAccount" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;" vertex="1" parent="lane_records"><mxGeometry x="55" y="145" width="250" height="105" as="geometry"/></mxCell>
+        <mxCell id="record_notification" value="Create NotificationRecord with pending status" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;" vertex="1" parent="lane_records"><mxGeometry x="55" y="550" width="250" height="70" as="geometry"/></mxCell>
+        <mxCell id="record_suppressed" value="Record suppressed notification reason" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;" vertex="1" parent="lane_records"><mxGeometry x="55" y="390" width="250" height="70" as="geometry"/></mxCell>
+        <mxCell id="update_status" value="Update NotificationRecord status and timestamp" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;" vertex="1" parent="lane_records"><mxGeometry x="55" y="770" width="250" height="70" as="geometry"/></mxCell>
+        <mxCell id="channel_send" value="Send in-app, email, SMS, or provider message" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;" vertex="1" parent="lane_channel"><mxGeometry x="45" y="690" width="210" height="70" as="geometry"/></mxCell>
+        <mxCell id="decision_delivered" value="Delivered?" style="rhombus;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="lane_channel"><mxGeometry x="75" y="805" width="150" height="90" as="geometry"/></mxCell>
+        <mxCell id="audit" value="Create AuditRecord for notification event" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;" vertex="1" parent="lane_result"><mxGeometry x="35" y="550" width="205" height="70" as="geometry"/></mxCell>
+        <mxCell id="observable_success" value="Observable result&#xa;recipient receives notification or sees in-app alert" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;strokeWidth=2;" vertex="1" parent="lane_result"><mxGeometry x="35" y="705" width="205" height="90" as="geometry"/></mxCell>
+        <mxCell id="observable_failure" value="Observable result&#xa;failed or suppressed status is visible for authorized review" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fontSize=12;dashed=1;" vertex="1" parent="lane_result"><mxGeometry x="35" y="840" width="205" height="90" as="geometry"/></mxCell>
+        <mxCell id="final" value="" style="ellipse;shape=doubleEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="lane_result"><mxGeometry x="120" y="975" width="34" height="34" as="geometry"/></mxCell>
+        <mxCell id="e1" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="start" target="trigger_event"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="trigger_event" target="classify"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" value="scheduled reminder" style="endArrow=block;html=1;rounded=0;fontSize=11;dashed=1;" edge="1" parent="1" source="scheduled_event" target="classify"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="classify" target="link_entity"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="link_entity" target="resolve_recipient"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="resolve_recipient" target="decision_allowed"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" value="[no]" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="decision_allowed" target="record_suppressed"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" value="[yes]" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="decision_allowed" target="compose"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="compose" target="record_notification"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="record_notification" target="audit"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="audit" target="dispatch"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="dispatch" target="channel_send"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="channel_send" target="decision_delivered"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e14" value="[yes]" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="decision_delivered" target="update_status"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e15" value="[no or provider error]" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="decision_delivered" target="update_status"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1430" y="1010"/><mxPoint x="1100" y="1010"/></Array></mxGeometry></mxCell>
+        <mxCell id="e16" value="delivered or sent" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="update_status" target="observable_success"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e17" value="failed or suppressed" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="record_suppressed" target="observable_failure"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e18" value="failed status" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="update_status" target="observable_failure"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e19" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="observable_success" target="final"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e20" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="observable_failure" target="final"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

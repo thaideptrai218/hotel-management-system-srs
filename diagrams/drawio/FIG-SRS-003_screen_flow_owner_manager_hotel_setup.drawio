@@ -1,0 +1,22 @@
+<mxfile host="app.diagrams.net"><diagram name="FIG-SRS-003 - Owner Manager Hotel Setup"><mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="900" math="0" shadow="0"><root>
+<mxCell id="0"/><mxCell id="1" parent="0"/>
+<mxCell id="title" value="FIG-SRS-003 - Screen Flow: Owner / Manager Hotel Setup" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="430" y="30" width="940" height="40" as="geometry"/></mxCell>
+<mxCell id="scr_014" value="SCR-014&#xa;Owner / Manager Dashboard" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="80" y="170" width="250" height="70" as="geometry"/></mxCell>
+<mxCell id="scr_015" value="SCR-015&#xa;Hotel Registration Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="400" y="100" width="250" height="70" as="geometry"/></mxCell>
+<mxCell id="scr_016" value="SCR-016&#xa;Hotel Profile Management Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="400" y="250" width="280" height="70" as="geometry"/></mxCell>
+<mxCell id="scr_017" value="SCR-017&#xa;Room Type Management Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="760" y="250" width="270" height="70" as="geometry"/></mxCell>
+<mxCell id="scr_018" value="SCR-018&#xa;Physical Room Management Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="1110" y="250" width="290" height="70" as="geometry"/></mxCell>
+<mxCell id="scr_019" value="SCR-019&#xa;Availability Calendar Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="760" y="430" width="270" height="70" as="geometry"/></mxCell>
+<mxCell id="scr_028" value="SCR-028&#xa;Staff Management Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="400" y="580" width="250" height="70" as="geometry"/></mxCell>
+<mxCell id="scr_029" value="SCR-029&#xa;Staff Role Assignment Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="760" y="580" width="280" height="70" as="geometry"/></mxCell>
+<mxCell id="scr_035" value="SCR-035&#xa;Room Status Board" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="1110" y="580" width="230" height="70" as="geometry"/></mxCell>
+<mxCell id="e1" value="Register hotel" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_014" target="scr_015"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" value="Open hotel profile" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_014" target="scr_016"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" value="Manage room types" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_016" target="scr_017"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" value="Manage rooms" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_017" target="scr_018"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e5" value="Open availability" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_018" target="scr_019"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e6" value="Manage staff" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_014" target="scr_028"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e7" value="Assign roles" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_028" target="scr_029"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e8" value="View room status" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_019" target="scr_035"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e9" value="View room status" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_029" target="scr_035"><mxGeometry relative="1" as="geometry"/></mxCell>
+</root></mxGraphModel></diagram></mxfile>

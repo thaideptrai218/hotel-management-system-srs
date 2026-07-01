@@ -1,0 +1,65 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="FIG-SRS-002 - Housekeeping and Maintenance">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="FIG-SRS-002 - Use Case Diagram: Housekeeping and Maintenance" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="390" y="30" width="820" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="boundary_housekeeping_maintenance" value="Hotel Marketplace Management System" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontSize=13;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="350" y="100" width="860" height="690" as="geometry"/>
+        </mxCell>
+        <mxCell id="actor_housekeeping" value="Housekeeping Staff" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="125" y="180" width="60" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="actor_maintenance" value="Maintenance Staff" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="125" y="520" width="60" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="actor_manager" value="Hotel Manager" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1370" y="170" width="60" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="actor_receptionist" value="Receptionist" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1370" y="420" width="60" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="actor_notification" value="&lt;b&gt;Notification Service&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external system / mock&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="660" width="250" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc_032" value="UC-032&#xa;View Housekeeping Tasks" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_housekeeping_maintenance">
+          <mxGeometry x="115" y="110" width="260" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc_033" value="UC-033&#xa;Update Room Cleaning Status" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_housekeeping_maintenance">
+          <mxGeometry x="470" y="110" width="285" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc_034" value="UC-034&#xa;Report Room Issue" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_housekeeping_maintenance">
+          <mxGeometry x="300" y="285" width="230" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc_035" value="UC-035&#xa;View Maintenance Requests" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_housekeeping_maintenance">
+          <mxGeometry x="115" y="465" width="275" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc_036" value="UC-036&#xa;Update Maintenance Request" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_housekeeping_maintenance">
+          <mxGeometry x="470" y="465" width="285" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc_037" value="UC-037&#xa;Release Room from Maintenance" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_housekeeping_maintenance">
+          <mxGeometry x="295" y="590" width="300" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="a_housekeeping_view" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_housekeeping" target="uc_032"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_housekeeping_update" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_housekeeping" target="uc_033"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_housekeeping_issue" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_housekeeping" target="uc_034"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_maintenance_view" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_maintenance" target="uc_035"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_maintenance_update" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_maintenance" target="uc_036"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_maintenance_release" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_maintenance" target="uc_037"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_manager_housekeeping_view" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_032"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_manager_cleaning_update" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_033"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_manager_issue" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_034"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_manager_maintenance_view" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_035"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_manager_maintenance_update" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_036"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_manager_release" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_037"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_receptionist_issue" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_receptionist" target="uc_034"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_notification_issue" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_notification" target="uc_034"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_notification_update" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_notification" target="uc_036"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_notification_release" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_notification" target="uc_037"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

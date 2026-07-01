@@ -1,0 +1,13 @@
+<mxfile host="app.diagrams.net"><diagram name="FIG-SRS-003 - Maintenance Screen Flow"><mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="700" math="0" shadow="0"><root>
+<mxCell id="0"/><mxCell id="1" parent="0"/>
+<mxCell id="title" value="FIG-SRS-003 - Screen Flow: Maintenance Operation" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="300" y="30" width="800" height="40" as="geometry"/></mxCell>
+<mxCell id="scr_033" value="SCR-033&#xa;Maintenance Request List Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="100" y="210" width="300" height="70" as="geometry"/></mxCell>
+<mxCell id="scr_034" value="SCR-034&#xa;Maintenance Request Detail Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="510" y="210" width="310" height="70" as="geometry"/></mxCell>
+<mxCell id="act_update" value="Update Maintenance Status action" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="510" y="390" width="280" height="60" as="geometry"/></mxCell>
+<mxCell id="act_release" value="Release Room action" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="900" y="390" width="220" height="60" as="geometry"/></mxCell>
+<mxCell id="scr_035" value="SCR-035&#xa;Room Status Board" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="900" y="210" width="230" height="70" as="geometry"/></mxCell>
+<mxCell id="e1" value="Select request" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_033" target="scr_034"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" value="Update status" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_034" target="act_update"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" value="Release room" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="act_update" target="act_release"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" value="Open room board" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="act_release" target="scr_035"><mxGeometry relative="1" as="geometry"/></mxCell>
+</root></mxGraphModel></diagram></mxfile>
