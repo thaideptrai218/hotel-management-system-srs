@@ -1,0 +1,27 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="FIG-SRS-005D - Booking and Stay ERD">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="FIG-SRS-005D - Logical ERD: Booking and Stay" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="410" y="30" width="680" height="40" as="geometry"/></mxCell>
+        <mxCell id="r_customer_booking" value="1 customer : * bookings" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="user" target="booking"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_hotel_booking" value="1 hotel : * bookings" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="booking"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_booking_room" value="1 : 1..*" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="booking" target="bookingroom"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_br_type" value="* : 1" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="bookingroom" target="roomtype"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_type_room" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="roomtype" target="room"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_br_assign" value="1 : 0..*" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="bookingroom" target="assignment"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_assign_room" value="* : 1" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="assignment" target="room"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_booking_stay" value="1 booking : 0..1 stay record" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="booking" target="stay"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="user" value="&lt;b&gt;UserAccount&lt;/b&gt;&#xa;PK UserAccountId&#xa;Customer account" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="90" y="170" width="230" height="85" as="geometry"/></mxCell>
+        <mxCell id="hotel" value="&lt;b&gt;HotelProperty&lt;/b&gt;&#xa;PK HotelId&#xa;Booking hotel" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="90" y="430" width="230" height="85" as="geometry"/></mxCell>
+        <mxCell id="booking" value="&lt;b&gt;Booking&lt;/b&gt;&#xa;PK BookingId&#xa;BookingStatus, Amount&#xa;Check-in/out dates" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="450" y="290" width="250" height="115" as="geometry"/></mxCell>
+        <mxCell id="bookingroom" value="&lt;b&gt;BookingRoom&lt;/b&gt;&#xa;PK BookingRoomId&#xa;Quantity, NightCount" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="830" y="170" width="250" height="95" as="geometry"/></mxCell>
+        <mxCell id="roomtype" value="&lt;b&gt;RoomType&lt;/b&gt;&#xa;PK RoomTypeId&#xa;Capacity, BasePrice" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="1160" y="170" width="240" height="90" as="geometry"/></mxCell>
+        <mxCell id="assignment" value="&lt;b&gt;BookingRoomAssignment&lt;/b&gt;&#xa;PK AssignmentId&#xa;Assigned room, status" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="830" y="455" width="270" height="95" as="geometry"/></mxCell>
+        <mxCell id="room" value="&lt;b&gt;PhysicalRoom&lt;/b&gt;&#xa;PK PhysicalRoomId&#xa;Room number, status" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="1160" y="455" width="240" height="90" as="geometry"/></mxCell>
+        <mxCell id="stay" value="&lt;b&gt;GuestStayRecord&lt;/b&gt;&#xa;PK StayRecordId&#xa;Identity info, stay dates" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="450" y="610" width="260" height="95" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

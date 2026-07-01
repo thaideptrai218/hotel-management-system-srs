@@ -1,0 +1,22 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="FIG-SRS-005B - Account and Staff ERD">
+    <mxGraphModel dx="1000" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="FIG-SRS-005B - Logical ERD: Account and Staff" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="320" y="30" width="660" height="40" as="geometry"/></mxCell>
+        <mxCell id="r_user_role" value="* : 1" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="user" target="role"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_user_hotel" value="1 owner : * hotels" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="user" target="hotel"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_hotel_staff" value="1 hotel : * assignments" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="staff"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_user_staff" value="1 user : * assignments" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="user" target="staff"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_hotel_invite" value="1 hotel : * invitations" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="invite"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_user_invite" value="0..1 accepted user" style="endArrow=none;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="user" target="invite"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="user" value="&lt;b&gt;UserAccount&lt;/b&gt;&#xa;PK UserAccountId&#xa;Role, AccountStatus&#xa;Profile fields" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="90" y="160" width="230" height="105" as="geometry"/></mxCell>
+        <mxCell id="role" value="&lt;b&gt;UserRole&lt;/b&gt;&#xa;PK RoleId&#xa;RoleCode" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="90" y="380" width="210" height="80" as="geometry"/></mxCell>
+        <mxCell id="hotel" value="&lt;b&gt;HotelProperty&lt;/b&gt;&#xa;PK HotelId&#xa;Owner, ApprovalStatus" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="520" y="160" width="240" height="95" as="geometry"/></mxCell>
+        <mxCell id="staff" value="&lt;b&gt;HotelStaffAssignment&lt;/b&gt;&#xa;PK AssignmentId&#xa;HotelRole, Status&#xa;Hotel-scoped permission" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="930" y="150" width="260" height="115" as="geometry"/></mxCell>
+        <mxCell id="invite" value="&lt;b&gt;StaffInvitation&lt;/b&gt;&#xa;PK InvitationId&#xa;InviteStatus&#xa;Invited role / recipient" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="930" y="380" width="260" height="105" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
