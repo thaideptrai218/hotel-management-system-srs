@@ -16,8 +16,9 @@ This package contains the final SRS artifacts for the Hotel Management System MV
 
 ## Final Validation Snapshot
 
-- 41 mobile mock-up images included in the DOCX.
+- 41 mobile mock-up images and 7 logical ERD diagrams included in the DOCX.
 - Mock-up image width in DOCX: 2.65 inches.
+- Logical ERD integrated as 1 canonical ERD plus 6 readable module views.
 - Alternative flows validated: 101 unique IDs, no duplicate IDs, branch/sub-step numbering coherent.
 - Actor and message trace validated against detailed use cases.
 - Finance/status fixes included: `BR-FIN-007`, `BR-PAY-007`, `Reconciliation Status`, `Commission Status`, and `Payment Collection Status`.

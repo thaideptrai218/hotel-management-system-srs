@@ -2,10 +2,10 @@
 
 **Project:** Hotel Marketplace Management System  
 **Document ID:** SRS-HMS-001  
-**Version:** Revalidated Draft v1.2 - Screen Mock-up Ready  
+**Version:** Revalidated Draft v1.2 - Screen Mock-up and ERD Integrated
 **Date:** 2026-06-29  
 **Prepared by:** GPT-5.5 Pro as Senior BA + Solution Architect + QA Reviewer  
-**Status:** Updated Markdown Draft for Review - Screen Mock-up and Diagram Delegation Ready  
+**Status:** Updated Markdown Draft for Review - Screen Mock-up and Modular ERD Integrated
 **Language:** English  
 **Understanding Score:** 96%  
 **Current Confidence:** High for confirmed MVP+Staff scope; medium only where items remain explicitly marked as open questions.
@@ -53,6 +53,7 @@ No source code repository was provided for this SRS update. Therefore, this docu
 | 2026-06-29 | A | BA Documentation Assistant | Created full SRS Markdown draft based on user-confirmed scope and BA rules. |
 | 2026-06-29 | M | BA + SA + QA Reviewer | Revalidated and updated SRS to v1.1: added hotel staff actors, corrected use case relationships, split features and screen flows, added staff/housekeeping/maintenance entities, strengthened authorization and traceability. |
 | 2026-06-29 | M | BA + SA + QA Reviewer | Updated SRS to v1.2: removed Detailed Use Case section from User Requirements, moved detailed use case descriptions into Feature Details, added screen mock-up placeholders, strengthened screen definitions, converted diagram placeholders to Codex/draw.io-ready blocks, and applied final user-confirmed business rules. |
+| 2026-07-02 | M | BA + SA Reviewer | Integrated the logical ERD into the SRS as one canonical ERD plus six module ERD views for overview, account/staff, inventory, booking/stay, finance, and operations/audit. |
 
 ---
 
@@ -662,30 +663,51 @@ Legend: `X` = allowed; `L` = limited by hotel assignment and permission; blank =
 
 ## 3.1.5 Entity Relationship Diagram
 
-```diagram-delegation
-Diagram ID: DGM-ERD-001
-Diagram Type: Logical Entity Relationship Diagram
-Recommended Tool: draw.io
-Input Sources: SRS Section 3.1.6 Entity Details and Section 3.1.7 Entity Origin Traceability
-Required Entities:
-- UserAccount, UserRole, HotelStaffAssignment, StaffInvitation, HotelProperty, HotelImage, Amenity, HotelAmenity, CancellationPolicy, RoomType, PhysicalRoom, RoomAvailability, Booking, BookingRoom, BookingRoomAssignment, PaymentTransaction, PaymentCollectionRecord, RefundRecord, Invoice, CommissionRecord, SettlementRecord, SettlementItem, NotificationRecord, AuditRecord, HousekeepingTask, MaintenanceRequest, RoomStatusHistory, GuestStayRecord.
-Main Relationships:
-- One Property Owner may own many HotelProperty records.
-- One HotelProperty has many HotelStaffAssignment records.
-- One UserAccount may have many HotelStaffAssignment records.
-- One HotelProperty has many RoomType, PhysicalRoom, HotelImage, HotelAmenity, CancellationPolicy, HousekeepingTask, MaintenanceRequest, and RoomStatusHistory records.
-- One RoomType has many PhysicalRoom and BookingRoom records.
-- One Booking has one or more BookingRoom records.
-- One BookingRoom may have one or more BookingRoomAssignment records when physical rooms are assigned.
-- One Booking may have zero or many PaymentTransaction, PaymentCollectionRecord, RefundRecord, Invoice, CommissionRecord, and GuestStayRecord records according to business rules.
-- One SettlementRecord has many SettlementItem records.
-Rules:
-- Show logical entities and cardinalities.
-- Do not include technical cache tables, ORM implementation fields, indexes, repositories, packages, or service classes.
-Output Required: .drawio source file and .png export.
-Acceptance Criteria:
-- Staff, front desk, housekeeping, maintenance, payment, refund, commission, settlement, and room-status relationships are visible.
-```
+The logical ERD is maintained as one canonical model plus six readable module views. `FIG-SRS-005` is the canonical all-entity logical ERD. `FIG-SRS-005A` to `FIG-SRS-005F` are module views derived from the same entity set; they improve readability but do not redefine or override the canonical relationships.
+
+| Figure | Diagram ID | Module View | Primary Coverage |
+|---|---|---|---|
+| Figure 3-1 | FIG-SRS-005 | Canonical Logical ERD | Account, hotel, inventory, booking, finance, operations, notification, and audit entities. |
+| Figure 3-2 | FIG-SRS-005A | Logical ERD Overview | High-level logical entity groups and cross-module relationships. |
+| Figure 3-3 | FIG-SRS-005B | Account and Staff | User accounts, roles, property ownership, hotel-scoped staff assignment, and invitations. |
+| Figure 3-4 | FIG-SRS-005C | Hotel Setup and Inventory | Hotel property profile, images, amenities, cancellation policy, room types, physical rooms, availability, and room status history. |
+| Figure 3-5 | FIG-SRS-005D | Booking and Stay | Customer booking, booked room type, physical-room assignment, and guest stay record. |
+| Figure 3-6 | FIG-SRS-005E | Finance | Payment transactions, payment collection, refunds, invoices, commissions, settlements, and settlement items. |
+| Figure 3-7 | FIG-SRS-005F | Operations, Notification, and Audit | Housekeeping tasks, maintenance requests, room status history, notifications, and audit records. |
+
+Design boundaries:
+
+- Entity names and cardinalities must remain consistent between the canonical ERD and module views.
+- Cross-module relationships must be visible in the canonical ERD or the overview module view.
+- Technical cache tables, ORM implementation fields, indexes, repositories, packages, service classes, and controller classes are intentionally excluded from the SRS ERD.
+
+![FIG-SRS-005 - Logical Entity Relationship Diagram](diagrams/png/FIG-SRS-005_logical_erd.png)
+
+Figure 3-1: Logical Entity Relationship Diagram
+
+![FIG-SRS-005A - Logical ERD Overview](diagrams/png/FIG-SRS-005A_logical_erd_overview.png)
+
+Figure 3-2: Logical ERD Overview
+
+![FIG-SRS-005B - Logical ERD Account and Staff](diagrams/png/FIG-SRS-005B_logical_erd_account_staff.png)
+
+Figure 3-3: Logical ERD of Account and Staff
+
+![FIG-SRS-005C - Logical ERD Hotel Setup and Inventory](diagrams/png/FIG-SRS-005C_logical_erd_hotel_inventory.png)
+
+Figure 3-4: Logical ERD of Hotel Setup and Inventory
+
+![FIG-SRS-005D - Logical ERD Booking and Stay](diagrams/png/FIG-SRS-005D_logical_erd_booking_stay.png)
+
+Figure 3-5: Logical ERD of Booking and Stay
+
+![FIG-SRS-005E - Logical ERD Finance](diagrams/png/FIG-SRS-005E_logical_erd_finance.png)
+
+Figure 3-6: Logical ERD of Finance
+
+![FIG-SRS-005F - Logical ERD Operations Notification and Audit](diagrams/png/FIG-SRS-005F_logical_erd_operations_audit.png)
+
+Figure 3-7: Logical ERD of Operations, Notification, and Audit
 
 ## 3.1.6 Entity Details
 
@@ -837,7 +859,7 @@ This feature allows users to register, log in, manage their own basic profile, a
 
 ![MCK-SCR-001 - Register Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-001-register-screen-mobile-flutter.png)
 
-Figure 3-1: Mobile Flutter Screen Design of Register Screen
+Figure 3-8: Mobile Flutter Screen Design of Register Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -859,7 +881,7 @@ Table 3-1: Screen Definition of Register Screen
 
 ![MCK-SCR-002 - Login Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-002-login-screen-mobile-flutter.png)
 
-Figure 3-2: Mobile Flutter Screen Design of Login Screen
+Figure 3-9: Mobile Flutter Screen Design of Login Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -878,7 +900,7 @@ Table 3-2: Screen Definition of Login Screen
 
 ![MCK-SCR-003 - User Profile Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-003-user-profile-screen-mobile-flutter.png)
 
-Figure 3-3: Mobile Flutter Screen Design of User Profile Screen
+Figure 3-10: Mobile Flutter Screen Design of User Profile Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1048,7 +1070,7 @@ This feature enables public discovery of approved hotels and available private r
 
 ![MCK-SCR-004 - Home / Search Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-004-home-search-screen-mobile-flutter.png)
 
-Figure 3-4: Mobile Flutter Screen Design of Home / Search Screen
+Figure 3-11: Mobile Flutter Screen Design of Home / Search Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1068,7 +1090,7 @@ Table 3-4: Screen Definition of Home / Search Screen
 
 ![MCK-SCR-005 - Hotel Search Result Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-005-hotel-search-result-screen-mobile-flutter.png)
 
-Figure 3-5: Mobile Flutter Screen Design of Hotel Search Result Screen
+Figure 3-12: Mobile Flutter Screen Design of Hotel Search Result Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1087,7 +1109,7 @@ Table 3-5: Screen Definition of Hotel Search Result Screen
 
 ![MCK-SCR-006 - Hotel Detail Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-006-hotel-detail-screen-mobile-flutter.png)
 
-Figure 3-6: Mobile Flutter Screen Design of Hotel Detail Screen
+Figure 3-13: Mobile Flutter Screen Design of Hotel Detail Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1207,7 +1229,7 @@ This feature supports instant booking creation, Platform Collect online payment,
 
 ![MCK-SCR-007 - Booking Form Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-007-booking-form-screen-mobile-flutter.png)
 
-Figure 3-7: Mobile Flutter Screen Design of Booking Form Screen
+Figure 3-14: Mobile Flutter Screen Design of Booking Form Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1232,7 +1254,7 @@ Table 3-7: Screen Definition of Booking Form Screen
 
 ![MCK-SCR-008 - Booking Confirmation Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-008-booking-confirmation-screen-mobile-flutter.png)
 
-Figure 3-8: Mobile Flutter Screen Design of Booking Confirmation Screen
+Figure 3-15: Mobile Flutter Screen Design of Booking Confirmation Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1253,7 +1275,7 @@ Table 3-8: Screen Definition of Booking Confirmation Screen
 
 ![MCK-SCR-011 - Payment Instruction Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-011-payment-instruction-screen-mobile-flutter.png)
 
-Figure 3-9: Mobile Flutter Screen Design of Payment Instruction Screen
+Figure 3-16: Mobile Flutter Screen Design of Payment Instruction Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1273,7 +1295,7 @@ Table 3-9: Screen Definition of Payment Instruction Screen
 
 ![MCK-SCR-012 - Payment Result Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-012-payment-result-screen-mobile-flutter.png)
 
-Figure 3-10: Mobile Flutter Screen Design of Payment Result Screen
+Figure 3-17: Mobile Flutter Screen Design of Payment Result Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1429,7 +1451,7 @@ This feature allows Customers to view their own bookings, cancel eligible bookin
 
 ![MCK-SCR-009 - My Bookings Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-009-my-bookings-screen-mobile-flutter.png)
 
-Figure 3-11: Mobile Flutter Screen Design of My Bookings Screen
+Figure 3-18: Mobile Flutter Screen Design of My Bookings Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1448,7 +1470,7 @@ Table 3-11: Screen Definition of My Bookings Screen
 
 ![MCK-SCR-010 - Customer Booking Detail Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-010-customer-booking-detail-screen-mobile-flutter.png)
 
-Figure 3-12: Mobile Flutter Screen Design of Customer Booking Detail Screen
+Figure 3-19: Mobile Flutter Screen Design of Customer Booking Detail Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1467,7 +1489,7 @@ Table 3-12: Screen Definition of Customer Booking Detail Screen
 
 ![MCK-SCR-013 - Customer Refund Status Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-013-customer-refund-status-screen-mobile-flutter.png)
 
-Figure 3-13: Mobile Flutter Screen Design of Customer Refund Status Screen
+Figure 3-20: Mobile Flutter Screen Design of Customer Refund Status Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1587,7 +1609,7 @@ This feature supports hotel onboarding, profile management, images, amenities, a
 
 ![MCK-SCR-014 - Owner/Manager Dashboard](hotel_management_system_srs_v1_2_assets/MCK-SCR-014-owner-manager-dashboard-mobile-flutter.png)
 
-Figure 3-14: Mobile Flutter Screen Design of Owner/Manager Dashboard
+Figure 3-21: Mobile Flutter Screen Design of Owner/Manager Dashboard
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1605,7 +1627,7 @@ Table 3-14: Screen Definition of Owner/Manager Dashboard
 
 ![MCK-SCR-015 - Hotel Registration Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-015-hotel-registration-screen-mobile-flutter.png)
 
-Figure 3-15: Mobile Flutter Screen Design of Hotel Registration Screen
+Figure 3-22: Mobile Flutter Screen Design of Hotel Registration Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1629,7 +1651,7 @@ Table 3-15: Screen Definition of Hotel Registration Screen
 
 ![MCK-SCR-016 - Hotel Profile Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-016-hotel-profile-management-screen-mobile-flutter.png)
 
-Figure 3-16: Mobile Flutter Screen Design of Hotel Profile Management Screen
+Figure 3-23: Mobile Flutter Screen Design of Hotel Profile Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1749,7 +1771,7 @@ This feature supports room type management, physical room management, availabili
 
 ![MCK-SCR-017 - Room Type Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-017-room-type-management-screen-mobile-flutter.png)
 
-Figure 3-17: Mobile Flutter Screen Design of Room Type Management Screen
+Figure 3-24: Mobile Flutter Screen Design of Room Type Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1771,7 +1793,7 @@ Table 3-17: Screen Definition of Room Type Management Screen
 
 ![MCK-SCR-018 - Physical Room Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-018-physical-room-management-screen-mobile-flutter.png)
 
-Figure 3-18: Mobile Flutter Screen Design of Physical Room Management Screen
+Figure 3-25: Mobile Flutter Screen Design of Physical Room Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1793,7 +1815,7 @@ Table 3-18: Screen Definition of Physical Room Management Screen
 
 ![MCK-SCR-019 - Availability Calendar Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-019-availability-calendar-screen-mobile-flutter.png)
 
-Figure 3-19: Mobile Flutter Screen Design of Availability Calendar Screen
+Figure 3-26: Mobile Flutter Screen Design of Availability Calendar Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1814,7 +1836,7 @@ Table 3-19: Screen Definition of Availability Calendar Screen
 
 ![MCK-SCR-035 - Room Status Board](hotel_management_system_srs_v1_2_assets/MCK-SCR-035-room-status-board-mobile-flutter.png)
 
-Figure 3-20: Mobile Flutter Screen Design of Room Status Board
+Figure 3-27: Mobile Flutter Screen Design of Room Status Board
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2000,7 +2022,7 @@ This feature supports hotel-scoped staff account management and role/permission 
 
 ![MCK-SCR-028 - Staff Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-028-staff-management-screen-mobile-flutter.png)
 
-Figure 3-21: Mobile Flutter Screen Design of Staff Management Screen
+Figure 3-28: Mobile Flutter Screen Design of Staff Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2020,7 +2042,7 @@ Table 3-21: Screen Definition of Staff Management Screen
 
 ![MCK-SCR-029 - Staff Role Assignment Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-029-staff-role-assignment-screen-mobile-flutter.png)
 
-Figure 3-22: Mobile Flutter Screen Design of Staff Role Assignment Screen
+Figure 3-29: Mobile Flutter Screen Design of Staff Role Assignment Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2149,7 +2171,7 @@ This feature supports day-to-day front desk work: booking list, arrivals/departu
 
 ![MCK-SCR-020 - Hotel Booking List Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-020-hotel-booking-list-screen-mobile-flutter.png)
 
-Figure 3-23: Mobile Flutter Screen Design of Hotel Booking List Screen
+Figure 3-30: Mobile Flutter Screen Design of Hotel Booking List Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2168,7 +2190,7 @@ Table 3-23: Screen Definition of Hotel Booking List Screen
 
 ![MCK-SCR-021 - Hotel Booking Detail Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-021-hotel-booking-detail-screen-mobile-flutter.png)
 
-Figure 3-24: Mobile Flutter Screen Design of Hotel Booking Detail Screen
+Figure 3-31: Mobile Flutter Screen Design of Hotel Booking Detail Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2189,7 +2211,7 @@ Table 3-24: Screen Definition of Hotel Booking Detail Screen
 
 ![MCK-SCR-022 - Front Desk Dashboard](hotel_management_system_srs_v1_2_assets/MCK-SCR-022-front-desk-dashboard-mobile-flutter.png)
 
-Figure 3-25: Mobile Flutter Screen Design of Front Desk Dashboard
+Figure 3-32: Mobile Flutter Screen Design of Front Desk Dashboard
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2208,7 +2230,7 @@ Table 3-25: Screen Definition of Front Desk Dashboard
 
 ![MCK-SCR-023 - Arrival / Departure List Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-023-arrival-departure-list-screen-mobile-flutter.png)
 
-Figure 3-26: Mobile Flutter Screen Design of Arrival / Departure List Screen
+Figure 3-33: Mobile Flutter Screen Design of Arrival / Departure List Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2227,7 +2249,7 @@ Table 3-26: Screen Definition of Arrival / Departure List Screen
 
 ![MCK-SCR-024 - Room Assignment Board](hotel_management_system_srs_v1_2_assets/MCK-SCR-024-room-assignment-board-mobile-flutter.png)
 
-Figure 3-27: Mobile Flutter Screen Design of Room Assignment Board
+Figure 3-34: Mobile Flutter Screen Design of Room Assignment Board
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2246,7 +2268,7 @@ Table 3-27: Screen Definition of Room Assignment Board
 
 ![MCK-SCR-025 - Check-in Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-025-check-in-screen-mobile-flutter.png)
 
-Figure 3-28: Mobile Flutter Screen Design of Check-in Screen
+Figure 3-35: Mobile Flutter Screen Design of Check-in Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2267,7 +2289,7 @@ Table 3-28: Screen Definition of Check-in Screen
 
 ![MCK-SCR-026 - Check-out / Payment Collection Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-026-check-out-payment-collection-screen-mobile-flutter.png)
 
-Figure 3-29: Mobile Flutter Screen Design of Check-out / Payment Collection Screen
+Figure 3-36: Mobile Flutter Screen Design of Check-out / Payment Collection Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2293,7 +2315,7 @@ Table 3-29: Screen Definition of Check-out / Payment Collection Screen
 
 ![MCK-SCR-027 - Walk-in Booking Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-027-walk-in-booking-screen-mobile-flutter.png)
 
-Figure 3-30: Mobile Flutter Screen Design of Walk-in Booking Screen
+Figure 3-37: Mobile Flutter Screen Design of Walk-in Booking Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2781,7 +2803,7 @@ This feature supports dirty-to-clean room workflow, housekeeping task execution,
 
 ![MCK-SCR-030 - Housekeeping Dashboard](hotel_management_system_srs_v1_2_assets/MCK-SCR-030-housekeeping-dashboard-mobile-flutter.png)
 
-Figure 3-31: Mobile Flutter Screen Design of Housekeeping Dashboard
+Figure 3-38: Mobile Flutter Screen Design of Housekeeping Dashboard
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2799,7 +2821,7 @@ Table 3-31: Screen Definition of Housekeeping Dashboard
 
 ![MCK-SCR-031 - Housekeeping Task List Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-031-housekeeping-task-list-screen-mobile-flutter.png)
 
-Figure 3-32: Mobile Flutter Screen Design of Housekeeping Task List Screen
+Figure 3-39: Mobile Flutter Screen Design of Housekeeping Task List Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2818,7 +2840,7 @@ Table 3-32: Screen Definition of Housekeeping Task List Screen
 
 ![MCK-SCR-032 - Housekeeping Task Detail Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-032-housekeeping-task-detail-screen-mobile-flutter.png)
 
-Figure 3-33: Mobile Flutter Screen Design of Housekeeping Task Detail Screen
+Figure 3-40: Mobile Flutter Screen Design of Housekeeping Task Detail Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3016,7 +3038,7 @@ This feature supports maintenance request handling, status updates, and room rel
 
 ![MCK-SCR-033 - Maintenance Request List Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-033-maintenance-request-list-screen-mobile-flutter.png)
 
-Figure 3-34: Mobile Flutter Screen Design of Maintenance Request List Screen
+Figure 3-41: Mobile Flutter Screen Design of Maintenance Request List Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3035,7 +3057,7 @@ Table 3-34: Screen Definition of Maintenance Request List Screen
 
 ![MCK-SCR-034 - Maintenance Request Detail Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-034-maintenance-request-detail-screen-mobile-flutter.png)
 
-Figure 3-35: Mobile Flutter Screen Design of Maintenance Request Detail Screen
+Figure 3-42: Mobile Flutter Screen Design of Maintenance Request Detail Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3220,7 +3242,7 @@ This feature allows Platform Administrator to review, approve, or reject submitt
 
 ![MCK-SCR-037 - Hotel Approval Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-037-hotel-approval-screen-mobile-flutter.png)
 
-Figure 3-36: Mobile Flutter Screen Design of Hotel Approval Screen
+Figure 3-43: Mobile Flutter Screen Design of Hotel Approval Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3297,7 +3319,7 @@ This feature supports platform finance operations: commission configuration, pay
 
 ![MCK-SCR-038 - Commission Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-038-commission-management-screen-mobile-flutter.png)
 
-Figure 3-37: Mobile Flutter Screen Design of Commission Management Screen
+Figure 3-44: Mobile Flutter Screen Design of Commission Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3317,7 +3339,7 @@ Table 3-37: Screen Definition of Commission Management Screen
 
 ![MCK-SCR-039 - Payment Reconciliation Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-039-payment-reconciliation-screen-mobile-flutter.png)
 
-Figure 3-38: Mobile Flutter Screen Design of Payment Reconciliation Screen
+Figure 3-45: Mobile Flutter Screen Design of Payment Reconciliation Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3337,7 +3359,7 @@ Table 3-38: Screen Definition of Payment Reconciliation Screen
 
 ![MCK-SCR-040 - Refund Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-040-refund-management-screen-mobile-flutter.png)
 
-Figure 3-39: Mobile Flutter Screen Design of Refund Management Screen
+Figure 3-46: Mobile Flutter Screen Design of Refund Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3356,7 +3378,7 @@ Table 3-39: Screen Definition of Refund Management Screen
 
 ![MCK-SCR-041 - Settlement Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-041-settlement-management-screen-mobile-flutter.png)
 
-Figure 3-40: Mobile Flutter Screen Design of Settlement Management Screen
+Figure 3-47: Mobile Flutter Screen Design of Settlement Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3592,7 +3614,7 @@ This feature provides platform-level operational and financial dashboard metrics
 
 ![MCK-SCR-036 - Admin Dashboard](hotel_management_system_srs_v1_2_assets/MCK-SCR-036-admin-dashboard-mobile-flutter.png)
 
-Figure 3-41: Mobile Flutter Screen Design of Admin Dashboard
+Figure 3-48: Mobile Flutter Screen Design of Admin Dashboard
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
