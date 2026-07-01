@@ -16,8 +16,10 @@ This package contains the final SRS artifacts for the Hotel Management System MV
 
 ## Final Validation Snapshot
 
-- 41 mobile mock-up images and 7 logical ERD diagrams included in the DOCX.
+- 41 mobile mock-up images and 28 SRS diagrams included in the DOCX.
 - Mock-up image width in DOCX: 2.65 inches.
+- Diagram image width in DOCX: 6.2 inches.
+- Integrated diagrams cover context, use case, activity, screen flow, logical ERD, and state machine views.
 - Logical ERD integrated as 1 canonical ERD plus 6 readable module views.
 - Alternative flows validated: 101 unique IDs, no duplicate IDs, branch/sub-step numbering coherent.
 - Actor and message trace validated against detailed use cases.
@@ -34,5 +36,6 @@ python .\scripts\export-md-to-docx.py `
   --output .\srs-final-mvp-semantic-repair.docx `
   --engine python-docx `
   --mockup-width-inches 2.65 `
+  --image-width-inches 6.2 `
   --overwrite
 ```

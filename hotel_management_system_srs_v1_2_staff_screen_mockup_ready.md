@@ -2,10 +2,10 @@
 
 **Project:** Hotel Marketplace Management System  
 **Document ID:** SRS-HMS-001  
-**Version:** Revalidated Draft v1.2 - Screen Mock-up and ERD Integrated
+**Version:** Revalidated Draft v1.2 - Screen Mock-up and Diagrams Integrated
 **Date:** 2026-06-29  
 **Prepared by:** GPT-5.5 Pro as Senior BA + Solution Architect + QA Reviewer  
-**Status:** Updated Markdown Draft for Review - Screen Mock-up and Modular ERD Integrated
+**Status:** Updated Markdown Draft for Review - Screen Mock-up and Modular Diagrams Integrated
 **Language:** English  
 **Understanding Score:** 96%  
 **Current Confidence:** High for confirmed MVP+Staff scope; medium only where items remain explicitly marked as open questions.
@@ -53,7 +53,7 @@ No source code repository was provided for this SRS update. Therefore, this docu
 | 2026-06-29 | A | BA Documentation Assistant | Created full SRS Markdown draft based on user-confirmed scope and BA rules. |
 | 2026-06-29 | M | BA + SA + QA Reviewer | Revalidated and updated SRS to v1.1: added hotel staff actors, corrected use case relationships, split features and screen flows, added staff/housekeeping/maintenance entities, strengthened authorization and traceability. |
 | 2026-06-29 | M | BA + SA + QA Reviewer | Updated SRS to v1.2: removed Detailed Use Case section from User Requirements, moved detailed use case descriptions into Feature Details, added screen mock-up placeholders, strengthened screen definitions, converted diagram placeholders to Codex/draw.io-ready blocks, and applied final user-confirmed business rules. |
-| 2026-07-02 | M | BA + SA Reviewer | Integrated the logical ERD into the SRS as one canonical ERD plus six module ERD views for overview, account/staff, inventory, booking/stay, finance, and operations/audit. |
+| 2026-07-02 | M | BA + SA Reviewer | Integrated SRS diagrams into the Markdown and DOCX, including context, use case, activity, screen flow, logical ERD, and state machine diagrams. |
 
 ---
 
@@ -182,38 +182,11 @@ The system does not directly execute real bank payout or automated refund in MVP
 
 ## 1.8 Context Diagram
 
-```diagram-delegation
-Diagram ID: DGM-CTX-001
-Diagram Type: System Context Diagram
-Recommended Tool: draw.io
-Input Sources:
-- SRS Section 1 Product Overview
-- SRS Section 2.1 Actors
-Required Elements:
-- System boundary: Hotel Marketplace Management System
-- Human actors: Guest, Customer, Property Owner, Hotel Manager, Receptionist, Housekeeping Staff, Maintenance Staff, Platform Administrator
-- External systems/time-based actor: payOS Payment Gateway, Notification Service, System Scheduler
-Data / Control Flows:
-- Guest searches and views approved hotels.
-- Customer registers/logs in, books rooms, pays online or at property, views/cancels bookings.
-- Property Owner manages hotels, room inventory, staff, and hotel-level configuration.
-- Hotel Manager supervises hotel operation and staff-scoped functions.
-- Receptionist manages front desk booking operations, room assignment, check-in, check-out, no-show, and pay-at-property collection recording.
-- Housekeeping Staff views and updates cleaning tasks and reports room issues.
-- Maintenance Staff views and resolves maintenance requests.
-- Platform Administrator approves hotels, configures commission, reconciles payments, processes refund status, and marks settlement.
-- payOS receives online payment request and sends payment result.
-- Notification Service receives notification events.
-- System Scheduler triggers unpaid booking expiration and scheduled events.
-Rules:
-- Actors and external systems must be outside the system boundary.
-- Controllers, repositories, database, classes, and internal components must not appear.
-Output Required:
-- `.drawio` source file
-- `.png` export
-Acceptance Criteria:
-- The diagram clearly communicates system boundary and external interactions.
-```
+The context diagram shows the Hotel Marketplace Management System as a single system boundary. Human actors, external systems, and the time-based scheduler remain outside the boundary; internal controllers, repositories, database tables, and implementation classes are intentionally excluded.
+
+![FIG-SRS-001 - System Context Diagram](diagrams/png/FIG-SRS-001_context_diagram.png)
+
+Figure 1-1: System Context Diagram
 
 ---
 
@@ -243,178 +216,77 @@ Acceptance Criteria:
 
 The use case diagrams are split by business capability to keep each diagram readable. Detailed use case descriptions are not placed in this section; they are documented under the relevant Feature Details in Section 3.2.
 
-```diagram-delegation
-Diagram ID: DGM-UC-001
-Diagram Type: UML Use Case Diagram - Account and Marketplace
-Recommended Tool: draw.io
-Document Section: SRS 2.2.1
-Input Sources:
-- SRS Section 2.1 Actors
-- SRS Section 2.2.2 Use Case List
-- SRS Section 3.2.1 FEAT-AUTH
-- SRS Section 3.2.2 FEAT-MKT
-Required Elements:
-- Actors: Guest, Customer, Property Owner, Hotel Manager, Receptionist, Housekeeping Staff, Maintenance Staff, Platform Administrator
-- Use cases: Register Account, Login, Manage Own Profile, Search Hotels, View Hotel Detail
-Do Not Include:
-- Screens, database tables, controllers, services, repositories, classes, APIs, or code-level implementation.
-Output Required:
-- `.drawio` source file
-- `.png` export
-Acceptance Criteria:
-- All use cases are inside the Hotel Marketplace Management System boundary.
-- Human actors are outside the boundary.
-- Login is modeled as its own use case, not blindly included by every protected use case.
-```
+| Figure | Diagram ID | Module View | Primary Coverage |
+|---|---|---|---|
+| Figure 2-1 | FIG-SRS-002 | Account and Marketplace | Register account, login, own profile, hotel search, and hotel detail browsing. |
+| Figure 2-2 | FIG-SRS-002 | Customer Booking and Payment | Booking creation, online payment, booking list/detail, cancellation, and unpaid booking expiration. |
+| Figure 2-3 | FIG-SRS-002 | Hotel Setup, Room Inventory, and Staff | Hotel profile, room inventory, room availability, staff accounts, and staff role assignment. |
+| Figure 2-4 | FIG-SRS-002 | Front Desk Operation | Hotel booking operation, room assignment, check-in, check-out, no-show, pay-at-property collection, and walk-in booking. |
+| Figure 2-5 | FIG-SRS-002 | Housekeeping and Maintenance | Housekeeping tasks, cleaning status, room issue reporting, maintenance request update, and room release. |
+| Figure 2-6 | FIG-SRS-002 | Platform Administration | Hotel approval, commission rate, payment reconciliation, refund status, settlement, and platform dashboard. |
 
-```diagram-delegation
-Diagram ID: DGM-UC-002
-Diagram Type: UML Use Case Diagram - Customer Booking and Payment
-Recommended Tool: draw.io
-Document Section: SRS 2.2.1
-Input Sources:
-- SRS Section 2.2.2 Use Case List
-- SRS Section 3.2.3 FEAT-CUST-BOOK
-- SRS Section 3.2.4 FEAT-CUST-MYBOOK
-Required Elements:
-- Actors: Customer, payOS Payment Gateway, Notification Service, System Scheduler
-- Use cases: Create Booking, Pay Online, View My Bookings, Cancel Booking, Expire Unpaid Booking
-Relationship Notes:
-- Create Booking may continue to Pay Online only when Platform Collect is selected; show as workflow note, not mandatory include.
-- payOS participates in Pay Online and payment result handling.
-- Expire Unpaid Booking is initiated by System Scheduler.
-Do Not Include:
-- Payment controller, webhook endpoint, payment table, or implementation detail.
-Output Required: `.drawio` source file and `.png` export
-Acceptance Criteria:
-- No dangling include/extend relationship is present.
-- Cancellation and refund administration are not modeled as direct extend unless a formal extension point is created.
-```
+Use case diagram boundaries:
 
-```diagram-delegation
-Diagram ID: DGM-UC-003
-Diagram Type: UML Use Case Diagram - Hotel Setup, Room Inventory, and Staff Management
-Recommended Tool: draw.io
-Document Section: SRS 2.2.1
-Input Sources:
-- SRS Section 2.1 Actors
-- SRS Section 2.2.2 Use Case List
-- SRS Sections 3.2.5, 3.2.6, 3.2.7
-Required Elements:
-- Actors: Property Owner, Hotel Manager, Platform Administrator, Notification Service
-- Use cases: Register Hotel Property, Manage Hotel Profile, Manage Room Type, Manage Physical Room, Manage Room Availability, Manage Hotel Staff Accounts, Assign Staff Roles and Permissions, Approve Hotel Property
-Relationship Notes:
-- Hotel approval is performed by Platform Administrator after hotel registration submission.
-- Staff roles are hotel-scoped.
-Do Not Include:
-- Internal RBAC tables or database implementation.
-Output Required: `.drawio` source file and `.png` export
-Acceptance Criteria:
-- Hotel Manager permissions are shown as hotel-scoped and delegated, not platform-wide.
-```
+- Use cases remain inside the Hotel Marketplace Management System boundary.
+- Human actors and external systems remain outside the boundary.
+- Include/extend relationships are used only where the relationship is explicit and valid in the SRS.
+- Screens, controllers, services, repositories, APIs, database tables, and implementation classes are intentionally excluded.
 
-```diagram-delegation
-Diagram ID: DGM-UC-004
-Diagram Type: UML Use Case Diagram - Front Desk Operation
-Recommended Tool: draw.io
-Document Section: SRS 2.2.1
-Input Sources:
-- SRS Section 2.2.2 Use Case List
-- SRS Section 3.2.8 FEAT-FRONTDESK
-Required Elements:
-- Actors: Receptionist, Hotel Manager, Property Owner, Customer, Notification Service
-- Use cases: View Hotel Bookings, View Arrival and Departure List, Assign Physical Room, Check In Customer, Check Out Customer, Mark No-show, Record Pay-at-Property Payment, Create Walk-in Booking
-Valid Relationship:
-- Check In Customer `<<include>>` Assign Physical Room only if the diagram explicitly shows physical-room assignment as mandatory before check-in.
-Do Not Include:
-- Room assignment repository, booking service, SQL, or code-level room-locking design.
-Output Required: `.drawio` source file and `.png` export
-Acceptance Criteria:
-- Front desk actions are associated primarily with Receptionist, with Hotel Manager/Property Owner as authorized supervisory actors.
-```
+![FIG-SRS-002 - Use Case Diagram Account and Marketplace](diagrams/png/FIG-SRS-002_use_case_account_marketplace.png)
 
-```diagram-delegation
-Diagram ID: DGM-UC-005
-Diagram Type: UML Use Case Diagram - Housekeeping and Maintenance
-Recommended Tool: draw.io
-Document Section: SRS 2.2.1
-Input Sources:
-- SRS Sections 3.2.9 and 3.2.10
-Required Elements:
-- Actors: Housekeeping Staff, Maintenance Staff, Hotel Manager, Receptionist, Notification Service
-- Use cases: View Housekeeping Tasks, Update Room Cleaning Status, Report Room Issue, View Maintenance Requests, Update Maintenance Request, Release Room from Maintenance
-Relationship Notes:
-- Report Room Issue creates a maintenance request, but do not model it as extend unless a formal extension point is documented.
-Do Not Include:
-- Internal task service, maintenance repository, or database tables.
-Output Required: `.drawio` source file and `.png` export
-Acceptance Criteria:
-- Housekeeping screens and use cases must not imply access to payment/refund/commission data.
-```
+Figure 2-1: Use Case Diagram of Account and Marketplace
 
-```diagram-delegation
-Diagram ID: DGM-UC-006
-Diagram Type: UML Use Case Diagram - Platform Administration
-Recommended Tool: draw.io
-Document Section: SRS 2.2.1
-Input Sources:
-- SRS Sections 3.2.11, 3.2.12, 3.2.13
-Required Elements:
-- Actors: Platform Administrator, payOS Payment Gateway, Customer, Property Owner, Notification Service
-- Use cases: Approve Hotel Property, Manage Commission Rate, Reconcile Payment, Process Refund Status, Mark Settlement, View Platform Dashboard
-Do Not Include:
-- Platform finance operator actor unless future scope explicitly adds it.
-Output Required: `.drawio` source file and `.png` export
-Acceptance Criteria:
-- Refund, reconciliation, commission, and settlement are clearly separated as different admin goals.
-```
+![FIG-SRS-002 - Use Case Diagram Customer Booking and Payment](diagrams/png/FIG-SRS-002_use_case_customer_booking_payment.png)
 
-#### Activity Diagram Placeholders for Complex Use Cases
+Figure 2-2: Use Case Diagram of Customer Booking and Payment
 
-```diagram-delegation
-Diagram ID: DGM-ACT-BOOK-001
-Diagram Type: UML Activity Diagram - Create Booking
-Recommended Tool: draw.io
-Input Sources: UC-005 Create Booking in Section 3.2.3
-Required Swimlanes: Customer, System, Notification Service
-Required Activities: enter booking info, validate date/guest/quantity, check availability, calculate room-price-only amount, select payment mode, create booking, reserve availability, show payment or confirmation result.
-Do Not Include: controllers, services, repositories, SQL, or internal code.
-Output Required: `.drawio` source file and `.png` export
-```
+![FIG-SRS-002 - Use Case Diagram Hotel Setup Inventory and Staff](diagrams/png/FIG-SRS-002_use_case_hotel_setup_inventory_staff.png)
 
-```diagram-delegation
-Diagram ID: DGM-ACT-CANCEL-001
-Diagram Type: UML Activity Diagram - Cancel Booking
-Recommended Tool: draw.io
-Input Sources: UC-007 Cancel Booking in Section 3.2.4
-Required Swimlanes: Customer, System, Notification Service, Platform Administrator as downstream refund actor note
-Required Activities: view booking, request cancellation, validate policy, cancel or reject, release availability, create refund record if required, show refund status.
-Do Not Include: automatic payment-gateway refund implementation.
-Output Required: `.drawio` source file and `.png` export
-```
+Figure 2-3: Use Case Diagram of Hotel Setup, Inventory, and Staff
 
-```diagram-delegation
-Diagram ID: DGM-ACT-CHECKIN-001
-Diagram Type: UML Activity Diagram - Check In Customer
-Recommended Tool: draw.io
-Input Sources: UC-015 and UC-029 in Section 3.2.8
-Required Swimlanes: Receptionist, System, Notification Service
-Required Activities: open booking, verify confirmed booking, record identity document information, assign physical room, validate availability, mark checked in, update room status, notify.
-Do Not Include: internal database lock or repository method.
-Output Required: `.drawio` source file and `.png` export
-```
+![FIG-SRS-002 - Use Case Diagram Front Desk Operation](diagrams/png/FIG-SRS-002_use_case_front_desk_operation.png)
 
-```diagram-delegation
-Diagram ID: DGM-ACT-CHECKOUT-001
-Diagram Type: UML Activity Diagram - Check Out Customer
-Recommended Tool: draw.io
-Input Sources: UC-016 and UC-030 in Section 3.2.8
-Required Swimlanes: Receptionist, System, Housekeeping Staff as downstream task receiver, Notification Service
-Required Activities: open checked-in stay, review receipt/folio summary, record pay-at-property collection if needed, confirm checkout, finalize staff-visible folio, create customer receipt, set room Dirty, create housekeeping task, notify.
-Do Not Include: full platform settlement logic or customer full invoice/folio display.
-Output Required: `.drawio` source file and `.png` export
-```
+Figure 2-4: Use Case Diagram of Front Desk Operation
 
+![FIG-SRS-002 - Use Case Diagram Housekeeping and Maintenance](diagrams/png/FIG-SRS-002_use_case_housekeeping_maintenance.png)
+
+Figure 2-5: Use Case Diagram of Housekeeping and Maintenance
+
+![FIG-SRS-002 - Use Case Diagram Platform Administration](diagrams/png/FIG-SRS-002_use_case_platform_administration.png)
+
+Figure 2-6: Use Case Diagram of Platform Administration
+
+#### Activity Diagrams for Complex Use Cases and Non-Screen Behavior
+
+Activity diagrams are split by complex business flow. They show actor/system behavior at SRS level and intentionally exclude controllers, services, repositories, SQL, and internal locking details.
+
+| Figure | Diagram ID | Flow | Primary Coverage |
+|---|---|---|---|
+| Figure 2-7 | FIG-SRS-006 | Create Booking | Booking input, validation, availability check, amount calculation, payment-mode selection, booking creation, and notification. |
+| Figure 2-8 | FIG-SRS-006 | Cancel Booking | Cancellation request, policy validation, availability release, refund record creation where required, and status feedback. |
+| Figure 2-9 | FIG-SRS-006 | Check In Customer | Booking verification, identity information capture, physical room assignment, room status update, and notification. |
+| Figure 2-10 | FIG-SRS-006 | Check Out Customer | Folio/receipt review, pay-at-property collection where required, checkout, dirty-room transition, housekeeping task creation, and notification. |
+| Figure 2-11 | FIG-SRS-006 | Automated Notification | Event/schedule trigger, notification record creation, notification delivery or recording result, and audit outcome. |
+
+![FIG-SRS-006 - Activity Diagram Create Booking](diagrams/png/FIG-SRS-006_activity_uc_005_create_booking.png)
+
+Figure 2-7: Activity Diagram of Create Booking
+
+![FIG-SRS-006 - Activity Diagram Cancel Booking](diagrams/png/FIG-SRS-006_activity_uc_007_cancel_booking.png)
+
+Figure 2-8: Activity Diagram of Cancel Booking
+
+![FIG-SRS-006 - Activity Diagram Check In Customer](diagrams/png/FIG-SRS-006_activity_uc_015_check_in_customer.png)
+
+Figure 2-9: Activity Diagram of Check In Customer
+
+![FIG-SRS-006 - Activity Diagram Check Out Customer](diagrams/png/FIG-SRS-006_activity_uc_016_check_out_customer.png)
+
+Figure 2-10: Activity Diagram of Check Out Customer
+
+![FIG-SRS-006 - Activity Diagram Automated Notification](diagrams/png/FIG-SRS-006_activity_nsf_001_automated_notification.png)
+
+Figure 2-11: Activity Diagram of Automated Notification
 ### 2.2.2 Use Case List
 
 | ID | Group Function | Use Case | Primary Actor | Secondary Actor(s) | Brief Description |
@@ -487,78 +359,44 @@ The feature model is reorganized by business capability instead of by broad user
 
 Screen flows are intentionally split by business workflow. This prevents one large unreadable diagram and keeps navigation traceable to a business capability.
 
-```diagram-delegation
-Diagram ID: DGM-SCR-CUST-001
-Diagram Type: Screen Flow Diagram - Customer Search, Booking, Payment, Cancellation
-Recommended Tool: draw.io
-Input Sources: SRS Sections 3.1.2 and 3.2 Feature Details
-Required Flow:
-- SCR-004 Home/Search Screen -> SCR-005 Hotel Search Result Screen -> SCR-006 Hotel Detail Screen -> SCR-002 Login Screen or SCR-001 Register Screen if not authenticated -> SCR-007 Booking Form Screen -> SCR-008 Booking Confirmation Screen -> SCR-011 Payment Instruction Screen if Platform Collect -> SCR-012 Payment Result Screen -> SCR-010 Customer Booking Detail Screen -> SCR-009 My Bookings Screen -> SCR-013 Customer Refund Status Screen if cancellation/refund exists.
-Rules:
-- Show screen navigation only.
-- Do not include controller, service, repository, database table, class, API endpoint, or implementation detail.
-Output Required: .drawio source file and .png export.
-```
+| Figure | Diagram ID | Workflow | Primary Coverage |
+|---|---|---|---|
+| Figure 3-1 | FIG-SRS-003 | Customer Search, Booking, Payment, and Cancellation | Marketplace search, hotel detail, authentication, booking form, confirmation, payment, result, booking detail, booking list, and refund status. |
+| Figure 3-2 | FIG-SRS-003 | Owner / Manager Hotel Setup | Owner/manager dashboard, hotel registration/profile, room type, physical room, availability, staff management, role assignment, and room status board. |
+| Figure 3-3 | FIG-SRS-003 | Front Desk Operation | Front desk dashboard, arrival/departure list, booking list/detail, room assignment, check-in, check-out/payment collection, walk-in booking, and room status board. |
+| Figure 3-4 | FIG-SRS-003 | Housekeeping Operation | Housekeeping dashboard, task list, task detail, room issue reporting, and room status board. |
+| Figure 3-5 | FIG-SRS-003 | Maintenance Operation | Maintenance request list/detail, maintenance status update, room release, and room status board. |
+| Figure 3-6 | FIG-SRS-003 | Platform Administration | Admin dashboard, hotel approval, commission management, payment reconciliation, refund management, and settlement management. |
 
-```diagram-delegation
-Diagram ID: DGM-SCR-HOTEL-SETUP-001
-Diagram Type: Screen Flow Diagram - Owner / Manager Hotel Setup
-Recommended Tool: draw.io
-Required Flow:
-- SCR-014 Owner/Manager Dashboard -> SCR-015 Hotel Registration Screen -> SCR-016 Hotel Profile Management Screen -> SCR-017 Room Type Management Screen -> SCR-018 Physical Room Management Screen -> SCR-019 Availability Calendar Screen -> SCR-028 Staff Management Screen -> SCR-029 Staff Role Assignment Screen -> SCR-035 Room Status Board.
-Rules:
-- Hotel Manager access is hotel-scoped and depends on assigned permissions.
-- Do not show backend components.
-Output Required: .drawio source file and .png export.
-```
+Screen flow boundaries:
 
-```diagram-delegation
-Diagram ID: DGM-SCR-FD-001
-Diagram Type: Screen Flow Diagram - Front Desk Operation
-Recommended Tool: draw.io
-Required Flow:
-- SCR-022 Front Desk Dashboard -> SCR-023 Arrival / Departure List Screen -> SCR-020 Hotel Booking List Screen -> SCR-021 Hotel Booking Detail Screen -> SCR-024 Room Assignment Board -> SCR-025 Check-in Screen -> SCR-026 Check-out / Payment Collection Screen -> SCR-027 Walk-in Booking Screen -> SCR-035 Room Status Board.
-Rules:
-- Receptionist screens must not expose platform commission, platform settlement, or full refund administration.
-- Do not show internal backend components.
-Output Required: .drawio source file and .png export.
-```
+- Diagrams show user-visible screen navigation only.
+- Role-specific diagrams must not expose screens or data outside that role's authorization boundary.
+- Controllers, services, repositories, database tables, API endpoints, and implementation classes are intentionally excluded.
 
-```diagram-delegation
-Diagram ID: DGM-SCR-HK-001
-Diagram Type: Screen Flow Diagram - Housekeeping Operation
-Recommended Tool: draw.io
-Required Flow:
-- SCR-030 Housekeeping Dashboard -> SCR-031 Housekeeping Task List Screen -> SCR-032 Housekeeping Task Detail Screen -> Report Room Issue action -> SCR-035 Room Status Board.
-Rules:
-- Housekeeping screens show only minimum stay/room information required for cleaning.
-- Do not show customer payment, refund, commission, or settlement information.
-Output Required: .drawio source file and .png export.
-```
+![FIG-SRS-003 - Screen Flow Customer Search Booking Payment](diagrams/png/FIG-SRS-003_screen_flow_customer_search_booking_payment.png)
 
-```diagram-delegation
-Diagram ID: DGM-SCR-MAINT-001
-Diagram Type: Screen Flow Diagram - Maintenance Operation
-Recommended Tool: draw.io
-Required Flow:
-- SCR-033 Maintenance Request List Screen -> SCR-034 Maintenance Request Detail Screen -> Update Maintenance Status action -> Release Room action -> SCR-035 Room Status Board.
-Rules:
-- Maintenance screens show only issue, room, priority, and operational status information.
-- Do not show customer payment, refund, commission, or platform settlement information.
-Output Required: .drawio source file and .png export.
-```
+Figure 3-1: Screen Flow of Customer Search, Booking, Payment, and Cancellation
 
-```diagram-delegation
-Diagram ID: DGM-SCR-ADMIN-001
-Diagram Type: Screen Flow Diagram - Platform Administration
-Recommended Tool: draw.io
-Required Flow:
-- SCR-036 Admin Dashboard -> SCR-037 Hotel Approval Screen -> SCR-038 Commission Management Screen -> SCR-039 Payment Reconciliation Screen -> SCR-040 Refund Management Screen -> SCR-041 Settlement Management Screen.
-Rules:
-- Platform administration screens are only for Platform Administrator unless future platform staff roles are added.
-Output Required: .drawio source file and .png export.
-```
+![FIG-SRS-003 - Screen Flow Owner Manager Hotel Setup](diagrams/png/FIG-SRS-003_screen_flow_owner_manager_hotel_setup.png)
 
+Figure 3-2: Screen Flow of Owner / Manager Hotel Setup
+
+![FIG-SRS-003 - Screen Flow Front Desk Operation](diagrams/png/FIG-SRS-003_screen_flow_front_desk_operation.png)
+
+Figure 3-3: Screen Flow of Front Desk Operation
+
+![FIG-SRS-003 - Screen Flow Housekeeping Operation](diagrams/png/FIG-SRS-003_screen_flow_housekeeping_operation.png)
+
+Figure 3-4: Screen Flow of Housekeeping Operation
+
+![FIG-SRS-003 - Screen Flow Maintenance Operation](diagrams/png/FIG-SRS-003_screen_flow_maintenance_operation.png)
+
+Figure 3-5: Screen Flow of Maintenance Operation
+
+![FIG-SRS-003 - Screen Flow Platform Administration](diagrams/png/FIG-SRS-003_screen_flow_platform_administration.png)
+
+Figure 3-6: Screen Flow of Platform Administration
 ## 3.1.2 Screen Descriptions
 
 | Screen ID | Feature | Screen Name | Description | Related Use Cases |
@@ -667,13 +505,13 @@ The logical ERD is maintained as one canonical model plus six readable module vi
 
 | Figure | Diagram ID | Module View | Primary Coverage |
 |---|---|---|---|
-| Figure 3-1 | FIG-SRS-005 | Canonical Logical ERD | Account, hotel, inventory, booking, finance, operations, notification, and audit entities. |
-| Figure 3-2 | FIG-SRS-005A | Logical ERD Overview | High-level logical entity groups and cross-module relationships. |
-| Figure 3-3 | FIG-SRS-005B | Account and Staff | User accounts, roles, property ownership, hotel-scoped staff assignment, and invitations. |
-| Figure 3-4 | FIG-SRS-005C | Hotel Setup and Inventory | Hotel property profile, images, amenities, cancellation policy, room types, physical rooms, availability, and room status history. |
-| Figure 3-5 | FIG-SRS-005D | Booking and Stay | Customer booking, booked room type, physical-room assignment, and guest stay record. |
-| Figure 3-6 | FIG-SRS-005E | Finance | Payment transactions, payment collection, refunds, invoices, commissions, settlements, and settlement items. |
-| Figure 3-7 | FIG-SRS-005F | Operations, Notification, and Audit | Housekeeping tasks, maintenance requests, room status history, notifications, and audit records. |
+| Figure 3-7 | FIG-SRS-005 | Canonical Logical ERD | Account, hotel, inventory, booking, finance, operations, notification, and audit entities. |
+| Figure 3-8 | FIG-SRS-005A | Logical ERD Overview | High-level logical entity groups and cross-module relationships. |
+| Figure 3-9 | FIG-SRS-005B | Account and Staff | User accounts, roles, property ownership, hotel-scoped staff assignment, and invitations. |
+| Figure 3-10 | FIG-SRS-005C | Hotel Setup and Inventory | Hotel property profile, images, amenities, cancellation policy, room types, physical rooms, availability, and room status history. |
+| Figure 3-11 | FIG-SRS-005D | Booking and Stay | Customer booking, booked room type, physical-room assignment, and guest stay record. |
+| Figure 3-12 | FIG-SRS-005E | Finance | Payment transactions, payment collection, refunds, invoices, commissions, settlements, and settlement items. |
+| Figure 3-13 | FIG-SRS-005F | Operations, Notification, and Audit | Housekeeping tasks, maintenance requests, room status history, notifications, and audit records. |
 
 Design boundaries:
 
@@ -683,31 +521,31 @@ Design boundaries:
 
 ![FIG-SRS-005 - Logical Entity Relationship Diagram](diagrams/png/FIG-SRS-005_logical_erd.png)
 
-Figure 3-1: Logical Entity Relationship Diagram
+Figure 3-7: Logical Entity Relationship Diagram
 
 ![FIG-SRS-005A - Logical ERD Overview](diagrams/png/FIG-SRS-005A_logical_erd_overview.png)
 
-Figure 3-2: Logical ERD Overview
+Figure 3-8: Logical ERD Overview
 
 ![FIG-SRS-005B - Logical ERD Account and Staff](diagrams/png/FIG-SRS-005B_logical_erd_account_staff.png)
 
-Figure 3-3: Logical ERD of Account and Staff
+Figure 3-9: Logical ERD of Account and Staff
 
 ![FIG-SRS-005C - Logical ERD Hotel Setup and Inventory](diagrams/png/FIG-SRS-005C_logical_erd_hotel_inventory.png)
 
-Figure 3-4: Logical ERD of Hotel Setup and Inventory
+Figure 3-10: Logical ERD of Hotel Setup and Inventory
 
 ![FIG-SRS-005D - Logical ERD Booking and Stay](diagrams/png/FIG-SRS-005D_logical_erd_booking_stay.png)
 
-Figure 3-5: Logical ERD of Booking and Stay
+Figure 3-11: Logical ERD of Booking and Stay
 
 ![FIG-SRS-005E - Logical ERD Finance](diagrams/png/FIG-SRS-005E_logical_erd_finance.png)
 
-Figure 3-6: Logical ERD of Finance
+Figure 3-12: Logical ERD of Finance
 
 ![FIG-SRS-005F - Logical ERD Operations Notification and Audit](diagrams/png/FIG-SRS-005F_logical_erd_operations_audit.png)
 
-Figure 3-7: Logical ERD of Operations, Notification, and Audit
+Figure 3-13: Logical ERD of Operations, Notification, and Audit
 
 ## 3.1.6 Entity Details
 
@@ -768,80 +606,25 @@ Figure 3-7: Logical ERD of Operations, Notification, and Audit
 
 ## 3.1.8 State Machine Diagrams
 
-```diagram-delegation
-Diagram ID: DGM-STATE-BOOK-001
-Diagram Type: State Machine Diagram - Booking Lifecycle
-Recommended Tool: draw.io
-Required States:
-- Pending Payment, Confirmed, Checked In, Checked Out, Cancelled, Expired, No-show
-Optional Derived/Report State:
-- Completed, only if finance completion is explicitly kept as a separate reporting state.
-Required Transitions:
-- Create Platform Collect Booking -> Pending Payment
-- Payment Success -> Confirmed
-- Payment Timeout -> Expired
-- Create Pay at Property Booking -> Confirmed
-- Customer Cancellation -> Cancelled
-- Receptionist/Authorized Staff Check-in -> Checked In
-- Receptionist/Authorized Staff Check-out -> Checked Out
-- Receptionist/Hotel Manager Mark No-show -> No-show
-- Admin refund/settlement actions do not directly change booking stay status unless a business rule says so.
-Rules:
-- Do not show Owner-only check-in/check-out labels because staff roles are now in scope.
-- Do not show implementation methods/classes.
-Output Required: .drawio source file and .png export.
-```
+State machine diagrams are split by lifecycle to keep booking, room operation, and finance status rules readable. These diagrams define business-visible states and transitions only; implementation methods, classes, queues, and database-level details are excluded.
 
-```diagram-delegation
-Diagram ID: DGM-STATE-ROOM-001
-Diagram Type: State Machine Diagram - Physical Room Operational Lifecycle
-Recommended Tool: draw.io
-Required States:
-- Available, Assigned, Occupied, Dirty, Cleaning, Inspection Required, Maintenance, Out of Service, Blocked, Inactive
-Required Transitions:
-- Assign Room -> Assigned
-- Check In -> Occupied
-- Check Out -> Dirty
-- Start Cleaning -> Cleaning
-- Complete Cleaning -> Inspection Required or Available depending on policy
-- Inspection Passed -> Available
-- Report Issue -> Maintenance or Out of Service depending on severity
-- Resolve Maintenance -> Dirty, Inspection Required, or Available depending on policy
-- Deactivate Room -> Inactive
-Rules:
-- State names must be states, not actions.
-- Transition labels must be events/actions.
-Output Required: .drawio source file and .png export.
-```
+| Figure | Diagram ID | Lifecycle | Primary Coverage |
+|---|---|---|---|
+| Figure 3-14 | FIG-SRS-007 | Booking Lifecycle | Pending Payment, Confirmed, Checked In, Checked Out, Cancelled, Expired, and No-show. |
+| Figure 3-15 | FIG-SRS-007 | Physical Room Operational Lifecycle | Available, Assigned, Occupied, Dirty, Cleaning, Inspection Required, Maintenance, Out of Service, Blocked, and Inactive. |
+| Figure 3-16 | FIG-SRS-007 | Finance Lifecycle | Payment, reconciliation, refund, settlement, commission, and payment collection states. |
 
+![FIG-SRS-007 - Booking Lifecycle State Machine](diagrams/png/FIG-SRS-007_business_state_booking.png)
 
+Figure 3-14: State Machine Diagram of Booking Lifecycle
 
-```diagram-delegation
-Diagram ID: DGM-STATE-FIN-001
-Diagram Type: State Machine Diagram - Payment, Refund, and Settlement Lifecycle
-Recommended Tool: draw.io
-Document Section: SRS 3.1.8
-Input Sources:
-- UC-006 Pay Online
-- UC-007 Cancel Booking
-- UC-020 Reconcile Payment
-- UC-021 Process Refund Status
-- UC-022 Mark Settlement
-- Section 5.2 Status Lifecycles and Enumerations
-Required State Groups:
-- Payment: Pending, Processing, Paid, Failed, Cancelled, Expired
-- Reconciliation: Unreconciled, Reconciled, Exception
-- Refund: Not Required, Requested, Approved, Rejected, Processing, Processed, Failed
-- Settlement: Not Eligible, Eligible, Pending, Partially Settled, Settled, Exception
-- Commission: Calculated, Receivable, Deducted, Collected, Exception
-- Payment Collection: Pending, Partially Collected, Collected, Voided, Exception
-Rules:
-- Keep payment, refund, and settlement states visually separated but show key dependencies.
-- Do not show gateway refund automation because MVP records manual refund status.
-Output Required: `.drawio` source file and `.png` export
-Acceptance Criteria:
-- It is clear that customer booking status and platform finance status are related but not the same lifecycle.
-```
+![FIG-SRS-007 - Physical Room Operational Lifecycle State Machine](diagrams/png/FIG-SRS-007_business_state_physical_room.png)
+
+Figure 3-15: State Machine Diagram of Physical Room Operational Lifecycle
+
+![FIG-SRS-007 - Finance Lifecycle State Machine](diagrams/png/FIG-SRS-007_business_state_finance_lifecycle.png)
+
+Figure 3-16: State Machine Diagram of Finance Lifecycle
 
 ## 3.2 Feature Details
 
@@ -859,7 +642,7 @@ This feature allows users to register, log in, manage their own basic profile, a
 
 ![MCK-SCR-001 - Register Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-001-register-screen-mobile-flutter.png)
 
-Figure 3-8: Mobile Flutter Screen Design of Register Screen
+Figure 3-17: Mobile Flutter Screen Design of Register Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -881,7 +664,7 @@ Table 3-1: Screen Definition of Register Screen
 
 ![MCK-SCR-002 - Login Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-002-login-screen-mobile-flutter.png)
 
-Figure 3-9: Mobile Flutter Screen Design of Login Screen
+Figure 3-18: Mobile Flutter Screen Design of Login Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -900,7 +683,7 @@ Table 3-2: Screen Definition of Login Screen
 
 ![MCK-SCR-003 - User Profile Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-003-user-profile-screen-mobile-flutter.png)
 
-Figure 3-10: Mobile Flutter Screen Design of User Profile Screen
+Figure 3-19: Mobile Flutter Screen Design of User Profile Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1070,7 +853,7 @@ This feature enables public discovery of approved hotels and available private r
 
 ![MCK-SCR-004 - Home / Search Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-004-home-search-screen-mobile-flutter.png)
 
-Figure 3-11: Mobile Flutter Screen Design of Home / Search Screen
+Figure 3-20: Mobile Flutter Screen Design of Home / Search Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1090,7 +873,7 @@ Table 3-4: Screen Definition of Home / Search Screen
 
 ![MCK-SCR-005 - Hotel Search Result Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-005-hotel-search-result-screen-mobile-flutter.png)
 
-Figure 3-12: Mobile Flutter Screen Design of Hotel Search Result Screen
+Figure 3-21: Mobile Flutter Screen Design of Hotel Search Result Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1109,7 +892,7 @@ Table 3-5: Screen Definition of Hotel Search Result Screen
 
 ![MCK-SCR-006 - Hotel Detail Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-006-hotel-detail-screen-mobile-flutter.png)
 
-Figure 3-13: Mobile Flutter Screen Design of Hotel Detail Screen
+Figure 3-22: Mobile Flutter Screen Design of Hotel Detail Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1229,7 +1012,7 @@ This feature supports instant booking creation, Platform Collect online payment,
 
 ![MCK-SCR-007 - Booking Form Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-007-booking-form-screen-mobile-flutter.png)
 
-Figure 3-14: Mobile Flutter Screen Design of Booking Form Screen
+Figure 3-23: Mobile Flutter Screen Design of Booking Form Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1254,7 +1037,7 @@ Table 3-7: Screen Definition of Booking Form Screen
 
 ![MCK-SCR-008 - Booking Confirmation Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-008-booking-confirmation-screen-mobile-flutter.png)
 
-Figure 3-15: Mobile Flutter Screen Design of Booking Confirmation Screen
+Figure 3-24: Mobile Flutter Screen Design of Booking Confirmation Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1275,7 +1058,7 @@ Table 3-8: Screen Definition of Booking Confirmation Screen
 
 ![MCK-SCR-011 - Payment Instruction Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-011-payment-instruction-screen-mobile-flutter.png)
 
-Figure 3-16: Mobile Flutter Screen Design of Payment Instruction Screen
+Figure 3-25: Mobile Flutter Screen Design of Payment Instruction Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1295,7 +1078,7 @@ Table 3-9: Screen Definition of Payment Instruction Screen
 
 ![MCK-SCR-012 - Payment Result Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-012-payment-result-screen-mobile-flutter.png)
 
-Figure 3-17: Mobile Flutter Screen Design of Payment Result Screen
+Figure 3-26: Mobile Flutter Screen Design of Payment Result Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1451,7 +1234,7 @@ This feature allows Customers to view their own bookings, cancel eligible bookin
 
 ![MCK-SCR-009 - My Bookings Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-009-my-bookings-screen-mobile-flutter.png)
 
-Figure 3-18: Mobile Flutter Screen Design of My Bookings Screen
+Figure 3-27: Mobile Flutter Screen Design of My Bookings Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1470,7 +1253,7 @@ Table 3-11: Screen Definition of My Bookings Screen
 
 ![MCK-SCR-010 - Customer Booking Detail Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-010-customer-booking-detail-screen-mobile-flutter.png)
 
-Figure 3-19: Mobile Flutter Screen Design of Customer Booking Detail Screen
+Figure 3-28: Mobile Flutter Screen Design of Customer Booking Detail Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1489,7 +1272,7 @@ Table 3-12: Screen Definition of Customer Booking Detail Screen
 
 ![MCK-SCR-013 - Customer Refund Status Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-013-customer-refund-status-screen-mobile-flutter.png)
 
-Figure 3-20: Mobile Flutter Screen Design of Customer Refund Status Screen
+Figure 3-29: Mobile Flutter Screen Design of Customer Refund Status Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1609,7 +1392,7 @@ This feature supports hotel onboarding, profile management, images, amenities, a
 
 ![MCK-SCR-014 - Owner/Manager Dashboard](hotel_management_system_srs_v1_2_assets/MCK-SCR-014-owner-manager-dashboard-mobile-flutter.png)
 
-Figure 3-21: Mobile Flutter Screen Design of Owner/Manager Dashboard
+Figure 3-30: Mobile Flutter Screen Design of Owner/Manager Dashboard
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1627,7 +1410,7 @@ Table 3-14: Screen Definition of Owner/Manager Dashboard
 
 ![MCK-SCR-015 - Hotel Registration Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-015-hotel-registration-screen-mobile-flutter.png)
 
-Figure 3-22: Mobile Flutter Screen Design of Hotel Registration Screen
+Figure 3-31: Mobile Flutter Screen Design of Hotel Registration Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1651,7 +1434,7 @@ Table 3-15: Screen Definition of Hotel Registration Screen
 
 ![MCK-SCR-016 - Hotel Profile Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-016-hotel-profile-management-screen-mobile-flutter.png)
 
-Figure 3-23: Mobile Flutter Screen Design of Hotel Profile Management Screen
+Figure 3-32: Mobile Flutter Screen Design of Hotel Profile Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1771,7 +1554,7 @@ This feature supports room type management, physical room management, availabili
 
 ![MCK-SCR-017 - Room Type Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-017-room-type-management-screen-mobile-flutter.png)
 
-Figure 3-24: Mobile Flutter Screen Design of Room Type Management Screen
+Figure 3-33: Mobile Flutter Screen Design of Room Type Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1793,7 +1576,7 @@ Table 3-17: Screen Definition of Room Type Management Screen
 
 ![MCK-SCR-018 - Physical Room Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-018-physical-room-management-screen-mobile-flutter.png)
 
-Figure 3-25: Mobile Flutter Screen Design of Physical Room Management Screen
+Figure 3-34: Mobile Flutter Screen Design of Physical Room Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1815,7 +1598,7 @@ Table 3-18: Screen Definition of Physical Room Management Screen
 
 ![MCK-SCR-019 - Availability Calendar Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-019-availability-calendar-screen-mobile-flutter.png)
 
-Figure 3-26: Mobile Flutter Screen Design of Availability Calendar Screen
+Figure 3-35: Mobile Flutter Screen Design of Availability Calendar Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -1836,7 +1619,7 @@ Table 3-19: Screen Definition of Availability Calendar Screen
 
 ![MCK-SCR-035 - Room Status Board](hotel_management_system_srs_v1_2_assets/MCK-SCR-035-room-status-board-mobile-flutter.png)
 
-Figure 3-27: Mobile Flutter Screen Design of Room Status Board
+Figure 3-36: Mobile Flutter Screen Design of Room Status Board
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2022,7 +1805,7 @@ This feature supports hotel-scoped staff account management and role/permission 
 
 ![MCK-SCR-028 - Staff Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-028-staff-management-screen-mobile-flutter.png)
 
-Figure 3-28: Mobile Flutter Screen Design of Staff Management Screen
+Figure 3-37: Mobile Flutter Screen Design of Staff Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2042,7 +1825,7 @@ Table 3-21: Screen Definition of Staff Management Screen
 
 ![MCK-SCR-029 - Staff Role Assignment Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-029-staff-role-assignment-screen-mobile-flutter.png)
 
-Figure 3-29: Mobile Flutter Screen Design of Staff Role Assignment Screen
+Figure 3-38: Mobile Flutter Screen Design of Staff Role Assignment Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2171,7 +1954,7 @@ This feature supports day-to-day front desk work: booking list, arrivals/departu
 
 ![MCK-SCR-020 - Hotel Booking List Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-020-hotel-booking-list-screen-mobile-flutter.png)
 
-Figure 3-30: Mobile Flutter Screen Design of Hotel Booking List Screen
+Figure 3-39: Mobile Flutter Screen Design of Hotel Booking List Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2190,7 +1973,7 @@ Table 3-23: Screen Definition of Hotel Booking List Screen
 
 ![MCK-SCR-021 - Hotel Booking Detail Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-021-hotel-booking-detail-screen-mobile-flutter.png)
 
-Figure 3-31: Mobile Flutter Screen Design of Hotel Booking Detail Screen
+Figure 3-40: Mobile Flutter Screen Design of Hotel Booking Detail Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2211,7 +1994,7 @@ Table 3-24: Screen Definition of Hotel Booking Detail Screen
 
 ![MCK-SCR-022 - Front Desk Dashboard](hotel_management_system_srs_v1_2_assets/MCK-SCR-022-front-desk-dashboard-mobile-flutter.png)
 
-Figure 3-32: Mobile Flutter Screen Design of Front Desk Dashboard
+Figure 3-41: Mobile Flutter Screen Design of Front Desk Dashboard
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2230,7 +2013,7 @@ Table 3-25: Screen Definition of Front Desk Dashboard
 
 ![MCK-SCR-023 - Arrival / Departure List Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-023-arrival-departure-list-screen-mobile-flutter.png)
 
-Figure 3-33: Mobile Flutter Screen Design of Arrival / Departure List Screen
+Figure 3-42: Mobile Flutter Screen Design of Arrival / Departure List Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2249,7 +2032,7 @@ Table 3-26: Screen Definition of Arrival / Departure List Screen
 
 ![MCK-SCR-024 - Room Assignment Board](hotel_management_system_srs_v1_2_assets/MCK-SCR-024-room-assignment-board-mobile-flutter.png)
 
-Figure 3-34: Mobile Flutter Screen Design of Room Assignment Board
+Figure 3-43: Mobile Flutter Screen Design of Room Assignment Board
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2268,7 +2051,7 @@ Table 3-27: Screen Definition of Room Assignment Board
 
 ![MCK-SCR-025 - Check-in Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-025-check-in-screen-mobile-flutter.png)
 
-Figure 3-35: Mobile Flutter Screen Design of Check-in Screen
+Figure 3-44: Mobile Flutter Screen Design of Check-in Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2289,7 +2072,7 @@ Table 3-28: Screen Definition of Check-in Screen
 
 ![MCK-SCR-026 - Check-out / Payment Collection Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-026-check-out-payment-collection-screen-mobile-flutter.png)
 
-Figure 3-36: Mobile Flutter Screen Design of Check-out / Payment Collection Screen
+Figure 3-45: Mobile Flutter Screen Design of Check-out / Payment Collection Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2315,7 +2098,7 @@ Table 3-29: Screen Definition of Check-out / Payment Collection Screen
 
 ![MCK-SCR-027 - Walk-in Booking Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-027-walk-in-booking-screen-mobile-flutter.png)
 
-Figure 3-37: Mobile Flutter Screen Design of Walk-in Booking Screen
+Figure 3-46: Mobile Flutter Screen Design of Walk-in Booking Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2803,7 +2586,7 @@ This feature supports dirty-to-clean room workflow, housekeeping task execution,
 
 ![MCK-SCR-030 - Housekeeping Dashboard](hotel_management_system_srs_v1_2_assets/MCK-SCR-030-housekeeping-dashboard-mobile-flutter.png)
 
-Figure 3-38: Mobile Flutter Screen Design of Housekeeping Dashboard
+Figure 3-47: Mobile Flutter Screen Design of Housekeeping Dashboard
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2821,7 +2604,7 @@ Table 3-31: Screen Definition of Housekeeping Dashboard
 
 ![MCK-SCR-031 - Housekeeping Task List Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-031-housekeeping-task-list-screen-mobile-flutter.png)
 
-Figure 3-39: Mobile Flutter Screen Design of Housekeeping Task List Screen
+Figure 3-48: Mobile Flutter Screen Design of Housekeeping Task List Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -2840,7 +2623,7 @@ Table 3-32: Screen Definition of Housekeeping Task List Screen
 
 ![MCK-SCR-032 - Housekeeping Task Detail Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-032-housekeeping-task-detail-screen-mobile-flutter.png)
 
-Figure 3-40: Mobile Flutter Screen Design of Housekeeping Task Detail Screen
+Figure 3-49: Mobile Flutter Screen Design of Housekeeping Task Detail Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3038,7 +2821,7 @@ This feature supports maintenance request handling, status updates, and room rel
 
 ![MCK-SCR-033 - Maintenance Request List Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-033-maintenance-request-list-screen-mobile-flutter.png)
 
-Figure 3-41: Mobile Flutter Screen Design of Maintenance Request List Screen
+Figure 3-50: Mobile Flutter Screen Design of Maintenance Request List Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3057,7 +2840,7 @@ Table 3-34: Screen Definition of Maintenance Request List Screen
 
 ![MCK-SCR-034 - Maintenance Request Detail Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-034-maintenance-request-detail-screen-mobile-flutter.png)
 
-Figure 3-42: Mobile Flutter Screen Design of Maintenance Request Detail Screen
+Figure 3-51: Mobile Flutter Screen Design of Maintenance Request Detail Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3242,7 +3025,7 @@ This feature allows Platform Administrator to review, approve, or reject submitt
 
 ![MCK-SCR-037 - Hotel Approval Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-037-hotel-approval-screen-mobile-flutter.png)
 
-Figure 3-43: Mobile Flutter Screen Design of Hotel Approval Screen
+Figure 3-52: Mobile Flutter Screen Design of Hotel Approval Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3319,7 +3102,7 @@ This feature supports platform finance operations: commission configuration, pay
 
 ![MCK-SCR-038 - Commission Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-038-commission-management-screen-mobile-flutter.png)
 
-Figure 3-44: Mobile Flutter Screen Design of Commission Management Screen
+Figure 3-53: Mobile Flutter Screen Design of Commission Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3339,7 +3122,7 @@ Table 3-37: Screen Definition of Commission Management Screen
 
 ![MCK-SCR-039 - Payment Reconciliation Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-039-payment-reconciliation-screen-mobile-flutter.png)
 
-Figure 3-45: Mobile Flutter Screen Design of Payment Reconciliation Screen
+Figure 3-54: Mobile Flutter Screen Design of Payment Reconciliation Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3359,7 +3142,7 @@ Table 3-38: Screen Definition of Payment Reconciliation Screen
 
 ![MCK-SCR-040 - Refund Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-040-refund-management-screen-mobile-flutter.png)
 
-Figure 3-46: Mobile Flutter Screen Design of Refund Management Screen
+Figure 3-55: Mobile Flutter Screen Design of Refund Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3378,7 +3161,7 @@ Table 3-39: Screen Definition of Refund Management Screen
 
 ![MCK-SCR-041 - Settlement Management Screen](hotel_management_system_srs_v1_2_assets/MCK-SCR-041-settlement-management-screen-mobile-flutter.png)
 
-Figure 3-47: Mobile Flutter Screen Design of Settlement Management Screen
+Figure 3-56: Mobile Flutter Screen Design of Settlement Management Screen
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
@@ -3614,7 +3397,7 @@ This feature provides platform-level operational and financial dashboard metrics
 
 ![MCK-SCR-036 - Admin Dashboard](hotel_management_system_srs_v1_2_assets/MCK-SCR-036-admin-dashboard-mobile-flutter.png)
 
-Figure 3-48: Mobile Flutter Screen Design of Admin Dashboard
+Figure 3-57: Mobile Flutter Screen Design of Admin Dashboard
 
 | # | Field / Component Name | Type | Mandatory | Max Length | Description |
 |---:|---|---|---|---:|---|
