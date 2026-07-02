@@ -1,21 +1,25 @@
-# Figure 6: Activity Diagram - UC-005 Create Booking
+# Figure FIG-SRS-006: Activity Diagram - UC-005 Create Booking
 
 - Document target: SRS
-- Source evidence: v1.2 DOCX DGM-ACT-BOOK-001, UC-005
-- Scope: Customer creates a booking and chooses Platform Collect or Pay at Property
-- Assumptions: Notification Service may record rather than send events
+- Source evidence: `hotel_management_system_srs_v1_2_staff_screen_mockup_ready.md`, Section 2.2.1 activity diagram list, UC-005 Create Booking, FEAT-CUST-BOOK, SCR-007, SCR-008, booking business rules
+- Scope: Customer creates a booking, validates availability, chooses Platform Collect or Pay at Property, receives confirmation/payment instruction, and records notification
+- Assumptions: ASSUMP-014; Notification Service may record rather than externally send events
 - Open questions: None
-- Traceability: UC-005, UC-006, UC-024, ACT-002, ACT-010
+- Traceability: UC-005, UC-006, UC-024, ACT-002, ACT-010, SCR-007, SCR-008, BR-BOOK-001, BR-BOOK-003, BR-BOOK-004, BR-BOOK-005, BR-BOOK-006, BR-BOOK-011, BR-BOOK-012, BR-FIN-001, BR-FIN-003
 
 ## Explanation
 
-The activity diagram shows Customer input, System validation and availability checking, room-price-only calculation, booking creation, availability reservation, notification recording, and the final branch to payment instruction or Pay-at-Property confirmation.
+The diagram shows Customer input, System validation, availability checking, room-price-only amount calculation, booking creation, payment-mode branching, booking notification recording, and final visible confirmation or payment instruction. Validation and unavailable-room paths return to the Customer for correction instead of creating a booking.
 
 ## Validation checklist
 
-- [x] Activity diagram maps to one use case or one coherent workflow.
-- [x] Actor/system boundary is preserved.
-- [x] Decision branches have clear guard conditions.
-- [x] Main and important alternative flows are represented.
-- [x] No code-level/internal design elements appear.
-- [x] The final state matches the use case post-condition.
+- [x] Opens in diagrams.net/draw.io.
+- [x] Diagram elements match the source evidence.
+- [x] No SRS boundary violation.
+- [x] Decision branches have guard labels.
+- [x] Alternative paths merge or terminate correctly.
+- [x] No unsupported parallel flow or dead-end activity remains.
+- [x] Main and important alternative/exception flows are represented.
+- [x] Final state matches the use case postcondition.
+- [x] `.drawio` XML is well-formed, has no duplicate IDs, and every edge has a valid source and target.
+- [x] Naming and IDs are consistent with the SRS.
