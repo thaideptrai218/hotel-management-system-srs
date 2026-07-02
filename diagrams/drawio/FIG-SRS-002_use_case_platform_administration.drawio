@@ -1,61 +1,87 @@
-<mxfile host="app.diagrams.net">
-  <diagram name="FIG-SRS-002 - Platform Administration">
-    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram name="FIG-SRS-002 - Platform Administration" id="0">
+    <mxGraphModel dx="1489" dy="894" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="FIG-SRS-002 - Use Case Diagram: Platform Administration" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="420" y="30" width="760" height="40" as="geometry"/>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" value="FIG-SRS-002 - Use Case Diagram: Platform Administration" vertex="1">
+          <mxGeometry height="40" width="760" x="420" y="30" as="geometry" />
         </mxCell>
-        <mxCell id="boundary_platform_admin" value="Hotel Marketplace Management System" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontSize=13;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;" vertex="1" parent="1">
-          <mxGeometry x="350" y="100" width="860" height="690" as="geometry"/>
+        <mxCell id="boundary_platform_admin" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontSize=13;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;" value="Hotel Marketplace Management System" vertex="1">
+          <mxGeometry height="690" width="860" x="350" y="100" as="geometry" />
         </mxCell>
-        <mxCell id="actor_admin" value="Platform Administrator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="125" y="360" width="60" height="100" as="geometry"/>
+        <mxCell id="uc_018" parent="boundary_platform_admin" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-018&#xa;Approve Hotel Property" vertex="1">
+          <mxGeometry height="70" width="245" x="297.5" y="490" as="geometry" />
         </mxCell>
-        <mxCell id="actor_payos" value="&lt;b&gt;payOS Payment Gateway&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external system&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="1290" y="180" width="250" height="80" as="geometry"/>
+        <mxCell id="uc_019" parent="boundary_platform_admin" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-019&#xa;Manage Commission Rate" vertex="1">
+          <mxGeometry height="70" width="255" x="50" y="80" as="geometry" />
         </mxCell>
-        <mxCell id="actor_customer" value="Customer" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1370" y="340" width="60" height="100" as="geometry"/>
+        <mxCell id="uc_020" parent="boundary_platform_admin" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-020&#xa;Reconcile Payment" vertex="1">
+          <mxGeometry height="70" width="240" x="300" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="actor_owner" value="Property Owner" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1370" y="510" width="60" height="100" as="geometry"/>
+        <mxCell id="uc_021" parent="boundary_platform_admin" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-021&#xa;Process Refund Status" vertex="1">
+          <mxGeometry height="70" width="260" x="290" y="290" as="geometry" />
         </mxCell>
-        <mxCell id="actor_notification" value="&lt;b&gt;Notification Service&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external system / mock&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="1290" y="680" width="250" height="80" as="geometry"/>
+        <mxCell id="uc_022" parent="boundary_platform_admin" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-022&#xa;Mark Settlement" vertex="1">
+          <mxGeometry height="70" width="230" x="305" y="390" as="geometry" />
         </mxCell>
-        <mxCell id="uc_018" value="UC-018&#xa;Approve Hotel Property" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_platform_admin">
-          <mxGeometry x="105" y="115" width="245" height="70" as="geometry"/>
+        <mxCell id="uc_023" parent="boundary_platform_admin" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-023&#xa;View Platform Dashboard" vertex="1">
+          <mxGeometry height="70" width="260" x="47.5" y="580" as="geometry" />
         </mxCell>
-        <mxCell id="uc_019" value="UC-019&#xa;Manage Commission Rate" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_platform_admin">
-          <mxGeometry x="500" y="115" width="255" height="70" as="geometry"/>
+        <mxCell id="actor_admin" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Platform Administrator" vertex="1">
+          <mxGeometry height="100" width="60" x="125" y="360" as="geometry" />
         </mxCell>
-        <mxCell id="uc_020" value="UC-020&#xa;Reconcile Payment" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_platform_admin">
-          <mxGeometry x="105" y="315" width="240" height="70" as="geometry"/>
+        <mxCell id="actor_payos" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;payOS Payment Gateway&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external system&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="80" width="250" x="1290" y="180" as="geometry" />
         </mxCell>
-        <mxCell id="uc_021" value="UC-021&#xa;Process Refund Status" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_platform_admin">
-          <mxGeometry x="500" y="315" width="260" height="70" as="geometry"/>
+        <mxCell id="actor_customer" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Customer" vertex="1">
+          <mxGeometry height="100" width="60" x="1370" y="340" as="geometry" />
         </mxCell>
-        <mxCell id="uc_022" value="UC-022&#xa;Mark Settlement" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_platform_admin">
-          <mxGeometry x="105" y="510" width="230" height="70" as="geometry"/>
+        <mxCell id="actor_owner" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Property Owner" vertex="1">
+          <mxGeometry height="100" width="60" x="1370" y="510" as="geometry" />
         </mxCell>
-        <mxCell id="uc_023" value="UC-023&#xa;View Platform Dashboard" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_platform_admin">
-          <mxGeometry x="500" y="510" width="260" height="70" as="geometry"/>
+        <mxCell id="actor_notification" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;Notification Service&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external system / mock&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="80" width="250" x="1290" y="680" as="geometry" />
         </mxCell>
-        <mxCell id="a_admin_approve" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_admin" target="uc_018"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_admin_commission" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_admin" target="uc_019"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_admin_reconcile" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_admin" target="uc_020"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_admin_refund" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_admin" target="uc_021"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_admin_settlement" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_admin" target="uc_022"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_admin_dashboard" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_admin" target="uc_023"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_payos_reconcile" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_payos" target="uc_020"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_customer_refund" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_customer" target="uc_021"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_owner_approval" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_owner" target="uc_018"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_owner_settlement" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_owner" target="uc_022"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_notification_approval" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_notification" target="uc_018"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_notification_refund" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_notification" target="uc_021"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_notification_settlement" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_notification" target="uc_022"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_admin_approve" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;" target="uc_018">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_admin_commission" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;" target="uc_019">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_admin_reconcile" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_020">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_admin_refund" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;" target="uc_021">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_admin_settlement" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;" target="uc_022">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_admin_dashboard" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;" target="uc_023">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_payos_reconcile" edge="1" parent="1" source="actor_payos" style="endArrow=none;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="uc_020">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_customer_refund" edge="1" parent="1" source="actor_customer" style="endArrow=none;html=1;rounded=0;" target="uc_021">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_owner_approval" edge="1" parent="1" source="actor_owner" style="endArrow=none;html=1;rounded=0;" target="uc_018">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_owner_settlement" edge="1" parent="1" source="actor_owner" style="endArrow=none;html=1;rounded=0;" target="uc_022">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_notification_approval" edge="1" parent="1" source="actor_notification" style="endArrow=none;html=1;rounded=0;" target="uc_018">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_notification_refund" edge="1" parent="1" source="actor_notification" style="endArrow=none;html=1;rounded=0;" target="uc_021">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_notification_settlement" edge="1" parent="1" source="actor_notification" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" target="uc_022">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

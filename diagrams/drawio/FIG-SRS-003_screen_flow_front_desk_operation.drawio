@@ -1,23 +1,89 @@
-<mxfile host="app.diagrams.net"><diagram name="FIG-SRS-003 - Front Desk Screen Flow"><mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="900" math="0" shadow="0"><root>
-<mxCell id="0"/><mxCell id="1" parent="0"/>
-<mxCell id="title" value="FIG-SRS-003 - Screen Flow: Front Desk Operation" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="470" y="30" width="860" height="40" as="geometry"/></mxCell>
-<mxCell id="scr_022" value="SCR-022&#xa;Front Desk Dashboard" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="80" y="140" width="240" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_023" value="SCR-023&#xa;Arrival / Departure List Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="390" y="140" width="280" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_020" value="SCR-020&#xa;Hotel Booking List Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="740" y="140" width="260" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_021" value="SCR-021&#xa;Hotel Booking Detail Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="1070" y="140" width="270" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_024" value="SCR-024&#xa;Room Assignment Board" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="1070" y="340" width="260" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_025" value="SCR-025&#xa;Check-in Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="740" y="340" width="230" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_026" value="SCR-026&#xa;Check-out / Payment Collection Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="390" y="340" width="300" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_027" value="SCR-027&#xa;Walk-in Booking Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="80" y="340" width="240" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_035" value="SCR-035&#xa;Room Status Board" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="740" y="560" width="230" height="70" as="geometry"/></mxCell>
-<mxCell id="e1" value="Open arrivals" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_022" target="scr_023"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e2" value="Open booking list" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_023" target="scr_020"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e3" value="Select booking" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_020" target="scr_021"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e4" value="Assign room" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_021" target="scr_024"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e5" value="Proceed check-in" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_024" target="scr_025"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e6" value="Check out" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_021" target="scr_026"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e7" value="Create walk-in" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_022" target="scr_027"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e8" value="Update room status" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_025" target="scr_035"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e9" value="Set dirty / status" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_026" target="scr_035"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e10" value="Assign room for walk-in" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_027" target="scr_024"><mxGeometry relative="1" as="geometry"/></mxCell>
-</root></mxGraphModel></diagram></mxfile>
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram name="FIG-SRS-003 - Front Desk Screen Flow" id="0">
+    <mxGraphModel dx="1603" dy="963" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" value="FIG-SRS-003 - Screen Flow: Front Desk Operation" vertex="1">
+          <mxGeometry height="40" width="860" x="470" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_022" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-022&#xa;Front Desk Dashboard" vertex="1">
+          <mxGeometry height="70" width="240" x="80" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_023" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-023&#xa;Arrival / Departure List Screen" vertex="1">
+          <mxGeometry height="70" width="280" x="430" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_020" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-020&#xa;Hotel Booking List Screen" vertex="1">
+          <mxGeometry height="70" width="260" x="830" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_021" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-021&#xa;Hotel Booking Detail Screen" vertex="1">
+          <mxGeometry height="70" width="270" x="1220" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_025" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-025&#xa;Check-in Screen" vertex="1">
+          <mxGeometry height="70" width="230" x="765" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_026" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-026&#xa;Check-out / Payment Collection Screen" vertex="1">
+          <mxGeometry height="70" width="300" x="1205" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_027" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-027&#xa;Walk-in Booking Screen" vertex="1">
+          <mxGeometry height="70" width="240" x="80" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_035" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-035&#xa;Room Status Board" vertex="1">
+          <mxGeometry height="70" width="230" x="765" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="scr_022" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="scr_023" value="Open arrivals">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="scr_023" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="scr_020" value="Open booking list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="scr_020" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="scr_021" value="Select booking">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="scr_021" style="endArrow=block;html=1;rounded=0;fontSize=11;edgeStyle=orthogonalEdgeStyle;" target="scr_024" value="Assign room">
+          <mxGeometry relative="1" x="0.2688" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1355" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="scr_024" style="endArrow=block;html=1;rounded=0;fontSize=11;edgeStyle=orthogonalEdgeStyle;" target="scr_025" value="Proceed check-in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="scr_024" style="endArrow=block;html=1;rounded=0;fontSize=11;edgeStyle=orthogonalEdgeStyle;" target="scr_026" value="Check out">
+          <mxGeometry relative="1" x="-0.4887" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1355" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="scr_022" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="scr_027" value="Create walk-in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="scr_025" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="scr_035" value="Update room status">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="scr_026" style="endArrow=block;html=1;rounded=0;fontSize=11;edgeStyle=orthogonalEdgeStyle;" target="scr_035" value="Set dirty / status">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1355" y="665" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="scr_027" style="endArrow=block;html=1;rounded=0;fontSize=11;edgeStyle=orthogonalEdgeStyle;" target="scr_024" value="Assign room for walk-in">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="345" />
+              <mxPoint x="560" y="345" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="scr_024" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-024&#xa;Room Assignment Board" vertex="1">
+          <mxGeometry height="70" width="260" x="750" y="310" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

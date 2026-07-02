@@ -1,73 +1,111 @@
-<mxfile host="app.diagrams.net">
-  <diagram name="FIG-SRS-002 - Account and Marketplace">
-    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram name="FIG-SRS-002 - Account and Marketplace" id="0">
+    <mxGraphModel dx="1737" dy="1043" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="FIG-SRS-002 - Use Case Diagram: Account and Marketplace" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="430" y="30" width="740" height="40" as="geometry"/>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" value="FIG-SRS-002 - Use Case Diagram: Account and Marketplace" vertex="1">
+          <mxGeometry height="40" width="740" x="430" y="30" as="geometry" />
         </mxCell>
-        <mxCell id="boundary_account_marketplace" value="Hotel Marketplace Management System" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontSize=13;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;" vertex="1" parent="1">
-          <mxGeometry x="330" y="90" width="900" height="780" as="geometry"/>
+        <mxCell id="boundary_account_marketplace" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontSize=13;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;" value="Hotel Marketplace Management System" vertex="1">
+          <mxGeometry height="780" width="900" x="330" y="90" as="geometry" />
         </mxCell>
-        <mxCell id="actor_guest" value="Guest" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="120" y="170" width="60" height="100" as="geometry"/>
+        <mxCell id="uc_003" parent="boundary_account_marketplace" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-003&#xa;Register Account" vertex="1">
+          <mxGeometry height="70" width="210" x="80" y="60" as="geometry" />
         </mxCell>
-        <mxCell id="actor_customer" value="Customer" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="120" y="355" width="60" height="100" as="geometry"/>
+        <mxCell id="uc_004" parent="boundary_account_marketplace" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-004&#xa;Login" vertex="1">
+          <mxGeometry height="70" width="200" x="350" y="580" as="geometry" />
         </mxCell>
-        <mxCell id="actor_owner" value="Property Owner" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="120" y="540" width="60" height="100" as="geometry"/>
+        <mxCell id="uc_025" parent="boundary_account_marketplace" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-025&#xa;Manage Own Profile" vertex="1">
+          <mxGeometry height="70" width="220" x="340" y="350" as="geometry" />
         </mxCell>
-        <mxCell id="actor_manager" value="Hotel Manager" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1350" y="150" width="60" height="100" as="geometry"/>
+        <mxCell id="uc_001" parent="boundary_account_marketplace" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-001&#xa;Search Hotels" vertex="1">
+          <mxGeometry height="70" width="210" x="80" y="290" as="geometry" />
         </mxCell>
-        <mxCell id="actor_receptionist" value="Receptionist" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1350" y="300" width="60" height="100" as="geometry"/>
+        <mxCell id="uc_002" parent="boundary_account_marketplace" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-002&#xa;View Hotel Detail" vertex="1">
+          <mxGeometry height="70" width="220" x="75" y="165" as="geometry" />
         </mxCell>
-        <mxCell id="actor_housekeeping" value="Housekeeping Staff" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1350" y="450" width="60" height="100" as="geometry"/>
+        <mxCell id="actor_guest" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Guest" vertex="1">
+          <mxGeometry height="100" width="60" x="120" y="225" as="geometry" />
         </mxCell>
-        <mxCell id="actor_maintenance" value="Maintenance Staff" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1350" y="600" width="60" height="100" as="geometry"/>
+        <mxCell id="actor_customer" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Customer" vertex="1">
+          <mxGeometry height="100" width="60" x="120" y="450" as="geometry" />
         </mxCell>
-        <mxCell id="actor_admin" value="Platform Administrator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1350" y="750" width="60" height="100" as="geometry"/>
+        <mxCell id="actor_owner" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Property Owner" vertex="1">
+          <mxGeometry height="100" width="60" x="120" y="720" as="geometry" />
         </mxCell>
-        <mxCell id="uc_003" value="UC-003&#xa;Register Account" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_account_marketplace">
-          <mxGeometry x="110" y="150" width="210" height="70" as="geometry"/>
+        <mxCell id="actor_manager" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Hotel Manager" vertex="1">
+          <mxGeometry height="100" width="60" x="1350" y="150" as="geometry" />
         </mxCell>
-        <mxCell id="uc_004" value="UC-004&#xa;Login" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_account_marketplace">
-          <mxGeometry x="350" y="275" width="200" height="70" as="geometry"/>
+        <mxCell id="actor_receptionist" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Receptionist" vertex="1">
+          <mxGeometry height="100" width="60" x="1350" y="300" as="geometry" />
         </mxCell>
-        <mxCell id="uc_025" value="UC-025&#xa;Manage Own Profile" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_account_marketplace">
-          <mxGeometry x="585" y="275" width="220" height="70" as="geometry"/>
+        <mxCell id="actor_housekeeping" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Housekeeping Staff" vertex="1">
+          <mxGeometry height="100" width="60" x="1350" y="450" as="geometry" />
         </mxCell>
-        <mxCell id="uc_001" value="UC-001&#xa;Search Hotels" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_account_marketplace">
-          <mxGeometry x="190" y="475" width="210" height="70" as="geometry"/>
+        <mxCell id="actor_maintenance" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Maintenance Staff" vertex="1">
+          <mxGeometry height="100" width="60" x="1350" y="600" as="geometry" />
         </mxCell>
-        <mxCell id="uc_002" value="UC-002&#xa;View Hotel Detail" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_account_marketplace">
-          <mxGeometry x="520" y="475" width="220" height="70" as="geometry"/>
+        <mxCell id="actor_admin" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Platform Administrator" vertex="1">
+          <mxGeometry height="100" width="60" x="1350" y="750" as="geometry" />
         </mxCell>
-        <mxCell id="a_guest_register" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_guest" target="uc_003"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_guest_search" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_guest" target="uc_001"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_guest_detail" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_guest" target="uc_002"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_customer_login" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_customer" target="uc_004"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_customer_profile" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_customer" target="uc_025"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_customer_search" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_customer" target="uc_001"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_customer_detail" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_customer" target="uc_002"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_owner_login" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_owner" target="uc_004"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_owner_profile" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_owner" target="uc_025"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_manager_login" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_004"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_manager_profile" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_025"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_receptionist_login" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_receptionist" target="uc_004"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_receptionist_profile" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_receptionist" target="uc_025"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_housekeeping_login" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_housekeeping" target="uc_004"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_housekeeping_profile" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_housekeeping" target="uc_025"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_maintenance_login" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_maintenance" target="uc_004"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_maintenance_profile" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_maintenance" target="uc_025"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_admin_login" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_admin" target="uc_004"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_admin_profile" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_admin" target="uc_025"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_guest_register" edge="1" parent="1" source="actor_guest" style="endArrow=none;html=1;rounded=0;" target="uc_003">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_guest_search" edge="1" parent="1" source="actor_guest" style="endArrow=none;html=1;rounded=0;" target="uc_001">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_guest_detail" edge="1" parent="1" source="actor_guest" style="endArrow=none;html=1;rounded=0;" target="uc_002">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_customer_login" edge="1" parent="1" source="actor_customer" style="endArrow=none;html=1;rounded=0;" target="uc_004">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_customer_profile" edge="1" parent="1" source="actor_customer" style="endArrow=none;html=1;rounded=0;" target="uc_025">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_customer_search" edge="1" parent="1" source="actor_customer" style="endArrow=none;html=1;rounded=0;" target="uc_001">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_customer_detail" edge="1" parent="1" source="actor_customer" style="endArrow=none;html=1;rounded=0;" target="uc_002">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_owner_login" edge="1" parent="1" source="actor_owner" style="endArrow=none;html=1;rounded=0;" target="uc_004">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_owner_profile" edge="1" parent="1" source="actor_owner" style="endArrow=none;html=1;rounded=0;" target="uc_025">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_manager_login" edge="1" parent="1" source="actor_manager" style="endArrow=none;html=1;rounded=0;" target="uc_004">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_manager_profile" edge="1" parent="1" source="actor_manager" style="endArrow=none;html=1;rounded=0;" target="uc_025">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_receptionist_login" edge="1" parent="1" source="actor_receptionist" style="endArrow=none;html=1;rounded=0;" target="uc_004">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_receptionist_profile" edge="1" parent="1" source="actor_receptionist" style="endArrow=none;html=1;rounded=0;" target="uc_025">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_housekeeping_login" edge="1" parent="1" source="actor_housekeeping" style="endArrow=none;html=1;rounded=0;" target="uc_004">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_housekeeping_profile" edge="1" parent="1" source="actor_housekeeping" style="endArrow=none;html=1;rounded=0;" target="uc_025">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_maintenance_login" edge="1" parent="1" source="actor_maintenance" style="endArrow=none;html=1;rounded=0;" target="uc_004">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_maintenance_profile" edge="1" parent="1" source="actor_maintenance" style="endArrow=none;html=1;rounded=0;" target="uc_025">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_admin_login" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;" target="uc_004">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_admin_profile" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;" target="uc_025">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
