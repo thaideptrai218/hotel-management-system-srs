@@ -9,7 +9,7 @@
 
 ## Explanation
 
-The system is shown as one DFD-style process circle. All human actors, external systems, and the timer are outside the system and shown as external entity rectangles. Data/control flows are labeled using the v1.2 context diagram delegation block.
+The system is shown as one DFD-style process circle. All human actors, external systems, and the timer are outside the system and shown as external entity rectangles. Data/control flows are labeled using the v1.2 context diagram delegation block. Exchanges that have different data in opposite directions are modeled as separate one-way flows, such as Search Criteria, Approved Hotel Results, Payment Request, Payment Result, Notification Request, and Notification Status.
 
 ## Validation checklist
 
@@ -21,3 +21,4 @@ The system is shown as one DFD-style process circle. All human actors, external 
 - [x] All external entities are outside the boundary.
 - [x] Human actors are drawn as external entity rectangles, not UML actor stick figures.
 - [x] Every arrow has a data/control flow label.
+- [x] Request/result and request/status exchanges use separate one-way data flows.
