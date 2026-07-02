@@ -1,1 +1,142 @@
-<mxfile host="app.diagrams.net" modified="2026-07-02T00:00:00.000Z" agent="Codex" version="26.0.0" type="device"><diagram id="activity_uc007_sample_style" name="Page-1"><mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1410" pageHeight="1240" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="frame_activity" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="40" y="40" width="1330" height="1160" as="geometry" /></mxCell><mxCell id="header_activity" value="FIG-SRS-006 - Activity Diagram: UC-007 Cancel Booking Activity Stages" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9e8f5;strokeColor=#333333;strokeWidth=2;fontSize=16;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="40" y="40" width="1330" height="35" as="geometry" /></mxCell><mxCell id="lane_label_1" value="Customer" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="40" y="75" width="330" height="35" as="geometry" /></mxCell><mxCell id="lane_label_2" value="System" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="370" y="75" width="620" height="35" as="geometry" /></mxCell><mxCell id="lane_divider_1" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#333333;strokeWidth=2;" edge="1" parent="1"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="370" y="75" as="sourcePoint" /><mxPoint x="370" y="1200" as="targetPoint" /></mxGeometry></mxCell><mxCell id="lane_label_3" value="Notification Service" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="990" y="75" width="380" height="35" as="geometry" /></mxCell><mxCell id="lane_divider_2" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#333333;strokeWidth=2;" edge="1" parent="1"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="990" y="75" as="sourcePoint" /><mxPoint x="990" y="1200" as="targetPoint" /></mxGeometry></mxCell><mxCell id="e1" value="" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="start" target="c_view"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" value="" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="c_view" target="c_request"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" value="" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="c_request" target="s_validate"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" value="" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="s_validate" target="d_allowed"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" value="[no]" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="d_allowed" target="s_reject"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e6" value="" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="s_reject" target="final_reject"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e7" value="[yes]" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="d_allowed" target="s_cancel"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e8" value="" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="s_cancel" target="d_refund"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e9" value="[required]" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="d_refund" target="s_refund"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e10" value="[not required]" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="d_refund" target="s_no_refund"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e11" value="" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="s_refund" target="merge_refund"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e12" value="" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="s_no_refund" target="merge_refund"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e13" value="" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="merge_refund" target="n_event"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e14" value="" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" edge="1" parent="1" source="n_event" target="final"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="start" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="191" y="130" width="28" height="28" as="geometry" /></mxCell><mxCell id="c_view" value="View booking detail" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" vertex="1" parent="1"><mxGeometry x="102" y="205" width="205" height="60" as="geometry" /></mxCell><mxCell id="c_request" value="Request cancellation" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" vertex="1" parent="1"><mxGeometry x="97" y="330" width="215" height="60" as="geometry" /></mxCell><mxCell id="s_validate" value="Validate ownership, status, and policy" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" vertex="1" parent="1"><mxGeometry x="542" y="330" width="275" height="60" as="geometry" /></mxCell><mxCell id="d_allowed" value="Cancellation allowed?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" vertex="1" parent="1"><mxGeometry x="590" y="450" width="180" height="95" as="geometry" /></mxCell><mxCell id="s_reject" value="Reject cancellation and show reason" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" vertex="1" parent="1"><mxGeometry x="405" y="465" width="245" height="60" as="geometry" /></mxCell><mxCell id="final_reject" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="505" y="575" width="34" height="34" as="geometry" /></mxCell><mxCell id="s_cancel" value="Cancel booking and release availability" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" vertex="1" parent="1"><mxGeometry x="542" y="590" width="275" height="60" as="geometry" /></mxCell><mxCell id="d_refund" value="Refund required?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" vertex="1" parent="1"><mxGeometry x="600" y="705" width="160" height="85" as="geometry" /></mxCell><mxCell id="s_refund" value="Create refund record for admin review" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" vertex="1" parent="1"><mxGeometry x="440" y="835" width="250" height="60" as="geometry" /></mxCell><mxCell id="s_no_refund" value="Set refund status Not Required" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" vertex="1" parent="1"><mxGeometry x="735" y="835" width="245" height="60" as="geometry" /></mxCell><mxCell id="merge_refund" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" vertex="1" parent="1"><mxGeometry x="635" y="955" width="90" height="70" as="geometry" /></mxCell><mxCell id="n_event" value="Record cancellation notification event" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" vertex="1" parent="1"><mxGeometry x="1052" y="955" width="255" height="60" as="geometry" /></mxCell><mxCell id="final" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="1163" y="1070" width="34" height="34" as="geometry" /></mxCell><mxCell id="final_reject_inner" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="512" y="582" width="20" height="20" as="geometry" /></mxCell><mxCell id="final_inner" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="1170" y="1077" width="20" height="20" as="geometry" /></mxCell></root></mxGraphModel></diagram></mxfile>
+<mxfile host="Electron" agent="Codex">
+  <diagram id="activity_uc007_sample_style" name="Page-1">
+    <mxGraphModel dx="1873" dy="1138" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1410" pageHeight="1240" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="frame_activity" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="1160" width="1330" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="header_activity" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9e8f5;strokeColor=#333333;strokeWidth=2;fontSize=16;fontStyle=1;" value="FIG-SRS-006 - Activity Diagram: UC-007 Cancel Booking Activity Stages" vertex="1">
+          <mxGeometry height="35" width="1330" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_label_1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;" value="Customer" vertex="1">
+          <mxGeometry height="35" width="330" x="40" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_label_2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;" value="System" vertex="1">
+          <mxGeometry height="35" width="620" x="370" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_divider_1" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;strokeColor=#333333;strokeWidth=2;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="370" y="75" as="sourcePoint" />
+            <mxPoint x="370" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lane_label_3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;" value="Notification Service" vertex="1">
+          <mxGeometry height="35" width="380" x="990" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_divider_2" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;strokeColor=#333333;strokeWidth=2;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="990" y="75" as="sourcePoint" />
+            <mxPoint x="990" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="c_view" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="c_view" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="c_request" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="c_request" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="s_validate" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="s_validate" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="d_allowed" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="d_allowed" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="s_reject" value="[no]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="s_reject" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="final_reject" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="d_allowed" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="s_cancel" value="[yes]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="s_cancel" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="d_refund" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="d_refund" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="s_refund" value="[required]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="d_refund" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="s_no_refund" value="[not required]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="merge_refund" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="509" y="1050" />
+              <mxPoint x="635" y="1050" />
+            </Array>
+            <mxPoint x="509.4999999999999" y="895" as="sourcePoint" />
+            <mxPoint x="622.0714285714286" y="1060" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="s_no_refund" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="merge_refund" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="merge_refund" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="650" y="1065" as="sourcePoint" />
+            <mxPoint x="1097.4871794871794" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="n_event" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="final" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1180" y="950" />
+              <mxPoint x="1180" y="950" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="start" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="28" width="28" x="191" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="c_view" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" value="View booking detail" vertex="1">
+          <mxGeometry height="60" width="205" x="102" y="205" as="geometry" />
+        </mxCell>
+        <mxCell id="c_request" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" value="Request cancellation" vertex="1">
+          <mxGeometry height="60" width="215" x="97" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="s_validate" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" value="Validate ownership, status, and policy" vertex="1">
+          <mxGeometry height="60" width="275" x="600" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="d_allowed" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" value="Cancellation allowed?" vertex="1">
+          <mxGeometry height="95" width="180" x="750" y="447.5" as="geometry" />
+        </mxCell>
+        <mxCell id="s_reject" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" value="Reject cancellation and show reason" vertex="1">
+          <mxGeometry height="60" width="245" x="405" y="465" as="geometry" />
+        </mxCell>
+        <mxCell id="final_reject" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="34" width="34" x="475.5" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="s_cancel" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" value="Cancel booking and release availability" vertex="1">
+          <mxGeometry height="60" width="275" x="702.5" y="597" as="geometry" />
+        </mxCell>
+        <mxCell id="d_refund" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" value="Refund required?" vertex="1">
+          <mxGeometry height="85" width="160" x="760" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="s_refund" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" value="Create refund record for admin review" vertex="1">
+          <mxGeometry height="60" width="250" x="400" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="s_no_refund" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" value="Set refund status Not Required" vertex="1">
+          <mxGeometry height="60" width="245" x="717.5" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="n_event" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" value="Record cancellation notification event" vertex="1">
+          <mxGeometry height="60" width="255" x="1020" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="final" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="34" width="34" x="1163" y="1070" as="geometry" />
+        </mxCell>
+        <mxCell id="final_reject_inner" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="482.5" y="597" as="geometry" />
+        </mxCell>
+        <mxCell id="final_inner" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="1170" y="1077" as="geometry" />
+        </mxCell>
+        <mxCell id="merge_refund" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d9e8f5;strokeColor=#4d4d4d;strokeWidth=2;fontSize=12;" value="" vertex="1">
+          <mxGeometry height="70" width="90" x="650" y="1010" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
