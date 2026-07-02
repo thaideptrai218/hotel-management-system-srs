@@ -1,29 +1,102 @@
-<mxfile host="app.diagrams.net"><diagram name="FIG-SRS-003 - Customer Screen Flow"><mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1000" math="0" shadow="0"><root>
-<mxCell id="0"/><mxCell id="1" parent="0"/>
-<mxCell id="title" value="FIG-SRS-003 - Screen Flow: Customer Search, Booking, Payment, Cancellation" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="330" y="30" width="1140" height="40" as="geometry"/></mxCell>
-<mxCell id="scr_004" value="SCR-004&#xa;Home / Search Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="80" y="150" width="210" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_005" value="SCR-005&#xa;Hotel Search Result Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="350" y="150" width="230" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_006" value="SCR-006&#xa;Hotel Detail Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="650" y="150" width="220" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_002" value="SCR-002&#xa;Login Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="960" y="90" width="200" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_001" value="SCR-001&#xa;Register Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="960" y="210" width="200" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_007" value="SCR-007&#xa;Booking Form Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="1240" y="150" width="220" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_008" value="SCR-008&#xa;Booking Confirmation Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="1240" y="340" width="250" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_011" value="SCR-011&#xa;Payment Instruction Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="900" y="340" width="250" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_012" value="SCR-012&#xa;Payment Result Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="590" y="340" width="230" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_010" value="SCR-010&#xa;Customer Booking Detail Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="290" y="340" width="250" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_009" value="SCR-009&#xa;My Bookings Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="290" y="540" width="220" height="70" as="geometry"/></mxCell>
-<mxCell id="scr_013" value="SCR-013&#xa;Customer Refund Status Screen" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="590" y="540" width="265" height="70" as="geometry"/></mxCell>
-<mxCell id="e1" value="Submit search" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_004" target="scr_005"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e2" value="Select hotel" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_005" target="scr_006"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e3" value="Book unauthenticated" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_006" target="scr_002"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e4" value="Go to register" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_002" target="scr_001"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e5" value="Login/register success" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_001" target="scr_007"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e6" value="Authenticated booking" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_006" target="scr_007"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e7" value="Submit booking" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_007" target="scr_008"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e8" value="Platform Collect" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_008" target="scr_011"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e9" value="Complete payment" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_011" target="scr_012"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e10" value="Open detail" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_012" target="scr_010"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e11" value="Pay at Property confirmation" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_008" target="scr_010"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e12" value="Back to list" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_010" target="scr_009"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e13" value="Cancel / refund exists" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="scr_010" target="scr_013"><mxGeometry relative="1" as="geometry"/></mxCell>
-</root></mxGraphModel></diagram></mxfile>
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram name="FIG-SRS-003 - Customer Screen Flow" id="0">
+    <mxGraphModel dx="1737" dy="1043" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" value="FIG-SRS-003 - Screen Flow: Customer Search, Booking, Payment, Cancellation" vertex="1">
+          <mxGeometry height="40" width="1140" x="330" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_004" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-004&#xa;Home / Search Screen" vertex="1">
+          <mxGeometry height="70" width="210" x="80" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_005" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-005&#xa;Hotel Search Result Screen" vertex="1">
+          <mxGeometry height="70" width="230" x="350" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_006" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-006&#xa;Hotel Detail Screen" vertex="1">
+          <mxGeometry height="70" width="220" x="650" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_002" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-002&#xa;Login Screen" vertex="1">
+          <mxGeometry height="70" width="200" x="950" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_001" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-001&#xa;Register Screen" vertex="1">
+          <mxGeometry height="70" width="200" x="950" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_007" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-007&#xa;Booking Form Screen" vertex="1">
+          <mxGeometry height="70" width="220" x="1310" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_008" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-008&#xa;Booking Confirmation Screen" vertex="1">
+          <mxGeometry height="70" width="250" x="1295" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_011" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-011&#xa;Payment Instruction Screen" vertex="1">
+          <mxGeometry height="70" width="250" x="1000" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_012" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-012&#xa;Payment Result Screen" vertex="1">
+          <mxGeometry height="70" width="230" x="660" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_010" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-010&#xa;Customer Booking Detail Screen" vertex="1">
+          <mxGeometry height="70" width="250" x="220" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_009" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-009&#xa;My Bookings Screen" vertex="1">
+          <mxGeometry height="70" width="220" x="70" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="scr_013" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;" value="SCR-013&#xa;Customer Refund Status Screen" vertex="1">
+          <mxGeometry height="70" width="265" x="385" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="scr_004" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="scr_005" value="Submit search">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="scr_005" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="scr_006" value="Select hotel">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="scr_006" style="endArrow=block;html=1;rounded=0;fontSize=11;edgeStyle=orthogonalEdgeStyle;" target="scr_002" value="Book unauthenticated">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="scr_002" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="scr_001" value="Go to register">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="scr_001" style="endArrow=block;html=1;rounded=0;fontSize=11;entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=1;exitY=0.714;exitDx=0;exitDy=0;exitPerimeter=0;" target="scr_007" value="Login/register success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="scr_006" style="endArrow=block;html=1;rounded=0;fontSize=11;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" target="scr_007" value="Authenticated booking">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="scr_007" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="scr_008" value="Submit booking">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="scr_008" style="endArrow=block;html=1;rounded=0;fontSize=11;edgeStyle=orthogonalEdgeStyle;" target="scr_011" value="Platform Collect">
+          <mxGeometry relative="1" x="0.3599" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1420" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="scr_011" style="endArrow=block;html=1;rounded=0;fontSize=11;edgeStyle=orthogonalEdgeStyle;" target="scr_012" value="Complete payment">
+          <mxGeometry relative="1" x="-0.2982" y="-5" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="800" y="635" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="scr_012" style="endArrow=block;html=1;rounded=0;fontSize=11;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=-0.004;exitY=0.176;exitDx=0;exitDy=0;exitPerimeter=0;" target="scr_010" value="Open detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="scr_008" style="endArrow=block;html=1;rounded=0;fontSize=11;entryX=1;entryY=0.149;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.002;exitY=0.146;exitDx=0;exitDy=0;exitPerimeter=0;" target="scr_010" value="Pay at Property confirmation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="scr_010" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="scr_009" value="Back to list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="scr_010" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="scr_013" value="Cancel / refund exists">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,67 +1,101 @@
-<mxfile host="app.diagrams.net">
-  <diagram name="FIG-SRS-002 - Hotel Setup Inventory Staff">
-    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram name="FIG-SRS-002 - Hotel Setup Inventory Staff" id="0">
+    <mxGraphModel dx="1603" dy="963" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="FIG-SRS-002 - Use Case Diagram: Hotel Setup, Room Inventory, and Staff Management" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="330" y="30" width="940" height="40" as="geometry"/>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" value="FIG-SRS-002 - Use Case Diagram: Hotel Setup, Room Inventory, and Staff Management" vertex="1">
+          <mxGeometry height="40" width="940" x="330" y="30" as="geometry" />
         </mxCell>
-        <mxCell id="boundary_hotel_setup" value="Hotel Marketplace Management System" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontSize=13;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;" vertex="1" parent="1">
-          <mxGeometry x="330" y="90" width="900" height="780" as="geometry"/>
+        <mxCell id="boundary_hotel_setup" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontSize=13;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;" value="Hotel Marketplace Management System" vertex="1">
+          <mxGeometry height="780" width="900" x="330" y="90" as="geometry" />
         </mxCell>
-        <mxCell id="actor_owner" value="Property Owner" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="125" y="230" width="60" height="100" as="geometry"/>
+        <mxCell id="uc_009" parent="boundary_hotel_setup" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-009&#xa;Register Hotel Property" vertex="1">
+          <mxGeometry height="70" width="235" x="340" y="500" as="geometry" />
         </mxCell>
-        <mxCell id="actor_manager" value="Hotel Manager" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="125" y="565" width="60" height="100" as="geometry"/>
+        <mxCell id="uc_010" parent="boundary_hotel_setup" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-010&#xa;Manage Hotel Profile" vertex="1">
+          <mxGeometry height="70" width="230" x="57.5" y="70" as="geometry" />
         </mxCell>
-        <mxCell id="actor_admin" value="Platform Administrator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1370" y="250" width="60" height="100" as="geometry"/>
+        <mxCell id="uc_011" parent="boundary_hotel_setup" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-011&#xa;Manage Room Type" vertex="1">
+          <mxGeometry height="70" width="220" x="62.5" y="320" as="geometry" />
         </mxCell>
-        <mxCell id="actor_notification" value="&lt;b&gt;Notification Service&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external system / mock&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="1285" y="590" width="250" height="80" as="geometry"/>
+        <mxCell id="uc_012" parent="boundary_hotel_setup" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-012&#xa;Manage Physical Room" vertex="1">
+          <mxGeometry height="70" width="230" x="57.5" y="200" as="geometry" />
         </mxCell>
-        <mxCell id="uc_009" value="UC-009&#xa;Register Hotel Property" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_hotel_setup">
-          <mxGeometry x="95" y="110" width="235" height="70" as="geometry"/>
+        <mxCell id="uc_013" parent="boundary_hotel_setup" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-013&#xa;Manage Room Availability" vertex="1">
+          <mxGeometry height="70" width="240" x="52.5" y="430" as="geometry" />
         </mxCell>
-        <mxCell id="uc_010" value="UC-010&#xa;Manage Hotel Profile" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_hotel_setup">
-          <mxGeometry x="365" y="110" width="230" height="70" as="geometry"/>
+        <mxCell id="uc_026" parent="boundary_hotel_setup" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-026&#xa;Manage Hotel Staff Accounts" vertex="1">
+          <mxGeometry height="70" width="255" x="45" y="670" as="geometry" />
         </mxCell>
-        <mxCell id="uc_011" value="UC-011&#xa;Manage Room Type" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_hotel_setup">
-          <mxGeometry x="95" y="290" width="220" height="70" as="geometry"/>
+        <mxCell id="uc_027" parent="boundary_hotel_setup" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-027&#xa;Assign Staff Roles and Permissions" vertex="1">
+          <mxGeometry height="70" width="280" x="32.5" y="570" as="geometry" />
         </mxCell>
-        <mxCell id="uc_012" value="UC-012&#xa;Manage Physical Room" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_hotel_setup">
-          <mxGeometry x="365" y="290" width="230" height="70" as="geometry"/>
+        <mxCell id="uc_018" parent="boundary_hotel_setup" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" value="UC-018&#xa;Approve Hotel Property" vertex="1">
+          <mxGeometry height="70" width="235" x="600" y="180" as="geometry" />
         </mxCell>
-        <mxCell id="uc_013" value="UC-013&#xa;Manage Room Availability" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_hotel_setup">
-          <mxGeometry x="630" y="290" width="240" height="70" as="geometry"/>
+        <mxCell id="actor_owner" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Property Owner" vertex="1">
+          <mxGeometry height="100" width="60" x="110" y="590" as="geometry" />
         </mxCell>
-        <mxCell id="uc_026" value="UC-026&#xa;Manage Hotel Staff Accounts" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_hotel_setup">
-          <mxGeometry x="95" y="490" width="255" height="70" as="geometry"/>
+        <mxCell id="actor_manager" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Hotel Manager" vertex="1">
+          <mxGeometry height="100" width="60" x="110" y="240" as="geometry" />
         </mxCell>
-        <mxCell id="uc_027" value="UC-027&#xa;Assign Staff Roles and Permissions" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_hotel_setup">
-          <mxGeometry x="385" y="490" width="280" height="70" as="geometry"/>
+        <mxCell id="actor_admin" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="Platform Administrator" vertex="1">
+          <mxGeometry height="100" width="60" x="1370" y="250" as="geometry" />
         </mxCell>
-        <mxCell id="uc_018" value="UC-018&#xa;Approve Hotel Property" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;" vertex="1" parent="boundary_hotel_setup">
-          <mxGeometry x="635" y="110" width="235" height="70" as="geometry"/>
+        <mxCell id="actor_notification" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;Notification Service&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external system / mock&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="80" width="250" x="1285" y="590" as="geometry" />
         </mxCell>
-        <mxCell id="a_owner_register" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_owner" target="uc_009"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_owner_profile" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_owner" target="uc_010"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_owner_type" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_owner" target="uc_011"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_owner_room" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_owner" target="uc_012"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_owner_avail" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_owner" target="uc_013"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_owner_staff_accounts" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_owner" target="uc_026"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_owner_roles" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_owner" target="uc_027"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_manager_profile" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_010"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_manager_type" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_011"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_manager_room" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_012"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_manager_avail" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_013"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_manager_staff_accounts" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_026"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_manager_roles" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_manager" target="uc_027"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_admin_approve" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_admin" target="uc_018"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_notification_register" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_notification" target="uc_009"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a_notification_approve" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="actor_notification" target="uc_018"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a_owner_register" edge="1" parent="1" source="actor_owner" style="endArrow=none;html=1;rounded=0;" target="uc_009">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_owner_profile" edge="1" parent="1" source="actor_owner" style="endArrow=none;html=1;rounded=0;entryX=0.011;entryY=0.633;entryDx=0;entryDy=0;entryPerimeter=0;" target="uc_010">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_owner_type" edge="1" parent="1" source="actor_owner" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_011">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_owner_room" edge="1" parent="1" source="actor_owner" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_012">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_owner_avail" edge="1" parent="1" source="actor_owner" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_013">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="409" y="577" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_owner_staff_accounts" edge="1" parent="1" source="actor_owner" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_026">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_owner_roles" edge="1" parent="1" source="actor_owner" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_027">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_manager_profile" edge="1" parent="1" source="actor_manager" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_010">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_manager_type" edge="1" parent="1" source="actor_manager" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_011">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_manager_room" edge="1" parent="1" source="actor_manager" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_012">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_manager_avail" edge="1" parent="1" source="actor_manager" style="endArrow=none;html=1;rounded=0;entryX=0.014;entryY=0.38;entryDx=0;entryDy=0;entryPerimeter=0;" target="uc_013">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_manager_staff_accounts" edge="1" parent="1" source="actor_manager" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_026">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_manager_roles" edge="1" parent="1" source="actor_manager" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_027">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_admin_approve" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;" target="uc_018">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_notification_register" edge="1" parent="1" source="actor_notification" style="endArrow=none;html=1;rounded=0;" target="uc_009">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_notification_approve" edge="1" parent="1" source="actor_notification" style="endArrow=none;html=1;rounded=0;" target="uc_018">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
