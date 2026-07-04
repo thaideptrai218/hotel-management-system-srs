@@ -2,26 +2,62 @@
   <diagram name="FIG-SRS-005E - Finance ERD">
     <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="900" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="FIG-SRS-005E - Logical ERD: Finance" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="450" y="30" width="600" height="40" as="geometry"/></mxCell>
-        <mxCell id="r_hotel_booking" value="1 hotel : * bookings" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="booking"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_booking_payment" value="1 booking : 0..* payments" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="booking" target="payment"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_booking_collection" value="1 booking : 0..* collections" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="booking" target="collection"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_booking_refund" value="1 booking : 0..* refunds" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="booking" target="refund"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_booking_invoice" value="1 booking : 0..1 invoice" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="booking" target="invoice"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_booking_commission" value="1 booking : 0..1 commission" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="booking" target="commission"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_settlement_item" value="1 settlement : * items" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="settlement" target="item"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_item_commission" value="* items : 0..1 commission" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="item" target="commission"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="hotel" value="&lt;b&gt;HotelProperty&lt;/b&gt;&#xa;PK HotelId&#xa;Commission configuration context" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="90" y="155" width="270" height="90" as="geometry"/></mxCell>
-        <mxCell id="booking" value="&lt;b&gt;Booking&lt;/b&gt;&#xa;PK BookingId&#xa;PaymentMode, Amount, BookingStatus" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="590" y="155" width="290" height="100" as="geometry"/></mxCell>
-        <mxCell id="payment" value="&lt;b&gt;PaymentTransaction&lt;/b&gt;&#xa;PK PaymentId&#xa;GatewayRef, Status" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="1100" y="100" width="260" height="90" as="geometry"/></mxCell>
-        <mxCell id="collection" value="&lt;b&gt;PaymentCollectionRecord&lt;/b&gt;&#xa;PK CollectionId&#xa;Collected at property" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="1100" y="245" width="280" height="90" as="geometry"/></mxCell>
-        <mxCell id="refund" value="&lt;b&gt;RefundRecord&lt;/b&gt;&#xa;PK RefundId&#xa;RefundStatus" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="1100" y="390" width="250" height="85" as="geometry"/></mxCell>
-        <mxCell id="invoice" value="&lt;b&gt;Invoice&lt;/b&gt;&#xa;PK InvoiceId&#xa;Receipt / folio summary" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="540" y="430" width="250" height="85" as="geometry"/></mxCell>
-        <mxCell id="commission" value="&lt;b&gt;CommissionRecord&lt;/b&gt;&#xa;PK CommissionId&#xa;RateSnapshot, Amount" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="900" y="610" width="270" height="90" as="geometry"/></mxCell>
-        <mxCell id="settlement" value="&lt;b&gt;SettlementRecord&lt;/b&gt;&#xa;PK SettlementId&#xa;SettlementStatus" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="90" y="610" width="260" height="90" as="geometry"/></mxCell>
-        <mxCell id="item" value="&lt;b&gt;SettlementItem&lt;/b&gt;&#xa;PK SettlementItemId&#xa;Related booking / commission" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="90" y="390" width="280" height="90" as="geometry"/></mxCell>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="FIG-SRS-005E - Logical ERD: Finance" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="450" y="30" width="600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="r_hotel_booking" value="1 hotel : * bookings" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="booking">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_booking_payment" value="1 booking : 0..* payments" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="booking" target="payment">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_booking_collection" value="1 booking : 0..* collections" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="booking" target="collection">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_booking_refund" value="1 booking : 0..* refunds" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="booking" target="refund">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_booking_invoice" value="1 booking : 0..1 invoice" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="booking" target="invoice">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_booking_commission" value="1 booking : 0..1 commission" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="booking" target="commission">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_settlement_item" value="1 settlement : * items" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="settlement" target="item">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_item_commission" value="* items : 0..1 commission" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="item" target="commission">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hotel" value="&lt;b&gt;HotelProperty&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK HotelId&#10;Commission configuration context" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="90" y="155" width="270" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="booking" value="&lt;b&gt;Booking&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK BookingId&#10;PaymentMode, Amount, BookingStatus" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="590" y="155" width="290" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="payment" value="&lt;b&gt;PaymentTransaction&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK PaymentId&#10;GatewayRef, Status" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="100" width="260" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="collection" value="&lt;b&gt;PaymentCollectionRecord&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK CollectionId&#10;Collected at property" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="245" width="280" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="refund" value="&lt;b&gt;RefundRecord&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK RefundId&#10;RefundStatus" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="390" width="250" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="invoice" value="&lt;b&gt;Invoice&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK InvoiceId&#10;Receipt / folio summary" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="540" y="430" width="250" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="commission" value="&lt;b&gt;CommissionRecord&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK CommissionId&#10;RateSnapshot, Amount" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="900" y="610" width="270" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="settlement" value="&lt;b&gt;SettlementRecord&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK SettlementId&#10;SettlementStatus" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="90" y="610" width="260" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="item" value="&lt;b&gt;SettlementItem&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK SettlementItemId&#10;Related booking / commission" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="90" y="390" width="280" height="90" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

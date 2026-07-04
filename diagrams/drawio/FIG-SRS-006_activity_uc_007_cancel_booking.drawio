@@ -16,20 +16,14 @@
         <mxCell id="lane_label_2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;" value="System" vertex="1">
           <mxGeometry height="35" width="620" x="370" y="75" as="geometry" />
         </mxCell>
-        <mxCell id="lane_divider_1" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;strokeColor=#333333;strokeWidth=2;" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="370" y="75" as="sourcePoint" />
-            <mxPoint x="370" y="1200" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="lane_divider_1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#333333;strokeColor=#333333;strokeWidth=0;pointerEvents=0;" value="" vertex="1">
+          <mxGeometry x="369" y="75" width="2" height="1125" as="geometry" />
         </mxCell>
         <mxCell id="lane_label_3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;" value="Notification Service" vertex="1">
           <mxGeometry height="35" width="380" x="990" y="75" as="geometry" />
         </mxCell>
-        <mxCell id="lane_divider_2" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;strokeColor=#333333;strokeWidth=2;" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="990" y="75" as="sourcePoint" />
-            <mxPoint x="990" y="1200" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="lane_divider_2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#333333;strokeColor=#333333;strokeWidth=0;pointerEvents=0;" value="" vertex="1">
+          <mxGeometry x="989" y="75" width="2" height="1125" as="geometry" />
         </mxCell>
         <mxCell id="e1" edge="1" parent="1" source="start" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="c_view" value="">
           <mxGeometry relative="1" as="geometry" />
@@ -61,7 +55,7 @@
         <mxCell id="e10" edge="1" parent="1" source="d_refund" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="s_no_refund" value="[not required]">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e11" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="merge_refund" value="">
+        <mxCell id="e11" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="merge_refund" value="" source="s_refund">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="509" y="1050" />
@@ -74,7 +68,7 @@
         <mxCell id="e12" edge="1" parent="1" source="s_no_refund" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" target="merge_refund" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e13" edge="1" parent="1" source="merge_refund" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" value="">
+        <mxCell id="e13" edge="1" parent="1" source="merge_refund" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;fontSize=11;strokeColor=#666666;" value="" target="n_event">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="650" y="1065" as="sourcePoint" />
             <mxPoint x="1097.4871794871794" y="910" as="targetPoint" />

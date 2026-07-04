@@ -1,28 +1,89 @@
-<mxfile host="app.diagrams.net"><diagram name="FIG-SRS-007 - Booking State"><mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="900" math="0" shadow="0"><root>
-<mxCell id="0"/><mxCell id="1" parent="0"/>
-<mxCell id="title" value="FIG-SRS-007 - Business State Diagram: Booking Lifecycle" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="350" y="30" width="800" height="40" as="geometry"/></mxCell>
-<mxCell id="start" value="" style="ellipse;html=1;shape=ellipse;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="120" y="210" width="30" height="30" as="geometry"/></mxCell>
-<mxCell id="pending" value="Pending Payment" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" vertex="1" parent="1"><mxGeometry x="240" y="190" width="180" height="70" as="geometry"/></mxCell>
-<mxCell id="confirmed" value="Confirmed" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" vertex="1" parent="1"><mxGeometry x="520" y="190" width="170" height="70" as="geometry"/></mxCell>
-<mxCell id="checked_in" value="Checked In" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" vertex="1" parent="1"><mxGeometry x="800" y="190" width="170" height="70" as="geometry"/></mxCell>
-<mxCell id="checked_out" value="Checked Out" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" vertex="1" parent="1"><mxGeometry x="1080" y="190" width="170" height="70" as="geometry"/></mxCell>
-<mxCell id="completed" value="Completed&#xa;(reporting)" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;dashed=1;" vertex="1" parent="1"><mxGeometry x="1080" y="380" width="170" height="70" as="geometry"/></mxCell>
-<mxCell id="cancelled" value="Cancelled" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" vertex="1" parent="1"><mxGeometry x="520" y="390" width="170" height="70" as="geometry"/></mxCell>
-<mxCell id="expired" value="Expired" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" vertex="1" parent="1"><mxGeometry x="240" y="390" width="170" height="70" as="geometry"/></mxCell>
-<mxCell id="noshow" value="No-show" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" vertex="1" parent="1"><mxGeometry x="800" y="390" width="170" height="70" as="geometry"/></mxCell>
-<mxCell id="final" value="" style="ellipse;shape=doubleEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="1310" y="400" width="36" height="36" as="geometry"/></mxCell>
-<mxCell id="e_start_pending" value="Create Platform Collect Booking" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="start" target="pending"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_pending_confirmed" value="Payment Success" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="pending" target="confirmed"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_pending_expired" value="Payment Timeout" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="pending" target="expired"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_start_confirmed" value="Create Pay at Property Booking" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="start" target="confirmed"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_confirmed_in" value="Receptionist Check-in" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="confirmed" target="checked_in"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_in_out" value="Receptionist Check-out" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="checked_in" target="checked_out"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_out_completed" value="Finance completion if tracked" style="endArrow=block;html=1;rounded=0;fontSize=11;dashed=1;" edge="1" parent="1" source="checked_out" target="completed"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_confirmed_cancel" value="Customer Cancellation" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="confirmed" target="cancelled"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_pending_cancel" value="Customer Cancellation" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="pending" target="cancelled"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_confirmed_noshow" value="Mark No-show" style="endArrow=block;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="confirmed" target="noshow"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_expired_final" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="expired" target="final"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_cancel_final" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="cancelled" target="final"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_noshow_final" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="noshow" target="final"><mxGeometry relative="1" as="geometry"/></mxCell>
-<mxCell id="e_completed_final" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="completed" target="final"><mxGeometry relative="1" as="geometry"/></mxCell>
-</root></mxGraphModel></diagram></mxfile>
+<mxfile host="Electron">
+  <diagram name="FIG-SRS-007 - Booking State" id="0">
+    <mxGraphModel dx="1373" dy="835" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" value="FIG-SRS-007 - Business State Diagram: Booking Lifecycle" vertex="1">
+          <mxGeometry height="40" width="800" x="350" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="1" style="ellipse;html=1;shape=ellipse;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="420" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pending" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" value="Pending Payment" vertex="1">
+          <mxGeometry height="70" width="180" x="180" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="confirmed" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" value="Confirmed" vertex="1">
+          <mxGeometry height="70" width="170" x="520" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="checked_in" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" value="Checked In" vertex="1">
+          <mxGeometry height="70" width="170" x="830" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="checked_out" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" value="Checked Out" vertex="1">
+          <mxGeometry height="70" width="170" x="1147" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="completed" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;dashed=1;" value="Completed&#xa;(reporting)" vertex="1">
+          <mxGeometry height="70" width="170" x="1147" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="cancelled" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" value="Cancelled" vertex="1">
+          <mxGeometry height="70" width="170" x="520" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="expired" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" value="Expired" vertex="1">
+          <mxGeometry height="70" width="170" x="180" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="noshow" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;" value="No-show" vertex="1">
+          <mxGeometry height="70" width="170" x="830" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="final" parent="1" style="ellipse;shape=doubleEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="36" width="36" x="1147" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="e_start_pending" edge="1" parent="1" source="start" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="pending" value="Create Platform Collect Booking">
+          <mxGeometry relative="1" x="-0.2538" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_pending_confirmed" edge="1" parent="1" source="pending" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="confirmed" value="Payment Success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_pending_expired" edge="1" parent="1" source="pending" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="expired" value="Payment Timeout">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_start_confirmed" edge="1" parent="1" source="start" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="confirmed" value="Create Pay at Property Booking">
+          <mxGeometry relative="1" x="0.3434" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_confirmed_in" edge="1" parent="1" source="confirmed" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="checked_in" value="Receptionist Check-in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_in_out" edge="1" parent="1" source="checked_in" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="checked_out" value="Receptionist Check-out">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_out_completed" edge="1" parent="1" source="checked_out" style="endArrow=block;html=1;rounded=0;fontSize=11;dashed=1;" target="completed" value="Finance completion if tracked">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_confirmed_cancel" edge="1" parent="1" source="confirmed" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="cancelled" value="Customer Cancellation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_pending_cancel" edge="1" parent="1" source="pending" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="cancelled" value="Customer Cancellation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_confirmed_noshow" edge="1" parent="1" source="confirmed" style="endArrow=block;html=1;rounded=0;fontSize=11;" target="noshow" value="Mark No-show">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_expired_final" edge="1" parent="1" source="expired" style="endArrow=block;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" target="final" value="Close expired booking">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_cancel_final" edge="1" parent="1" source="cancelled" style="endArrow=block;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" target="final" value="Close cancelled booking">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_noshow_final" edge="1" parent="1" source="noshow" style="endArrow=block;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" target="final" value="Close no-show booking">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_completed_final" edge="1" parent="1" source="completed" style="endArrow=block;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" target="final" value="Close completed booking">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

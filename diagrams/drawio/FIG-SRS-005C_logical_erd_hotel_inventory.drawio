@@ -2,26 +2,62 @@
   <diagram name="FIG-SRS-005C - Hotel Inventory ERD">
     <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="900" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="FIG-SRS-005C - Logical ERD: Hotel Setup and Inventory" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="390" y="30" width="720" height="40" as="geometry"/></mxCell>
-        <mxCell id="r_hotel_image" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="image"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_hotel_policy" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="policy"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_hotel_roomtype" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="roomtype"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_type_room" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="roomtype" target="room"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_type_avail" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="roomtype" target="availability"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_room_history" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="room" target="history"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_hotel_hotelamenity" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="hotelamenity"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="r_amenity_link" value="1 amenity : * links" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="amenity" target="hotelamenity"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="hotel" value="&lt;b&gt;HotelProperty&lt;/b&gt;&#xa;PK HotelId&#xa;Owner, ApprovalStatus&#xa;Name, address, profile" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="590" y="135" width="260" height="110" as="geometry"/></mxCell>
-        <mxCell id="image" value="&lt;b&gt;HotelImage&lt;/b&gt;&#xa;PK ImageId&#xa;Image URL / display order" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="110" y="145" width="230" height="90" as="geometry"/></mxCell>
-        <mxCell id="policy" value="&lt;b&gt;CancellationPolicy&lt;/b&gt;&#xa;PK PolicyId&#xa;Thresholds, refund rule" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="110" y="360" width="240" height="95" as="geometry"/></mxCell>
-        <mxCell id="amenity" value="&lt;b&gt;Amenity&lt;/b&gt;&#xa;PK AmenityId&#xa;Amenity name" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="590" y="360" width="220" height="85" as="geometry"/></mxCell>
-        <mxCell id="hotelamenity" value="&lt;b&gt;HotelAmenity&lt;/b&gt;&#xa;Hotel-Amenity link" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="920" y="360" width="230" height="80" as="geometry"/></mxCell>
-        <mxCell id="roomtype" value="&lt;b&gt;RoomType&lt;/b&gt;&#xa;PK RoomTypeId&#xa;Capacity, BasePrice&#xa;Quantity offered" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="1050" y="135" width="250" height="110" as="geometry"/></mxCell>
-        <mxCell id="room" value="&lt;b&gt;PhysicalRoom&lt;/b&gt;&#xa;PK PhysicalRoomId&#xa;Room number, RoomStatus" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="1050" y="570" width="250" height="95" as="geometry"/></mxCell>
-        <mxCell id="availability" value="&lt;b&gt;RoomAvailability&lt;/b&gt;&#xa;PK AvailabilityId&#xa;DateRange, Status" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="590" y="570" width="240" height="90" as="geometry"/></mxCell>
-        <mxCell id="history" value="&lt;b&gt;RoomStatusHistory&lt;/b&gt;&#xa;PK HistoryId&#xa;From/To Status, ChangedAt" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="1050" y="735" width="260" height="95" as="geometry"/></mxCell>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="FIG-SRS-005C - Logical ERD: Hotel Setup and Inventory" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="390" y="30" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="r_hotel_image" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="image">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_hotel_policy" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="policy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_hotel_roomtype" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="roomtype">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_type_room" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="roomtype" target="room">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_type_avail" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="roomtype" target="availability">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_room_history" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="room" target="history">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_hotel_hotelamenity" value="1 : *" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="hotel" target="hotelamenity">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_amenity_link" value="1 amenity : * links" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="amenity" target="hotelamenity">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hotel" value="&lt;b&gt;HotelProperty&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK HotelId&#10;Owner, ApprovalStatus&#10;Name, address, profile" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="590" y="135" width="260" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="image" value="&lt;b&gt;HotelImage&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK ImageId&#10;Image URL / display order" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="110" y="145" width="230" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="policy" value="&lt;b&gt;CancellationPolicy&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK PolicyId&#10;Thresholds, refund rule" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="110" y="360" width="240" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="amenity" value="&lt;b&gt;Amenity&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK AmenityId&#10;Amenity name" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="590" y="360" width="220" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="hotelamenity" value="&lt;b&gt;HotelAmenity&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;Hotel-Amenity link" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="920" y="360" width="230" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="roomtype" value="&lt;b&gt;RoomType&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK RoomTypeId&#10;Capacity, BasePrice&#10;Quantity offered" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="135" width="250" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="room" value="&lt;b&gt;PhysicalRoom&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK PhysicalRoomId&#10;Room number, RoomStatus" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="570" width="250" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="availability" value="&lt;b&gt;RoomAvailability&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK AvailabilityId&#10;DateRange, Status" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="590" y="570" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="history" value="&lt;b&gt;RoomStatusHistory&lt;/b&gt;&#10;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&#10;PK HistoryId&#10;From/To Status, ChangedAt" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="735" width="260" height="95" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

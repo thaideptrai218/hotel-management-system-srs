@@ -1,42 +1,123 @@
-﻿<mxfile host="app.diagrams.net">
+<mxfile host="app.diagrams.net">
   <diagram name="FIG-SRS-007 - Physical Room State">
     <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="FIG-SRS-007 - Business State Diagram: Physical Room Operational Lifecycle" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="320" y="30" width="960" height="40" as="geometry"/></mxCell>
-        <mxCell id="e_start_available" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="start" target="available"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_available_assigned" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="available" target="assigned"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_assigned_occupied" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="assigned" target="occupied"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_occupied_dirty" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="occupied" target="dirty"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_dirty_cleaning" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="dirty" target="cleaning"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_cleaning_inspection" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="cleaning" target="inspection"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_cleaning_available" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="cleaning" target="available"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1095" y="95"/><mxPoint x="255" y="95"/></Array></mxGeometry></mxCell>
-        <mxCell id="e_inspection_available" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="inspection" target="available"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1105" y="455"/><mxPoint x="255" y="455"/></Array></mxGeometry></mxCell>
-        <mxCell id="e_available_maintenance" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="available" target="maintenance"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_occupied_maintenance" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="occupied" target="maintenance"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_dirty_maintenance" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="dirty" target="maintenance"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_maintenance_out" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="maintenance" target="out_service"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_out_maintenance" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="out_service" target="maintenance"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_maintenance_dirty" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="maintenance" target="dirty"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_maintenance_inspection" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="maintenance" target="inspection"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_maintenance_available" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="maintenance" target="available"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_available_inactive" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="available" target="inactive"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_out_inactive" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="out_service" target="inactive"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_inactive_available" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="inactive" target="available"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="810" y="685"/><mxPoint x="255" y="685"/></Array></mxGeometry></mxCell>
-        <mxCell id="e_inactive_final" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="inactive" target="final"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="start" value="" style="ellipse;html=1;shape=ellipse;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="70" y="165" width="30" height="30" as="geometry"/></mxCell>
-        <mxCell id="available" value="Available" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="180" y="145" width="150" height="65" as="geometry"/></mxCell>
-        <mxCell id="assigned" value="Assigned" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="390" y="145" width="150" height="65" as="geometry"/></mxCell>
-        <mxCell id="occupied" value="Occupied" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="600" y="145" width="150" height="65" as="geometry"/></mxCell>
-        <mxCell id="dirty" value="Dirty" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="810" y="145" width="150" height="65" as="geometry"/></mxCell>
-        <mxCell id="cleaning" value="Cleaning" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="1020" y="145" width="150" height="65" as="geometry"/></mxCell>
-        <mxCell id="inspection" value="Inspection Required" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="1020" y="330" width="170" height="65" as="geometry"/></mxCell>
-        <mxCell id="maintenance" value="Maintenance" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="600" y="330" width="150" height="65" as="geometry"/></mxCell>
-        <mxCell id="out_service" value="Out of Service" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="390" y="330" width="150" height="65" as="geometry"/></mxCell>
-        <mxCell id="inactive" value="Inactive" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;dashed=1;" vertex="1" parent="1"><mxGeometry x="810" y="535" width="150" height="65" as="geometry"/></mxCell>
-        <mxCell id="final" value="" style="ellipse;shape=doubleEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="1070" y="550" width="36" height="36" as="geometry"/></mxCell>
-        <mxCell id="note" value="Transition notes&#xa;- Activate, assign, check in, check out, clean, inspect, pass inspection.&#xa;- Issue reporting can send a room to Maintenance or Out of Service.&#xa;- Maintenance can resolve to Dirty, Inspection Required, or Available.&#xa;- Deactivate moves a room to Inactive; Inactive can reactivate or retire." style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fillColor=#f5f5f5;strokeColor=#999999;align=left;spacing=8;" vertex="1" parent="1"><mxGeometry x="1240" y="310" width="310" height="190" as="geometry"/></mxCell>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="FIG-SRS-007 - Business State Diagram: Physical Room Operational Lifecycle" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="30" width="960" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="e_start_available" value="activate" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="start" target="available">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_available_assigned" value="assign" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="available" target="assigned">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_assigned_occupied" value="check in" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="assigned" target="occupied">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_occupied_dirty" value="check out" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="occupied" target="dirty">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_dirty_cleaning" value="clean" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="dirty" target="cleaning">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_cleaning_inspection" value="inspect" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="cleaning" target="inspection">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_cleaning_available" value="clean [no inspect]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="cleaning" target="available">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1095" y="95" />
+              <mxPoint x="255" y="95" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_inspection_available" value="pass" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="inspection" target="available">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1105" y="455" />
+              <mxPoint x="255" y="455" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_available_maintenance" value="issue" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="available" target="maintenance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_occupied_maintenance" value="stay issue" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="occupied" target="maintenance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_dirty_maintenance" value="cleaning issue" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="dirty" target="maintenance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_maintenance_out" value="escalate" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="maintenance" target="out_service">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_out_maintenance" value="repair" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="out_service" target="maintenance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_maintenance_dirty" value="resolve dirty" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="maintenance" target="dirty">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_maintenance_inspection" value="resolve inspect" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="maintenance" target="inspection">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_maintenance_available" value="resolve available" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="maintenance" target="available">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_available_inactive" value="deactivate" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="available" target="inactive">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_out_inactive" value="retire" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="out_service" target="inactive">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_inactive_available" value="reactivate" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="inactive" target="available">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="810" y="685" />
+              <mxPoint x="255" y="685" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_inactive_final" value="retire final" style="edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;html=1;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="inactive" target="final">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="start" value="" style="ellipse;html=1;shape=ellipse;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="70" y="165" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="available" value="Available" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="180" y="145" width="150" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="assigned" value="Assigned" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="390" y="145" width="150" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="occupied" value="Occupied" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="600" y="145" width="150" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="dirty" value="Dirty" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="810" y="145" width="150" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="cleaning" value="Cleaning" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="145" width="150" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="inspection" value="Inspection Required" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="330" width="170" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="maintenance" value="Maintenance" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="600" y="330" width="150" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="out_service" value="Out of Service" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="390" y="330" width="150" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="inactive" value="Inactive" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;fontSize=12;fillColor=#ffffff;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="810" y="535" width="150" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="final" value="" style="ellipse;shape=doubleEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="550" width="36" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="note" value="Transition notes&#10;- Activate, assign, check in, check out, clean, inspect, pass inspection.&#10;- Issue reporting can send a room to Maintenance or Out of Service.&#10;- Maintenance can resolve to Dirty, Inspection Required, or Available.&#10;- Deactivate moves a room to Inactive; Inactive can reactivate or retire." style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fillColor=#f5f5f5;strokeColor=#999999;align=left;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="310" width="310" height="190" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
