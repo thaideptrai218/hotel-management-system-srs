@@ -1,36 +1,186 @@
-<mxfile host="app.diagrams.net">
-  <diagram name="FIG-SRS-001 - Context Diagram">
-    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+<mxfile host="Electron">
+  <diagram name="FIG-SRS-001 - Context Diagram" id="0">
+    <mxGraphModel dx="2575" dy="1565" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="FIG-SRS-001 - DFD-Style System Context Diagram" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="500" y="30" width="800" height="40" as="geometry"/></mxCell>
-        <mxCell id="sys" value="&lt;b&gt;0&lt;/b&gt;&lt;br&gt;&lt;b&gt;Hotel Marketplace&lt;br&gt;Management System&lt;/b&gt;&lt;br&gt;MVP+Staff v1.2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;strokeWidth=2;fontSize=13;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="680" y="360" width="380" height="300" as="geometry"/></mxCell>
-        <mxCell id="ent_guest" value="&lt;b&gt;Guest&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="80" y="130" width="250" height="70" as="geometry"/></mxCell>
-        <mxCell id="ent_customer" value="&lt;b&gt;Customer&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="80" y="270" width="250" height="70" as="geometry"/></mxCell>
-        <mxCell id="ent_owner" value="&lt;b&gt;Property Owner&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="80" y="410" width="250" height="70" as="geometry"/></mxCell>
-        <mxCell id="ent_manager" value="&lt;b&gt;Hotel Manager&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="80" y="550" width="250" height="70" as="geometry"/></mxCell>
-        <mxCell id="ent_receptionist" value="&lt;b&gt;Receptionist&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="80" y="690" width="250" height="70" as="geometry"/></mxCell>
-        <mxCell id="ent_housekeeping" value="&lt;b&gt;Housekeeping Staff&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="80" y="830" width="250" height="70" as="geometry"/></mxCell>
-        <mxCell id="ent_maintenance" value="&lt;b&gt;Maintenance Staff&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="80" y="970" width="250" height="70" as="geometry"/></mxCell>
-        <mxCell id="ent_admin" value="&lt;b&gt;Platform Administrator&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1440" y="160" width="270" height="70" as="geometry"/></mxCell>
-        <mxCell id="ent_payos" value="&lt;b&gt;payOS Payment Gateway&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external system&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1440" y="360" width="270" height="80" as="geometry"/></mxCell>
-        <mxCell id="ent_notification" value="&lt;b&gt;Notification Service&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external system / mock&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1440" y="560" width="270" height="80" as="geometry"/></mxCell>
-        <mxCell id="ent_scheduler" value="&lt;b&gt;System Scheduler&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;timer&amp;gt;&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1440" y="850" width="270" height="80" as="geometry"/></mxCell>
-        <mxCell id="f_guest_search" value="Search Criteria" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.45;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.12;entryDx=0;entryDy=0;entryPerimeter=1;" edge="1" parent="1" source="ent_guest" target="sys"><mxGeometry x="0.08" y="-14" relative="1" as="geometry"><mxPoint x="10" y="-8" as="offset"/></mxGeometry></mxCell>
-        <mxCell id="f_guest_results" value="Approved Hotel Results" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.18;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.70;entryDx=0;entryDy=0;entryPerimeter=1;" edge="1" parent="1" source="sys" target="ent_guest"><mxGeometry x="-0.10" y="18" relative="1" as="geometry"><mxPoint x="-12" y="12" as="offset"/></mxGeometry></mxCell>
-        <mxCell id="f_customer" value="Account, booking, payment, cancellation data" style="endArrow=block;endFill=1;startArrow=block;startFill=1;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_customer" target="sys"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f_owner" value="Hotel, inventory, staff, configuration data" style="endArrow=block;endFill=1;startArrow=block;startFill=1;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_owner" target="sys"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f_manager" value="Hotel operation supervision data" style="endArrow=block;endFill=1;startArrow=block;startFill=1;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_manager" target="sys"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f_receptionist" value="Front desk operation data" style="endArrow=block;endFill=1;startArrow=block;startFill=1;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_receptionist" target="sys"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f_housekeeping" value="Cleaning task updates / room issues" style="endArrow=block;endFill=1;startArrow=block;startFill=1;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_housekeeping" target="sys"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f_maintenance" value="Maintenance request updates" style="endArrow=block;endFill=1;startArrow=block;startFill=1;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_maintenance" target="sys"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f_admin" value="Approval, commission, refund, settlement data" style="endArrow=block;endFill=1;startArrow=block;startFill=1;html=1;rounded=0;fontSize=11;" edge="1" parent="1" source="ent_admin" target="sys"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f_payos_req" value="Payment Request" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.35;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=1;" edge="1" parent="1" source="sys" target="ent_payos"><mxGeometry x="0.18" y="-16" relative="1" as="geometry"><mxPoint x="18" y="-8" as="offset"/></mxGeometry></mxCell>
-        <mxCell id="f_payos_res" value="Payment Result" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.75;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.48;entryDx=0;entryDy=0;entryPerimeter=1;" edge="1" parent="1" source="ent_payos" target="sys"><mxGeometry x="-0.22" y="18" relative="1" as="geometry"><mxPoint x="20" y="14" as="offset"/></mxGeometry></mxCell>
-        <mxCell id="f_notification_req" value="Notification Request" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.58;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.28;entryDx=0;entryDy=0;entryPerimeter=1;" edge="1" parent="1" source="sys" target="ent_notification"><mxGeometry x="0.12" y="-16" relative="1" as="geometry"><mxPoint x="20" y="-8" as="offset"/></mxGeometry></mxCell>
-        <mxCell id="f_notification_status" value="Notification Status" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.75;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.74;entryDx=0;entryDy=0;entryPerimeter=1;" edge="1" parent="1" source="ent_notification" target="sys"><mxGeometry x="-0.16" y="18" relative="1" as="geometry"><mxPoint x="18" y="14" as="offset"/></mxGeometry></mxCell>
-        <mxCell id="f_scheduler" value="Unpaid booking expiration and scheduled events" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=0;exitY=0.30;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.86;entryDx=0;entryDy=0;entryPerimeter=1;" edge="1" parent="1" source="ent_scheduler" target="sys"><mxGeometry x="0.18" y="24" relative="1" as="geometry"><mxPoint x="22" y="18" as="offset"/></mxGeometry></mxCell>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;align=center;" value="FIG-SRS-001 - DFD-Style System Context Diagram" vertex="1">
+          <mxGeometry height="40" width="800" x="500" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sys" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;strokeWidth=2;fontSize=13;align=center;verticalAlign=middle;" value="&lt;b&gt;0&lt;/b&gt;&lt;br&gt;&lt;b&gt;Hotel Marketplace&lt;br&gt;Management System&lt;/b&gt;&lt;br&gt;MVP+Staff v1.2" vertex="1">
+          <mxGeometry height="300" width="380" x="680" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="ent_guest" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;Guest&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="70" width="250" x="80" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ent_customer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;Customer&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="70" width="250" x="80" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="ent_owner" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;Property Owner&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="70" width="250" x="80" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="ent_manager" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;Hotel Manager&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="70" width="250" x="80" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="ent_receptionist" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;Receptionist&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="70" width="250" x="80" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="ent_housekeeping" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;Housekeeping Staff&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="70" width="250" x="80" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="ent_maintenance" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;Maintenance Staff&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="70" width="250" x="80" y="970" as="geometry" />
+        </mxCell>
+        <mxCell id="ent_admin" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;Platform Administrator&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external entity&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="70" width="270" x="1440" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ent_payos" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;payOS Payment Gateway&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external system&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="80" width="270" x="1440" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="ent_notification" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;Notification Service&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;external system / mock&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="80" width="270" x="1440" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="ent_scheduler" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;System Scheduler&lt;/b&gt;&lt;br&gt;&amp;lt;&amp;lt;timer&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="80" width="270" x="1440" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="f_guest_search" edge="1" parent="1" source="ent_guest" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.45;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="sys" value="Search Criteria">
+          <mxGeometry relative="1" x="0.016" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="870" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_guest_results" edge="1" parent="1" source="sys" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;entryX=1;entryY=0.70;entryDx=0;entryDy=0;entryPerimeter=1;" target="ent_guest" value="Approved Hotel Results">
+          <mxGeometry relative="1" x="0.1415" y="2" as="geometry">
+            <mxPoint y="-1" as="offset" />
+            <Array as="points">
+              <mxPoint x="740" y="190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_customer_req" edge="1" parent="1" source="ent_customer" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.35;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;" target="sys" value="Account, booking, payment, cancellation requests">
+          <mxGeometry relative="1" x="-0.3436" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="736" y="295" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_customer_status" edge="1" parent="1" source="sys" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.30;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.68;entryDx=0;entryDy=0;entryPerimeter=1;" target="ent_customer" value="Booking confirmations, payment and refund status">
+          <mxGeometry relative="1" x="0.2196" y="1" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_owner_update" edge="1" parent="1" source="ent_owner" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.35;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.38;entryDx=0;entryDy=0;entryPerimeter=1;" target="sys" value="Hotel, inventory, staff configuration updates">
+          <mxGeometry relative="1" x="-0.1006" y="3" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_owner_status" edge="1" parent="1" source="sys" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.44;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.68;entryDx=0;entryDy=0;entryPerimeter=1;" target="ent_owner" value="Hotel approval and operational summaries">
+          <mxGeometry relative="1" x="0.0854" y="6" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_manager_decisions" edge="1" parent="1" source="ent_manager" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.35;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.52;entryDx=0;entryDy=0;entryPerimeter=1;" target="sys" value="Operation supervision decisions">
+          <mxGeometry relative="1" x="-0.0791" y="7" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_manager_status" edge="1" parent="1" source="sys" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.58;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.68;entryDx=0;entryDy=0;entryPerimeter=1;" target="ent_manager" value="Booking, room, staff task status">
+          <mxGeometry relative="1" x="0.0933" y="2" as="geometry">
+            <mxPoint y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_receptionist_updates" edge="1" parent="1" source="ent_receptionist" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.35;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.70;entryDx=0;entryDy=0;entryPerimeter=1;" target="sys" value="Check-in, checkout, front desk updates">
+          <mxGeometry relative="1" x="0.0406" y="-3" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_receptionist_data" edge="1" parent="1" source="sys" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.76;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.68;entryDx=0;entryDy=0;entryPerimeter=1;" target="ent_receptionist" value="Arrivals, departures, room assignment data">
+          <mxGeometry relative="1" x="0.2095" y="5" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="640" y="738" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_housekeeping_updates" edge="1" parent="1" source="ent_housekeeping" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.35;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.86;entryDx=0;entryDy=0;entryPerimeter=1;" target="sys" value="Cleaning status and room issue updates">
+          <mxGeometry relative="1" x="-0.1967" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="670" y="830" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_housekeeping_tasks" edge="1" parent="1" source="sys" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.92;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.68;entryDx=0;entryDy=0;entryPerimeter=1;" target="ent_housekeeping" value="Assigned cleaning tasks and room status">
+          <mxGeometry relative="1" x="0.4573" y="-1" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="724" y="878" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_maintenance_updates" edge="1" parent="1" source="ent_maintenance" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.247;entryY=0.928;entryDx=0;entryDy=0;entryPerimeter=0;" target="sys" value="Maintenance progress and release updates">
+          <mxGeometry relative="1" x="-0.4568" y="2" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="770" y="990" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_maintenance_requests" edge="1" parent="1" source="sys" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0.35;exitY=0.978;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" target="ent_maintenance" value="Assigned maintenance requests">
+          <mxGeometry relative="1" x="-0.3412" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="813" y="1023" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_admin_decisions" edge="1" parent="1" source="ent_admin" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=0;exitY=0.35;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.15;entryDx=0;entryDy=0;entryPerimeter=1;" target="sys" value="Approval, commission, refund, settlement decisions">
+          <mxGeometry relative="1" x="-0.1" y="-16" as="geometry">
+            <mxPoint x="-10" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_admin_records" edge="1" parent="1" source="sys" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=1;exitY=0.22;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.68;entryDx=0;entryDy=0;entryPerimeter=1;" target="ent_admin" value="Hotel, finance, refund, settlement records">
+          <mxGeometry relative="1" x="0.1" y="16" as="geometry">
+            <mxPoint x="10" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_payos_req" edge="1" parent="1" source="sys" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.35;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=1;" target="ent_payos" value="Payment Request">
+          <mxGeometry relative="1" x="0.18" y="-16" as="geometry">
+            <mxPoint x="18" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_payos_res" edge="1" parent="1" source="ent_payos" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.75;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.48;entryDx=0;entryDy=0;entryPerimeter=1;" target="sys" value="Payment Result">
+          <mxGeometry relative="1" x="-0.22" y="18" as="geometry">
+            <mxPoint x="20" y="14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_notification_req" edge="1" parent="1" source="sys" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.58;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="ent_notification" value="Notification Request">
+          <mxGeometry relative="1" x="0.12" y="-16" as="geometry">
+            <mxPoint x="20" y="-8" as="offset" />
+            <Array as="points">
+              <mxPoint x="1508" y="533" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_notification_status" edge="1" parent="1" source="ent_notification" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.75;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.74;entryDx=0;entryDy=0;entryPerimeter=1;" target="sys" value="Notification Status">
+          <mxGeometry relative="1" x="0.1054" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1340" y="620" />
+              <mxPoint x="1340" y="575" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_scheduler" edge="1" parent="1" source="ent_scheduler" style="endArrow=block;endFill=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;exitX=0;exitY=0.30;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.86;entryDx=0;entryDy=0;entryPerimeter=1;" target="sys" value="Unpaid booking expiration and scheduled events">
+          <mxGeometry relative="1" x="0.18" y="24" as="geometry">
+            <mxPoint x="22" y="18" as="offset" />
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
