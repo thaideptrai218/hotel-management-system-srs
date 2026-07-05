@@ -609,21 +609,31 @@ This part presents the sequence diagrams for UC-002 View Hotel Detail. The main-
 
 ## 3.3.1 Design Purpose
 
-This section describes the detailed design for **UC-003 Register Account**. The use case allows a Guest to register a Customer or Property Owner account from the Register Screen. The design is based on the SRS only; class names and methods are conceptual design assumptions and must be revalidated against the final codebase.
+This section describes the detailed design for **UC-003 Register Account**. The use case covers register a Customer or Property Owner account. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
 
-**Related SRS items:** UC-003, FEAT-AUTH, SCR-001, ENT-001, ENT-002, ENT-023, BR-AUTH-001, BR-AUTH-002, BR-AUTH-003, MSG-AUTH-003, MSG-AUTH-004, MSG-AUTH-005, NSF-003.
+**Related SRS items:** FEAT-AUTH, UC-003, SCR-001, ENT-001, ENT-002, BR-AUTH-001, BR-AUTH-002, BR-AUTH-003, MSG-AUTH-003, MSG-AUTH-004, MSG-AUTH-005, TR-003, AT-UC003-04A, AT-UC003-04B.
 
-The registration flow must:
+**Precondition:** Guest is not authenticated.
 
-- Accept account type, full name, email, optional phone number, password, password confirmation, and terms confirmation from a Guest.
-- Validate mandatory fields, format, password confirmation, password policy, and email/phone uniqueness before account creation.
-- Create a `UserAccount` with the selected Customer or Property Owner role.
-- Send or record a registration notification because the SRS lists Notification Service as a secondary actor for UC-003 and NSF-003 includes registration events.
-- Return a clear success or validation message without exposing technical details.
+**Trigger:** Guest selects Register.
+
+**Post-condition:** POS-01: A Customer or Property Owner account is created after valid registration, or registration is rejected with a clear reason.
+
+The flow must:
+
+- Main step 1: Guest opens Register Screen.
+- Main step 2: System displays account type, full name, email, phone, password, confirmation, and terms fields.
+- Main step 3: Guest enters required information.
+- Main step 4: System validates mandatory fields, format, password confirmation, and uniqueness.
+- Main step 5: System creates account with selected role.
+- Main step 6: System sends or records registration notification.
+- Main step 7: System displays registration success message.
+- Enforce related business rules: BR-AUTH-001, BR-AUTH-002, BR-AUTH-003.
+- Return a separate scenario response for each alternative/error flow: AT-UC003-04A, AT-UC003-04B.
 
 ## 3.3.2 Class Diagram
 
-This part presents the class diagram for the use case.
+This part presents the class diagram for UC-003 Register Account.
 
 ![DGM-CLS-UC-003 - Register Account Class Diagram](sdd_assets/uc-003-register-account/dgm-cls-uc-003-register-account-class-diagram.png)
 
@@ -631,147 +641,170 @@ This part presents the class diagram for the use case.
 
 ## 3.3.3 Class Specifications
 
-This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions because no implementation codebase was inspected.
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### RegisterScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-003 Register Account.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
 
 ### RegistrationController Class
 
-**Description:** API entry point for account registration requests from the Register Screen.
+**Description:** API/application entry controller for UC-003 Register Account.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `registerAccount(request)` | Receives registration input, coordinates request validation, calls `RegistrationService`, and returns `RegistrationResponse`. |
-| 2 | `validateRegistrationRequest(request)` | Checks required fields, field length, accepted account type, password confirmation, and terms confirmation before service execution. |
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
 
 ### RegisterAccountRequest Class
 
-**Description:** Request DTO carrying registration data from SCR-001.
+**Description:** Request DTO carrying input for UC-003 Register Account.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `hasRequiredFields()` | Verifies that account type, full name, email, password, confirm password, and required terms confirmation are present. |
-| 2 | `passwordMatchesConfirmation()` | Verifies that password and confirm password contain the same value before account creation. |
-| 3 | `hasValidContactFormat()` | Verifies email format and phone format when a phone number is provided. |
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
 
 ### RegistrationService Class
 
-**Description:** Application service that enforces registration rules, creates the account and role assignment, and starts the registration notification event.
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Register Account.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `registerAccount(request)` | Executes UC-003 successful registration by validating uniqueness, resolving the selected role, creating account credentials, saving the account, and returning a response. |
-| 2 | `ensureUniqueEmailAndPhone(email, phoneNumber)` | Checks that submitted email and provided phone number are not already used by another account. |
-| 3 | `buildRegistrationResponse(account)` | Converts the created account and selected role into the response used by the Register Screen. |
-
-### PasswordPolicyService Class
-
-**Description:** Service that validates password policy and creates protected password credential data.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `validatePassword(password, confirmation)` | Checks password policy and matching confirmation for MSG-AUTH-005 conditions. |
-| 2 | `createPasswordCredential(password)` | Creates the protected credential value stored on `UserAccount`; exact hashing implementation is a design detail outside the SRS. |
+| 1 | `registeraccount(request)` | Executes the UC-003 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
 
 ### UserAccountRepository Class
 
-**Description:** Repository for querying and storing user account records.
+**Description:** Repository abstraction for loading and saving data required by Register Account.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `existsByEmailOrPhone(email, phoneNumber)` | Checks uniqueness for email and provided phone number before account creation. |
-| 2 | `save(userAccount)` | Persists the new account record after validation succeeds. |
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
 
-### UserRoleRepository Class
+### PasswordPolicyService Class
 
-**Description:** Repository for retrieving supported self-registration roles.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `findSelfRegistrationRole(accountType)` | Finds the Customer or Property Owner role selected on the Register Screen. |
-
-### NotificationServiceClient Class
-
-**Description:** Client or adapter for sending or recording notification events. Included because the SRS confirms Notification Service as a secondary actor for UC-003 and allows mock notification support.
+**Description:** Supporting service or integration used by UC-003 Register Account.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `sendOrRecordRegistrationNotification(account)` | Sends or records a registration notification event for the created account. |
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
 
-### RegistrationResponse Class
+### RegisterAccountResponse Class
 
-**Description:** Response DTO returned after successful account creation or validation failure.
+**Description:** Response DTO returned by UC-003 Register Account.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `success(account)` | Builds a success response for the Register Screen after the account is created. |
-| 2 | `validationError(messageCode)` | Builds a validation error response using SRS message codes such as MSG-AUTH-003, MSG-AUTH-004, or MSG-AUTH-005. |
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
 
 ### UserAccount Class
 
-**Description:** Domain entity representing a registered account.
+**Description:** Primary domain entity affected or displayed by UC-003 Register Account.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `createRegisteredAccount(request, role, credential)` | Creates a new `UserAccount` with full name, email, optional phone number, credential, selected role, account status, and timestamps. |
-| 2 | `assignRole(role)` | Associates the selected Customer or Property Owner role with the account. |
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
 
 ### UserRole Class
 
-**Description:** Domain entity representing a platform or hotel-scoped role definition.
+**Description:** Supporting domain entity affected or displayed by UC-003 Register Account.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `isAllowedForSelfRegistration()` | Returns whether the role can be selected by a Guest during UC-003. |
-
-### NotificationRecord Class
-
-**Description:** Domain entity representing a sent or recorded notification event.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `createRegistrationEvent(account)` | Creates notification event data for registration, linked to the newly created account. |
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
 
 ## 3.3.4 Sequence Diagram
 
-This part presents the sequence diagrams for the use case.
+This part presents the sequence diagrams for UC-003 Register Account. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
 
 ![DGM-SEQ-UC-003 - Register Account Main Flow](sdd_assets/uc-003-register-account/dgm-seq-uc-003-register-account-main-flow.png)
 
 **Figure 3.3-2: Sequence Diagram of UC-003 Register Account - Main Flow**
 
-![DGM-SEQ-UC-003 - Register Account Alternative Flows](sdd_assets/uc-003-register-account/dgm-seq-uc-003-register-account-alternative-flows.png)
+### AT-UC003-04A - Duplicate email phone
 
-**Figure 3.3-3: Sequence Diagram of UC-003 Register Account - Alternative/Error Flows**
+- **Branch from Main Step:** 4
+- **Condition:** Duplicate email/phone
+- **Expected Response:** Email or phone number is already in use.
+
+![DGM-SEQ-UC-003 - Duplicate email phone](sdd_assets/uc-003-register-account/dgm-seq-uc-003-register-account-at-uc003-04a-duplicate-email-phone.png)
+
+**Figure 3.3-3: Sequence Diagram of UC-003 Register Account - AT-UC003-04A Duplicate email phone**
+
+### AT-UC003-04B - Invalid data
+
+- **Branch from Main Step:** 4
+- **Condition:** Invalid data
+- **Expected Response:** Please complete all required account information.
+
+![DGM-SEQ-UC-003 - Invalid data](sdd_assets/uc-003-register-account/dgm-seq-uc-003-register-account-at-uc003-04b-invalid-data.png)
+
+**Figure 3.3-4: Sequence Diagram of UC-003 Register Account - AT-UC003-04B Invalid data**
 
 ### Validation, Authorization, Transaction, and Error Handling Notes
 
 | Area | Design |
 |---|---|
-| Validation | The controller validates required input and basic request shape. The service validates email/phone uniqueness. Password policy and password confirmation use `PasswordPolicyService`. Duplicate email/phone maps to MSG-AUTH-003; missing required account fields map to MSG-AUTH-004; invalid password or mismatch maps to MSG-AUTH-005. |
-| Authorization | UC-003 is public and starts from a Guest. Only Customer and Property Owner account types are self-registered. Hotel staff accounts are created/invited through staff management, not UC-003. |
-| Transaction | Account creation, selected role assignment, and registration notification record creation should be consistent. If notification is only an external send, account creation should remain successful and notification failure should be recorded or retried according to the notification design. |
-| Error Handling | Validation errors return user-facing message codes and keep submitted non-secret data available for correction. Unexpected repository or service errors return a safe generic failure response without exposing credentials or stack traces. |
-| Security and Privacy | Password is never returned in the response or diagrams as stored plaintext. Password credential storage is represented conceptually; exact hashing and storage implementation must be aligned with final security architecture. |
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Guest; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC003-04A returns "Email or phone number is already in use."; AT-UC003-04B returns "Please complete all required account information.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
 
 ## Assumptions and Open Issues
 
-- Class names, method names, API route, DTO field names, and repository names are conceptual design assumptions because no implementation codebase was inspected.
-- Notification handling is included because UC-003 lists Notification Service as a secondary actor and NSF-003 includes registration notifications; the SRS allows mock notification support.
-- The SRS confirms Customer and Property Owner self-registration only. Staff and platform administrator account creation is outside UC-003.
-- The SRS references password policy but does not define detailed password complexity; final implementation must align this with the security NFR or project policy.
+- ASSUMP-UC003-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC003-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC003-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
 
 # 3.4 UC-004 - Login
 
 ## 3.4.1 Design Purpose
 
-This section describes the detailed design for **UC-004 Login**. The use case allows Customer, Property Owner, Hotel Manager, Receptionist, Housekeeping Staff, Maintenance Staff, and Platform Administrator actors to authenticate and open the correct role-specific landing area.
+This section describes the detailed design for **UC-004 Login**. The use case covers authenticate user and access role-specific functions. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
 
-**Related SRS items:** UC-004, FEAT-AUTH, SCR-002, ENT-001, ENT-002, ENT-003, BR-AUTH-002, BR-AUTH-003, BR-STAFF-002, MSG-AUTH-001, MSG-AUTH-006, MSG-AUTH-008.
+**Related SRS items:** FEAT-AUTH, UC-004, SCR-002, ENT-001, ENT-002, ENT-003, BR-AUTH-002, BR-AUTH-003, BR-STAFF-002, MSG-AUTH-001, MSG-AUTH-006, MSG-AUTH-008, TR-004, AT-UC004-04A, AT-UC004-04B, AT-UC004-06A.
 
-The login design must accept email/phone and password credentials from SCR-002, authenticate only active accounts, resolve user role(s), resolve active hotel assignment before opening hotel-scoped staff workspace, and route the authenticated actor without inventing token/session details.
+**Precondition:** Actor has an account that can be validated.
+
+**Trigger:** Actor submits login credentials.
+
+**Post-condition:** POS-01: The actor is authenticated and routed to the role-specific landing area.
+
+The flow must:
+
+- Main step 1: Actor opens Login Screen.
+- Main step 2: System displays email/phone and password fields.
+- Main step 3: Actor enters credentials and submits login.
+- Main step 4: System validates credentials and account status.
+- Main step 5: System authenticates actor.
+- Main step 6: System displays appropriate landing screen according to role and hotel assignment.
+- Enforce related business rules: BR-AUTH-002, BR-AUTH-003, BR-STAFF-002.
+- Return a separate scenario response for each alternative/error flow: AT-UC004-04A, AT-UC004-04B, AT-UC004-06A.
 
 ## 3.4.2 Class Diagram
 
-This part presents the class diagram for the use case.
+This part presents the class diagram for UC-004 Login.
 
 ![DGM-CLS-UC-004 - Login Class Diagram](sdd_assets/uc-004-login/dgm-cls-uc-004-login-class-diagram.png)
 
@@ -779,185 +812,183 @@ This part presents the class diagram for the use case.
 
 ## 3.4.3 Class Specifications
 
-This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions because no implementation codebase was inspected.
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
 
 ### LoginScreen Class
 
-**Description:** Boundary component that collects credentials and displays login result or error messages.
+**Description:** Boundary object for the user-visible entry point of UC-004 Login.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `submitLogin()` | Sends entered email/phone and password to the controller for authentication. |
-| 2 | `displayLanding(result)` | Opens the role-specific landing area after successful authentication and assignment resolution. |
-| 3 | `displayError(messageCode)` | Shows user-facing authentication or assignment error messages from the SRS. |
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
 
 ### AuthController Class
 
-**Description:** Entry point for login requests and response mapping.
+**Description:** API/application entry controller for UC-004 Login.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `login(request)` | Receives a `LoginRequest`, validates basic input, calls `AuthService`, and returns `LoginResponse`. |
-| 2 | `validateLoginRequest(request)` | Checks required identifier and password fields before service authentication. |
-| 3 | `mapLoginResult(result)` | Converts authentication result, role data, and assignment data into a response understood by the client. |
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
 
 ### LoginRequest Class
 
-**Description:** Request DTO carrying the login identifier and password from SCR-002.
+**Description:** Request DTO carrying input for UC-004 Login.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `hasRequiredCredentials()` | Verifies that email/phone and password are present before authentication. |
-| 2 | `normalizeIdentifier()` | Normalizes the email/phone identifier for lookup without changing the submitted password. |
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
 
 ### AuthService Class
 
-**Description:** Core service that authenticates account credentials and coordinates role and hotel assignment checks.
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Login.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `authenticateUser(request)` | Performs the main UC-004 success flow by finding the user, verifying credentials, checking account status, resolving roles, and preparing a login result. |
-| 2 | `verifyCredentials(userAccount, password)` | Compares the submitted password against the stored credential through the configured credential verification design. |
-| 3 | `ensureAccountActive(userAccount)` | Enforces BR-AUTH-003 by rejecting inactive or blocked accounts. |
-| 4 | `buildLoginResult(userAccount, roles, assignments)` | Builds the conceptual login result used to choose the proper landing area. |
-
-### RoleService Class
-
-**Description:** Service that resolves platform roles and hotel-scoped roles for the authenticated user.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `resolveRoles(userAccountId)` | Loads all active roles for the user account. |
-| 2 | `requiresHotelAssignment(roles)` | Determines whether the resolved role set includes hotel-scoped staff access. |
-| 3 | `determineLandingArea(roles, assignments)` | Selects the role-specific landing area after role and assignment checks are complete. |
-
-### StaffAssignmentService Class
-
-**Description:** Service that validates hotel-scoped staff assignments for staff actors.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `resolveActiveAssignments(userAccountId)` | Loads active hotel staff assignments for the authenticated user. |
-| 2 | `ensureStaffHasActiveHotelAssignment(roles, assignments)` | Enforces BR-STAFF-002 by rejecting hotel-scoped staff workspace access when no active assignment exists. |
+| 1 | `login(request)` | Executes the UC-004 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
 
 ### UserAccountRepository Class
 
-**Description:** Repository for account lookup during login.
+**Description:** Repository abstraction for loading and saving data required by Login.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `findByEmailOrPhone(identifier)` | Finds a registered user account by email or phone login identifier. |
-| 2 | `loadCredential(userAccountId)` | Loads the stored credential data needed for password verification. |
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
 
-### RoleRepository Class
+### StaffAssignmentService Class
 
-**Description:** Repository for loading role definitions assigned to a user.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `findActiveRolesByUser(userAccountId)` | Retrieves active role definitions for the authenticated user. |
-
-### StaffAssignmentRepository Class
-
-**Description:** Repository for loading hotel staff assignment records.
+**Description:** Supporting service or integration used by UC-004 Login.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `findActiveAssignmentsByUser(userAccountId)` | Retrieves active hotel assignments for hotel-scoped staff role validation. |
-
-### UserAccount Class
-
-**Description:** Domain entity representing a registered account.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `isActive()` | Returns whether the account may be authenticated under BR-AUTH-003. |
-| 2 | `matchesIdentifier(identifier)` | Indicates whether the account matches the normalized email/phone identifier. |
-
-### UserRole Class
-
-**Description:** Domain entity representing a platform or hotel-scoped role.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `isHotelScoped()` | Returns whether the role requires hotel assignment validation. |
-| 2 | `isPlatformScoped()` | Returns whether the role represents platform-level access. |
-
-### HotelStaffAssignment Class
-
-**Description:** Domain entity mapping a staff account to a hotel and hotel-scoped role.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `isActive()` | Returns whether the assignment can grant hotel-scoped workspace access. |
-| 2 | `belongsToRole(roleId)` | Indicates whether the assignment supports the resolved staff role. |
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
 
 ### LoginResponse Class
 
-**Description:** Response DTO returned after login success or controlled failure.
+**Description:** Response DTO returned by UC-004 Login.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `success(landingArea)` | Builds a successful login response with role-specific landing information. |
-| 2 | `failure(messageCode)` | Builds a controlled failure response using SRS application message codes. |
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
+
+### UserAccount Class
+
+**Description:** Primary domain entity affected or displayed by UC-004 Login.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
+
+### HotelStaffAssignment Class
+
+**Description:** Supporting domain entity affected or displayed by UC-004 Login.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
 
 ## 3.4.4 Sequence Diagram
 
-This part presents the sequence diagrams for the use case.
+This part presents the sequence diagrams for UC-004 Login. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
 
 ![DGM-SEQ-UC-004 - Login Main Flow](sdd_assets/uc-004-login/dgm-seq-uc-004-login-main-flow.png)
 
 **Figure 3.4-2: Sequence Diagram of UC-004 Login - Main Flow**
 
-![DGM-SEQ-UC-004 - Login Alternative Flows](sdd_assets/uc-004-login/dgm-seq-uc-004-login-alternative-flows.png)
+### AT-UC004-04A - Invalid credentials
 
-**Figure 3.4-3: Sequence Diagram of UC-004 Login - Alternative/Error Flows**
+- **Branch from Main Step:** 4
+- **Condition:** Invalid credentials
+- **Expected Response:** Incorrect username or password. Please check again.
+
+![DGM-SEQ-UC-004 - Invalid credentials](sdd_assets/uc-004-login/dgm-seq-uc-004-login-at-uc004-04a-invalid-credentials.png)
+
+**Figure 3.4-3: Sequence Diagram of UC-004 Login - AT-UC004-04A Invalid credentials**
+
+### AT-UC004-04B - Inactive blocked account
+
+- **Branch from Main Step:** 4
+- **Condition:** Inactive/blocked account
+- **Expected Response:** This account is inactive or blocked. Please contact support.
+
+![DGM-SEQ-UC-004 - Inactive blocked account](sdd_assets/uc-004-login/dgm-seq-uc-004-login-at-uc004-04b-inactive-blocked-account.png)
+
+**Figure 3.4-4: Sequence Diagram of UC-004 Login - AT-UC004-04B Inactive blocked account**
+
+### AT-UC004-06A - No active hotel assignment
+
+- **Branch from Main Step:** 6
+- **Condition:** Staff has no active hotel assignment
+- **Expected Response:** Your staff account has no active hotel assignment. Please contact your hotel administrator.
+
+![DGM-SEQ-UC-004 - No active hotel assignment](sdd_assets/uc-004-login/dgm-seq-uc-004-login-at-uc004-06a-no-active-hotel-assignment.png)
+
+**Figure 3.4-5: Sequence Diagram of UC-004 Login - AT-UC004-06A No active hotel assignment**
 
 ### Validation, Authorization, Transaction, and Error Handling Notes
 
 | Area | Design |
 |---|---|
-| Validation | Login input validation checks that email/phone and password are provided before account lookup. |
-| Authorization | BR-AUTH-002 is enforced by resolving roles and separating platform access from hotel-scoped access. BR-STAFF-002 is enforced before opening hotel workspace for staff roles. |
-| Transaction | UC-004 is primarily read-only for account, role, and assignment lookup. No booking, room, payment, or hotel data transaction is required. |
-| Error Handling | Invalid credentials return MSG-AUTH-001; inactive/blocked accounts return MSG-AUTH-006; staff without active hotel assignment returns MSG-AUTH-008. |
-| Security and Privacy | Password verification is conceptual only; exact hashing, token, session, cookie, or refresh mechanism is intentionally not invented. |
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Registered User; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC004-04A returns "Incorrect username or password. Please check again."; AT-UC004-04B returns "This account is inactive or blocked. Please contact support."; AT-UC004-06A returns "Your staff account has no active hotel assignment. Please contact your hotel administrator.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
 
 ## Assumptions and Open Issues
 
-| Assumption ID | Assumption | Reason | Impact if Wrong | Confirmation Needed |
-|---|---|---|---|---|
-| ASSUMP-UC004-001 | The design uses conceptual controller, service, repository, DTO, and entity classes for authentication. | No source code repository was provided for this SDD asset. | Class names and method names may need renaming to match implementation. | Confirm final backend architecture and naming. |
-| ASSUMP-UC004-002 | Staff hotel assignment validation happens during login routing for hotel-scoped roles. | UC-004 alternative flow AT-UC004-06A requires preventing hotel workspace access when staff has no active hotel assignment. | If assignment is checked after landing, the sequence and error point must change. | Confirm desired enforcement point. |
-| ASSUMP-UC004-003 | Authentication returns conceptual landing information only. | User requested not to invent token/session details. | Technical session design must be documented later in architecture/security design. | Confirm actual session/token mechanism when implementation exists. |
-
-| Question ID | Question | Why It Matters | Affected Sections | Priority |
-|---|---|---|---|---|
-| OQ-UC004-001 | What exact account statuses exist besides active, inactive, and blocked? | Affects `UserAccount.isActive()` and MSG-AUTH-006 mapping. | Class specs, alternative sequence, error handling notes | Medium |
+- ASSUMP-UC004-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC004-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC004-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
 
 # 3.5 UC-005 - Create Booking
 
 ## 3.5.1 Design Purpose
 
-This section describes the detailed design for **UC-005 Create Booking**. The use case allows an authenticated Customer to create an instant booking for one selected hotel room type and quantity after validation and atomic availability reservation.
+This section describes the detailed design for **UC-005 Create Booking**. The use case covers create an instant booking after availability validation. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
 
-**Related SRS items:** UC-005, FEAT-CUST-BOOK, SCR-007, SCR-008, ENT-009, ENT-010, ENT-012, ENT-013, ENT-014, ENT-020, ENT-023, BR-AUTH-001, BR-BOOK-001, BR-BOOK-005, BR-BOOK-011, BR-BOOK-012, BR-BOOK-013, BR-FIN-001, BR-FIN-003, MSG-BOOK-001, MSG-BOOK-002, MSG-BOOK-003, MSG-PAY-004.
+**Related SRS items:** FEAT-CUST-BOOK, UC-005, SCR-007, SCR-008, ENT-009, ENT-010, ENT-012, ENT-013, ENT-014, ENT-020, BR-AUTH-001, BR-BOOK-001, BR-BOOK-005, BR-BOOK-011, BR-BOOK-012, BR-BOOK-013, BR-FIN-001, BR-FIN-003, MSG-BOOK-001, MSG-BOOK-002, MSG-BOOK-003, MSG-PAY-004, TR-005, AT-UC005-04A, AT-UC005-05A, AT-UC005-06A, AT-UC005-06B.
 
-The design follows the accepted hybrid availability decision: marketplace/customer booking checks room type quantity and date range; physical room assignment is deferred to check-in/front desk flows.
+**Precondition:** Customer is authenticated; hotel approved/active; selected room type active.
+
+**Trigger:** Customer submits booking information.
+
+**Post-condition:** POS-01: A booking is created for one room type with quantity; availability is reserved according to payment mode; booking amount uses room price only.
 
 The flow must:
 
-- Accept booking information from SCR-007 for an authenticated Customer.
-- Validate date range, guest count, room quantity, contact fields, payment mode, selected hotel, and selected active room type.
-- Atomically reserve requested room type quantity for the date range to prevent overbooking across customer and walk-in channels.
-- Create one Booking and one BookingRoom line for the selected room type.
-- Create a Confirmed booking immediately for Pay at Property and record commission receivable.
-- Create a Pending Payment booking for Platform Collect and continue to UC-006 for online payment.
-- Send or record booking notification events for Customer and hotel operation roles.
+- Main step 1: Customer selects approved hotel and available private room type.
+- Main step 2: System displays Booking Form with dates, guest count, room quantity, guest contact, price summary, policy, and payment modes.
+- Main step 3: Customer enters booking information and selects payment mode.
+- Main step 4: System validates booking information, dates, guest count, quantity, and payment mode.
+- Main step 5: System atomically validates availability and reserves requested room type quantity for the date range.
+- Main step 6: System creates the booking with the correct initial status.
+- Main step 7: System captures commission rate snapshot.
+- Main step 8: System sends or records booking notification.
+- Main step 9: Customer views booking confirmation or payment instruction.
+- Enforce related business rules: BR-AUTH-001, BR-BOOK-001, BR-BOOK-005, BR-BOOK-011, BR-BOOK-012, BR-BOOK-013, BR-FIN-001, BR-FIN-003.
+- Return a separate scenario response for each alternative/error flow: AT-UC005-04A, AT-UC005-05A, AT-UC005-06A, AT-UC005-06B.
 
 ## 3.5.2 Class Diagram
 
-This part presents the class diagram for the use case.
+This part presents the class diagram for UC-005 Create Booking.
 
 ![DGM-CLS-UC-005 - Create Booking Class Diagram](sdd_assets/uc-005-create-booking/dgm-cls-uc-005-create-booking-class-diagram.png)
 
@@ -965,195 +996,195 @@ This part presents the class diagram for the use case.
 
 ## 3.5.3 Class Specifications
 
-This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions because no implementation codebase was inspected.
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### BookingFormScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-005 Create Booking.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
 
 ### BookingController Class
 
-**Description:** API entry point for create booking requests from the Booking Form Screen.
+**Description:** API/application entry controller for UC-005 Create Booking.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `createBooking(request)` | Receives Customer booking request, validates request shape, checks authentication context, and delegates creation to `BookingService`. |
-| 2 | `validateCreateBookingRequest(request)` | Checks required fields before business processing: dates, quantity, guest count, contact data, room type, hotel, and payment mode. |
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
 
 ### CreateBookingRequest Class
 
-**Description:** Request DTO carrying booking form input from SCR-007.
+**Description:** Request DTO carrying input for UC-005 Create Booking.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `hasValidDateRange()` | Verifies that check-out date is later than check-in date, supporting BR-BOOK-001 and MSG-BOOK-001. |
-| 2 | `hasValidQuantity()` | Verifies selected room quantity is positive for the single room type allowed by BR-BOOK-011. |
-| 3 | `hasSupportedPaymentMode()` | Verifies payment mode is either Platform Collect or Pay at Property as defined by UC-005. |
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
 
-### BookingService Class
+### CreateBookingService Class
 
-**Description:** Application service that coordinates validation, atomic availability reservation, booking creation, commission handling, and notification publishing.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `createBooking(customerId, request)` | Executes the UC-005 main flow and returns booking confirmation or payment instruction data. |
-| 2 | `validateBookingRules(request)` | Enforces booking rules including active selected room type, date range, guest count, quantity, and amount calculation scope. |
-| 3 | `calculateRoomPriceAmount(roomType, request)` | Calculates room-price-only amount as unit price per night x room quantity x night count, supporting BR-BOOK-012. |
-| 4 | `determineInitialStatus(paymentMode)` | Sets Pending Payment for Platform Collect or Confirmed for Pay at Property. |
-| 5 | `buildBookingResponse(booking)` | Builds confirmation response for SCR-008, including booking code, status, amount, payment mode, and payment deadline when applicable. |
-
-### AvailabilityReservationService Class
-
-**Description:** Service that atomically checks and reserves room type quantity for the requested date range.
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Create Booking.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `reserveRoomTypeQuantity(hotelId, roomTypeId, dateRange, quantity)` | Performs the atomic availability check and reservation required by BR-BOOK-013. |
-| 2 | `releaseReservation(bookingId)` | Releases reserved availability if booking creation fails or later payment timeout handling expires the booking. |
+| 1 | `createbooking(request)` | Executes the UC-005 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
 
 ### BookingRepository Class
 
-**Description:** Repository for persisting and retrieving booking header records.
+**Description:** Repository abstraction for loading and saving data required by Create Booking.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `save(booking)` | Persists the Booking entity with generated booking code, status, amount, payment mode, source, and customer reference. |
-| 2 | `findByCode(bookingCode)` | Retrieves a booking by booking code for confirmation display or later payment flow. |
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
 
-### BookingRoomRepository Class
+### AvailabilityReservationService Class
 
-**Description:** Repository for persisting booking room line items.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `save(bookingRoom)` | Persists the single BookingRoom line for selected room type, quantity, unit price, night count, and line amount. |
-
-### RoomTypeRepository Class
-
-**Description:** Repository for retrieving the selected room type and its saleable room price data.
+**Description:** Supporting service or integration used by UC-005 Create Booking.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `findActiveRoomType(hotelId, roomTypeId)` | Loads selected active room type for the approved hotel and rejects unavailable or inactive room types. |
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
 
-### CommissionService Class
+### CreateBookingResponse Class
 
-**Description:** Service that captures commission rate snapshot and records commission when booking is confirmed.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `captureCommissionSnapshot(booking)` | Captures the commission rate snapshot for later commission calculation, supporting BR-FIN-001. |
-| 2 | `recordPayAtPropertyReceivable(booking)` | Creates commission receivable for Pay at Property confirmed bookings, supporting BR-FIN-003. |
-
-### NotificationService Class
-
-**Description:** Service that sends or records booking notification events.
+**Description:** Response DTO returned by UC-005 Create Booking.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `recordBookingCreated(booking)` | Creates notification records for Customer and hotel operation roles after booking creation. |
-
-### BookingResponse Class
-
-**Description:** Response DTO for SCR-008 confirmation or payment instruction transition.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `includeConfirmationMessage()` | Includes MSG-BOOK-003 for created booking or MSG-PAY-004 for Pay at Property confirmation where appropriate. |
-| 2 | `includePaymentDeadline()` | Includes payment deadline when the booking is Pending Payment for Platform Collect. |
-
-### RoomType Class
-
-**Description:** Domain entity representing the selected private room type.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `isActive()` | Confirms the room type can be booked. |
-| 2 | `getBasePricePerNight()` | Provides room price used for room-price-only amount calculation. |
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
 
 ### Booking Class
 
-**Description:** Domain entity representing a customer reservation.
+**Description:** Primary domain entity affected or displayed by UC-005 Create Booking.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `markPendingPayment(deadline)` | Sets Platform Collect booking to Pending Payment until payment or timeout. |
-| 2 | `markConfirmed()` | Sets Pay at Property booking to Confirmed immediately after successful availability validation. |
-| 3 | `attachCommissionSnapshot(rate)` | Stores commission rate snapshot for future commission records. |
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
 
 ### BookingRoom Class
 
-**Description:** Domain entity representing the booking line for one room type and room quantity.
+**Description:** Supporting domain entity affected or displayed by UC-005 Create Booking.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `calculateLineAmount()` | Calculates unit price per night x quantity x night count. |
-
-### CommissionRecord Class
-
-**Description:** Domain entity representing platform commission for a booking.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `createReceivable(booking)` | Creates commission receivable for Pay at Property booking. |
-
-### NotificationRecord Class
-
-**Description:** Domain entity representing notification event data.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `createForBookingCreated(booking)` | Creates a notification event linked to the booking. |
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
 
 ## 3.5.4 Sequence Diagram
 
-This part presents the sequence diagrams for the use case.
+This part presents the sequence diagrams for UC-005 Create Booking. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
 
 ![DGM-SEQ-UC-005 - Create Booking Main Flow](sdd_assets/uc-005-create-booking/dgm-seq-uc-005-create-booking-main-flow.png)
 
 **Figure 3.5-2: Sequence Diagram of UC-005 Create Booking - Main Flow**
 
-![DGM-SEQ-UC-005 - Create Booking Alternative Flows](sdd_assets/uc-005-create-booking/dgm-seq-uc-005-create-booking-alternative-flows.png)
+### AT-UC005-04A - Invalid booking info
 
-**Figure 3.5-3: Sequence Diagram of UC-005 Create Booking - Alternative/Error Flows**
+- **Branch from Main Step:** 4
+- **Condition:** Invalid booking info
+- **Expected Response:** Check-out date must be later than check-in date.
+
+![DGM-SEQ-UC-005 - Invalid booking info](sdd_assets/uc-005-create-booking/dgm-seq-uc-005-create-booking-at-uc005-04a-invalid-booking-info.png)
+
+**Figure 3.5-3: Sequence Diagram of UC-005 Create Booking - AT-UC005-04A Invalid booking info**
+
+### AT-UC005-05A - Room unavailable
+
+- **Branch from Main Step:** 5
+- **Condition:** Room unavailable
+- **Expected Response:** The selected room is no longer available for the selected dates.
+
+![DGM-SEQ-UC-005 - Room unavailable](sdd_assets/uc-005-create-booking/dgm-seq-uc-005-create-booking-at-uc005-05a-room-unavailable.png)
+
+**Figure 3.5-4: Sequence Diagram of UC-005 Create Booking - AT-UC005-05A Room unavailable**
+
+### AT-UC005-06A - Platform collect
+
+- **Branch from Main Step:** 6
+- **Condition:** Platform Collect
+- **Expected Response:** Booking is pending payment and payment instruction is displayed.
+
+![DGM-SEQ-UC-005 - Platform collect](sdd_assets/uc-005-create-booking/dgm-seq-uc-005-create-booking-at-uc005-06a-platform-collect.png)
+
+**Figure 3.5-5: Sequence Diagram of UC-005 Create Booking - AT-UC005-06A Platform collect**
+
+### AT-UC005-06B - Pay at property
+
+- **Branch from Main Step:** 6
+- **Condition:** Pay at Property
+- **Expected Response:** Booking is confirmed. Please pay at the property according to hotel policy.
+
+![DGM-SEQ-UC-005 - Pay at property](sdd_assets/uc-005-create-booking/dgm-seq-uc-005-create-booking-at-uc005-06b-pay-at-property.png)
+
+**Figure 3.5-6: Sequence Diagram of UC-005 Create Booking - AT-UC005-06B Pay at property**
 
 ### Validation, Authorization, Transaction, and Error Handling Notes
 
 | Area | Design |
 |---|---|
-| Validation | Validate authentication context, selected approved hotel, active room type, date range, guest count, room quantity, contact name, contact phone, optional contact email, and payment mode. Use MSG-BOOK-001 for invalid date range and general validation messaging for other invalid booking data. |
-| Authorization | Only authenticated Customer can create Customer booking. Guest must register or log in before booking per BR-AUTH-001. Customer may create only for own customer account. |
-| Transaction | Booking creation uses a single transaction around availability reservation, booking header creation, booking room creation, commission snapshot/receivable where applicable, and notification record creation. Roll back all writes when validation, availability, or persistence fails. |
-| Availability Consistency | Apply accepted hybrid availability decision: reserve room type quantity/date atomically for booking. Do not assign `PhysicalRoom`; assignment belongs to front desk/check-in design. |
-| Payment Mode | Platform Collect creates Pending Payment and hands off to UC-006. Pay at Property creates Confirmed booking immediately and records commission receivable. |
-| Error Handling | Invalid data returns validation response without write. Unavailable room returns MSG-BOOK-002 and does not create booking. Persistence/notification failure must not expose stack traces; booking transaction should roll back unless notification dispatch is explicitly implemented as outbox/record-after-commit. |
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Customer; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC005-04A returns "Check-out date must be later than check-in date."; AT-UC005-05A returns "The selected room is no longer available for the selected dates."; AT-UC005-06A returns "Booking is pending payment and payment instruction is displayed."; AT-UC005-06B returns "Booking is confirmed. Please pay at the property according to hotel policy.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
 
 ## Assumptions and Open Issues
 
-| ID | Type | Description | Impact |
-|---|---|---|---|
-| ASSUMP-UC005-001 | Assumption | Class names, method names, and repository boundaries are conceptual because no source implementation was inspected. | Final code may use different names or package boundaries. |
-| ASSUMP-UC005-002 | Assumption | Notification processing can be implemented as synchronous record creation inside the booking transaction or outbox-style after commit. | Transaction behavior should be aligned with final architecture. |
-| OQ-UC005-001 | Open Issue | Exact non-date validation message codes for missing contact fields, invalid phone/email, quantity, and payment mode are not defined in the provided UC-005 message list. | UI and API error mapping may need additional message catalog entries. |
+- ASSUMP-UC005-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC005-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC005-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
 
 # 3.6 UC-006 - Pay Online
 
 ## 3.6.1 Design Purpose
 
-This section describes the detailed design for **UC-006 Pay Online**. The use case allows an authenticated Customer to pay a Platform Collect booking through payOS while the system keeps `PaymentTransaction`, `Booking`, commission, and notification records consistent.
+This section describes the detailed design for **UC-006 Pay Online**. The use case covers pay booking amount through payOS for Platform Collect bookings. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
 
-**Related SRS items:** UC-006, FEAT-CUST-BOOK, SCR-008, SCR-011, SCR-012, NSF-001, INT-PAY-001, INT-PAY-002, INT-NOTI-001, ENT-013, ENT-016, ENT-020, ENT-023, BR-PAY-001, BR-PAY-003, BR-PAY-005, BR-BOOK-006, BR-BOOK-007, BR-FIN-001, BR-FIN-002, NFR-REL-002, NFR-SEC-001, MSG-PAY-001, MSG-PAY-002, MSG-PAY-003, MSG-BOOK-006.
+**Related SRS items:** FEAT-CUST-BOOK, UC-006, SCR-008, SCR-011, SCR-012, NSF-001, ENT-013, ENT-016, ENT-020, BR-PAY-001, BR-PAY-003, BR-PAY-005, BR-BOOK-006, BR-BOOK-007, BR-FIN-001, BR-FIN-002, MSG-PAY-001, MSG-PAY-002, MSG-PAY-003, MSG-BOOK-006, TR-006, AT-UC006-08A, AT-UC006-08B, AT-UC006-02A, AT-UC006-08C.
 
-The payment flow must:
+**Precondition:** Customer is authenticated; a Pending Payment booking exists and belongs to the Customer.
 
-- Allow payment only for the authenticated Customer who owns the Pending Payment booking.
-- Validate that the booking is still within the 15-minute payment deadline before initiating payment.
-- Create or reuse a Pending `PaymentTransaction` for payOS instruction generation.
-- Accept a successful payOS result through return or notification and process it idempotently.
-- Atomically update the payment to Paid, confirm the booking, create commission records, and record notification events.
-- Keep failed, cancelled, delayed, duplicate, late, or expired results from duplicating successful payment, commission, or confirmation effects.
+**Trigger:** Customer proceeds to online payment.
 
-Class names and methods are conceptual design assumptions because no implementation codebase was inspected.
+**Post-condition:** POS-01: Payment status and booking status are updated according to payOS result or timeout.
+
+The flow must:
+
+- Main step 1: Customer selects payment for Pending Payment booking.
+- Main step 2: System validates ownership, Pending Payment status, and payment deadline.
+- Main step 3: System displays payment summary and deadline.
+- Main step 4: Customer confirms online payment.
+- Main step 5: System presents payOS payment instruction/redirection.
+- Main step 6: Customer completes payment through payOS.
+- Main step 7: payOS Payment Gateway returns or sends payment result.
+- Main step 8: System idempotently records payment result.
+- Main step 9: System updates payment to Paid and booking to Confirmed.
+- Main step 10: System calculates commission and hotel payable.
+- Main step 11: System displays payment result and sends or records notification.
+- Enforce related business rules: BR-PAY-001, BR-PAY-003, BR-PAY-005, BR-BOOK-006, BR-BOOK-007, BR-FIN-001, BR-FIN-002.
+- Return a separate scenario response for each alternative/error flow: AT-UC006-08A, AT-UC006-08B, AT-UC006-02A, AT-UC006-08C.
 
 ## 3.6.2 Class Diagram
 
-This part presents the class diagram for the use case.
+This part presents the class diagram for UC-006 Pay Online.
 
 ![DGM-CLS-UC-006 - Pay Online Class Diagram](sdd_assets/uc-006-pay-online/dgm-cls-uc-006-pay-online-class-diagram.png)
 
@@ -1161,179 +1192,2134 @@ This part presents the class diagram for the use case.
 
 ## 3.6.3 Class Specifications
 
-This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions because no implementation codebase was inspected.
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### PaymentInstructionScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-006 Pay Online.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
 
 ### PaymentController Class
 
-**Description:** API entry point for Customer payment initiation and payOS payment result handling.
+**Description:** API/application entry controller for UC-006 Pay Online.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `initiatePayment(request)` | Receives a Customer request to pay a Pending Payment booking, validates the request boundary, and returns payOS instruction data. |
-| 2 | `handlePaymentReturn(request)` | Handles Customer return from payOS and queries/records the payment result for display. |
-| 3 | `handlePaymentNotification(payload)` | Receives payOS result notification for NSF-001 and delegates idempotent processing. |
-| 4 | `getPaymentResult(bookingId)` | Returns the latest customer-visible payment result for SCR-012. |
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
 
-### PaymentRequest Class
+### PayOnlineRequest Class
 
-**Description:** Request DTO carrying booking payment initiation data from SCR-008/SCR-011.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `validateRequiredFields()` | Checks that the booking reference and customer context required for payment initiation are present. |
-| 2 | `toPaymentCommand()` | Converts screen/API input into a service command without exposing gateway configuration values. |
-
-### PaymentResultPayload Class
-
-**Description:** DTO representing the payOS return or notification result without storing credentials or secret configuration.
+**Description:** Request DTO carrying input for UC-006 Pay Online.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `extractGatewayReference()` | Reads the gateway transaction reference used for idempotency and audit. |
-| 2 | `isSuccessful()` | Indicates whether the provider result should be mapped to a successful payment transition. |
-| 3 | `isFinalFailure()` | Indicates whether the provider result maps to failed or cancelled payment status. |
-
-### PaymentInstructionResponse Class
-
-**Description:** Response DTO carrying payOS instruction or redirection data for SCR-011 Payment Instruction Screen.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `includeInstructionData()` | Adds customer-visible payOS instruction or redirect data returned after payment initiation. |
-| 2 | `includeDeadline()` | Adds the payment deadline so SCR-011 can show the remaining time for the Pending Payment booking. |
-
-### PaymentResultResponse Class
-
-**Description:** Response DTO carrying customer-visible payment and booking result data for SCR-012 Payment Result Screen.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `includePaymentStatus()` | Adds the mapped payment status and user-facing message such as MSG-PAY-001, MSG-PAY-002, or MSG-PAY-003. |
-| 2 | `includeBookingStatus()` | Adds the updated booking status so the Customer can see whether the booking is Confirmed, still Pending Payment, or Expired. |
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
 
 ### PaymentService Class
 
-**Description:** Application service coordinating payment initiation, ownership/status/deadline validation, gateway interaction, and result processing.
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Pay Online.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `initiatePayment(command)` | Validates ownership, Pending Payment status, and deadline, creates or reuses a Pending transaction, and requests payOS instruction. |
-| 2 | `processGatewayResult(payload)` | Idempotently records payOS result and performs the first valid successful transition to Paid/Confirmed. |
-| 3 | `validatePaymentEligibility(booking, customerId)` | Enforces Customer ownership, Pending Payment status, and non-expired payment deadline before payment initiation. |
-| 4 | `mapProviderStatus(payload)` | Maps payOS result into internal payment status values: Processing, Paid, Failed, Cancelled, or Expired. |
-
-### PayOSClient Class
-
-**Description:** External client boundary for payOS payment instruction creation and result interpretation.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `createPaymentInstruction(transaction)` | Sends payment request data to payOS and returns instruction or redirect information. |
-| 2 | `parseResult(payload)` | Normalizes payOS return/notification data into internal result fields. |
-
-### BookingRepository Class
-
-**Description:** Repository for reading and updating `Booking` records involved in payment.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `findByIdForCustomer(bookingId, customerId)` | Finds the Customer-owned booking for authorization and payment eligibility checks. |
-| 2 | `confirmIfPendingPayment(bookingId)` | Atomically changes a Pending Payment booking to Confirmed when successful payment wins the state transition. |
-| 3 | `expireIfPaymentDeadlinePassed(bookingId)` | Marks the booking Expired when the payment deadline has passed before payment success. |
+| 1 | `payonline(request)` | Executes the UC-006 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
 
 ### PaymentTransactionRepository Class
 
-**Description:** Repository for persisting and querying `PaymentTransaction` records.
+**Description:** Repository abstraction for loading and saving data required by Pay Online.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `findActiveByBookingId(bookingId)` | Finds the current payment transaction for a Pending Payment booking. |
-| 2 | `createPendingTransaction(booking)` | Creates a Pending payOS transaction for the booking amount. |
-| 3 | `recordProviderResult(payload)` | Stores provider result fields and gateway reference for audit and status display. |
-| 4 | `markPaidIfNotProcessed(transactionId)` | Performs an idempotent transition to Paid only if no successful result has already been processed. |
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
 
-### CommissionService Class
+### PayOSClient Class
 
-**Description:** Service for creating commission and hotel payable records when payment confirms a booking.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `createCommissionForConfirmedBooking(booking)` | Calculates commission from booking amount and rate snapshot after booking confirmation. |
-| 2 | `calculateHotelPayable(booking, payment)` | Calculates Platform Collect hotel payable using paid amount, refund amount, and commission amount. |
-
-### NotificationService Class
-
-**Description:** Service for recording or sending customer and hotel operation notification events.
+**Description:** Supporting service or integration used by UC-006 Pay Online.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `recordPaymentSuccessNotification(booking, payment)` | Records/sends notification for successful payment and confirmed booking. |
-| 2 | `recordPaymentFailureNotification(booking, payment)` | Records customer-visible failed/cancelled payment event when applicable. |
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
+
+### PayOnlineResponse Class
+
+**Description:** Response DTO returned by UC-006 Pay Online.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
 
 ### Booking Class
 
-**Description:** Domain entity representing the Customer booking being paid.
+**Description:** Primary domain entity affected or displayed by UC-006 Pay Online.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `isPendingPayment()` | Determines whether UC-006 payment can still proceed. |
-| 2 | `isPaymentDeadlinePassed()` | Determines whether the booking must expire instead of accepting new payment attempts. |
-| 3 | `markConfirmed()` | Applies the successful payment state transition to Confirmed. |
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
 
 ### PaymentTransaction Class
 
-**Description:** Domain entity representing the online payOS payment transaction.
+**Description:** Supporting domain entity affected or displayed by UC-006 Pay Online.
 
 | No | Method | Description |
 |---:|---|---|
-| 1 | `canProcessSuccess()` | Determines whether a successful gateway result may still be processed. |
-| 2 | `markPaid(gatewayReference, paidAt)` | Applies successful payment result data. |
-| 3 | `markFailedOrCancelled(status, gatewayReference)` | Records failed or cancelled provider results without confirming the booking. |
-
-### CommissionRecord Class
-
-**Description:** Domain entity representing platform commission for the confirmed booking.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `createFromBooking(booking, rateSnapshot)` | Creates a commission record using the booking amount and commission rate snapshot. |
-
-### NotificationRecord Class
-
-**Description:** Domain entity representing recorded notification events.
-
-| No | Method | Description |
-|---:|---|---|
-| 1 | `createPaymentEvent(recipientId, bookingId, status)` | Creates an auditable payment notification event for customer or hotel operation roles. |
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
 
 ## 3.6.4 Sequence Diagram
 
-This part presents the sequence diagrams for the use case.
+This part presents the sequence diagrams for UC-006 Pay Online. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
 
 ![DGM-SEQ-UC-006 - Pay Online Main Flow](sdd_assets/uc-006-pay-online/dgm-seq-uc-006-pay-online-main-flow.png)
 
 **Figure 3.6-2: Sequence Diagram of UC-006 Pay Online - Main Flow**
 
-![DGM-SEQ-UC-006 - Pay Online Alternative Flows](sdd_assets/uc-006-pay-online/dgm-seq-uc-006-pay-online-alternative-flows.png)
+### AT-UC006-08A - Payment failed cancelled
 
-**Figure 3.6-3: Sequence Diagram of UC-006 Pay Online - Alternative/Error Flows**
+- **Branch from Main Step:** 8
+- **Condition:** Payment failed/cancelled
+- **Expected Response:** Payment was not completed. You may retry before the booking expires.
+
+![DGM-SEQ-UC-006 - Payment failed cancelled](sdd_assets/uc-006-pay-online/dgm-seq-uc-006-pay-online-at-uc006-08a-payment-failed-cancelled.png)
+
+**Figure 3.6-3: Sequence Diagram of UC-006 Pay Online - AT-UC006-08A Payment failed cancelled**
+
+### AT-UC006-08B - Delayed result
+
+- **Branch from Main Step:** 8
+- **Condition:** Delayed result
+- **Expected Response:** Payment result is being processed. The booking will update when the result is confirmed.
+
+![DGM-SEQ-UC-006 - Delayed result](sdd_assets/uc-006-pay-online/dgm-seq-uc-006-pay-online-at-uc006-08b-delayed-result.png)
+
+**Figure 3.6-4: Sequence Diagram of UC-006 Pay Online - AT-UC006-08B Delayed result**
+
+### AT-UC006-02A - Booking expired
+
+- **Branch from Main Step:** 2
+- **Condition:** Booking expired
+- **Expected Response:** This pending payment booking has expired. Please create a new booking.
+
+![DGM-SEQ-UC-006 - Booking expired](sdd_assets/uc-006-pay-online/dgm-seq-uc-006-pay-online-at-uc006-02a-booking-expired.png)
+
+**Figure 3.6-5: Sequence Diagram of UC-006 Pay Online - AT-UC006-02A Booking expired**
+
+### AT-UC006-08C - Duplicate or late callback
+
+- **Branch from Main Step:** 8
+- **Condition:** Duplicate or late callback
+- **Expected Response:** Provider event is recorded for audit only and no duplicate confirmation is created.
+
+![DGM-SEQ-UC-006 - Duplicate or late callback](sdd_assets/uc-006-pay-online/dgm-seq-uc-006-pay-online-at-uc006-08c-duplicate-or-late-callback.png)
+
+**Figure 3.6-6: Sequence Diagram of UC-006 Pay Online - AT-UC006-08C Duplicate or late callback**
 
 ### Validation, Authorization, Transaction, and Error Handling Notes
 
 | Area | Design |
 |---|---|
-| Validation | `PaymentController` validates required request shape. `PaymentService.validatePaymentEligibility()` validates Customer ownership, Pending Payment status, and the 15-minute payment deadline before payOS instruction creation. payOS result payloads are normalized through `PayOSClient.parseResult()` and mapped to internal statuses. |
-| Authorization | UC-006 is protected by authentication per NFR-SEC-001. The booking lookup uses `findByIdForCustomer(bookingId, customerId)` so a Customer can pay only their own booking. Hotel staff cannot manually change Platform Collect payment status per BR-PAY-002. |
-| Transaction | The successful result path is one database transaction: record provider result, mark transaction Paid if not already processed, confirm Pending Payment booking, create commission/hotel payable records, and record notification events. BR-PAY-005 applies: the first atomic transition to Confirmed or Expired wins. |
-| Error Handling | Failed/cancelled results are recorded and shown as MSG-PAY-002 while the booking remains Pending Payment until timeout. Delayed/processing results show MSG-PAY-003. Expired bookings show MSG-BOOK-006 and prevent resubmission. Duplicate or late callbacks are audit-only and must not duplicate payment, commission, booking confirmation, or availability reservation. |
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Customer; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC006-08A returns "Payment was not completed. You may retry before the booking expires."; AT-UC006-08B returns "Payment result is being processed. The booking will update when the result is confirmed."; AT-UC006-02A returns "This pending payment booking has expired. Please create a new booking."; AT-UC006-08C returns "Provider event is recorded for audit only and no duplicate confirmation is created.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
 
 ## Assumptions and Open Issues
 
-| ID | Type | Description | Impact |
-|---|---|---|---|
-| ASSUMP-UC006-001 | Assumption | The final implementation will expose controller/service/repository classes similar to the conceptual design above. | Class names may need renaming to match final source code. |
-| ASSUMP-UC006-002 | Assumption | payOS credential names, webhook secrets, and real endpoint configuration are intentionally omitted from the SDD assets. | Prevents accidental exposure of secrets while preserving the integration boundary. |
-| OQ-UC006-001 | Open Issue | Final payOS callback signature verification mechanism is not specified in the SRS. | Security design may need an additional verifier class once implementation details are confirmed. |
+- ASSUMP-UC006-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC006-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC006-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
+
+# 3.7 UC-007 - Cancel Booking
+
+## 3.7.1 Design Purpose
+
+This section describes the detailed design for **UC-007 Cancel Booking**. The use case covers cancel own booking according to policy and initiate refund status if applicable. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
+
+**Related SRS items:** FEAT-CUST-MYBOOK, UC-007, SCR-010, SCR-013, ENT-013, ENT-018, BR-BOOK-008, BR-REF-001, BR-REF-002, BR-REF-003, BR-FIN-002, MSG-BOOK-005, MSG-BOOK-007, MSG-REF-002, TR-007, AT-UC007-04A, AT-UC007-06A, AT-UC007-06B.
+
+**Precondition:** Customer authenticated; booking exists and belongs to customer.
+
+**Trigger:** Customer selects Cancel Booking.
+
+**Post-condition:** POS-01: Eligible booking is cancelled; reserved availability is released; refund status is recorded if applicable.
+
+The flow must:
+
+- Main step 1: Customer opens own Booking Detail.
+- Main step 2: System displays booking status, policy, refund eligibility, and cancel action if allowed.
+- Main step 3: Customer selects Cancel Booking and enters reason if required.
+- Main step 4: System validates ownership, status, and policy.
+- Main step 5: System cancels booking and releases reserved availability if applicable.
+- Main step 6: System determines refund eligibility.
+- Main step 7: System creates or updates RefundRecord if review is required.
+- Main step 8: System sends or records cancellation notification.
+- Main step 9: System displays cancellation result and refund status.
+- Enforce related business rules: BR-BOOK-008, BR-REF-001, BR-REF-002, BR-REF-003, BR-FIN-002.
+- Return a separate scenario response for each alternative/error flow: AT-UC007-04A, AT-UC007-06A, AT-UC007-06B.
+
+## 3.7.2 Class Diagram
+
+This part presents the class diagram for UC-007 Cancel Booking.
+
+![DGM-CLS-UC-007 - Cancel Booking Class Diagram](sdd_assets/uc-007-cancel-booking/dgm-cls-uc-007-cancel-booking-class-diagram.png)
+
+**Figure 3.7-1: Class Diagram of UC-007 Cancel Booking**
+
+## 3.7.3 Class Specifications
+
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### CustomerBookingDetailScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-007 Cancel Booking.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
+
+### CancelBookingController Class
+
+**Description:** API/application entry controller for UC-007 Cancel Booking.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
+
+### CancelBookingRequest Class
+
+**Description:** Request DTO carrying input for UC-007 Cancel Booking.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
+
+### CancelBookingService Class
+
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Cancel Booking.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `cancelbooking(request)` | Executes the UC-007 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
+
+### BookingRepository Class
+
+**Description:** Repository abstraction for loading and saving data required by Cancel Booking.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
+
+### RefundPolicyService Class
+
+**Description:** Supporting service or integration used by UC-007 Cancel Booking.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
+
+### CancelBookingResponse Class
+
+**Description:** Response DTO returned by UC-007 Cancel Booking.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
+
+### Booking Class
+
+**Description:** Primary domain entity affected or displayed by UC-007 Cancel Booking.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
+
+### RefundRecord Class
+
+**Description:** Supporting domain entity affected or displayed by UC-007 Cancel Booking.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
+
+## 3.7.4 Sequence Diagram
+
+This part presents the sequence diagrams for UC-007 Cancel Booking. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
+
+![DGM-SEQ-UC-007 - Cancel Booking Main Flow](sdd_assets/uc-007-cancel-booking/dgm-seq-uc-007-cancel-booking-main-flow.png)
+
+**Figure 3.7-2: Sequence Diagram of UC-007 Cancel Booking - Main Flow**
+
+### AT-UC007-04A - Cancellation not allowed
+
+- **Branch from Main Step:** 4
+- **Condition:** Cancellation not allowed
+- **Expected Response:** This booking cannot be cancelled according to its current status or policy.
+
+![DGM-SEQ-UC-007 - Cancellation not allowed](sdd_assets/uc-007-cancel-booking/dgm-seq-uc-007-cancel-booking-at-uc007-04a-cancellation-not-allowed.png)
+
+**Figure 3.7-3: Sequence Diagram of UC-007 Cancel Booking - AT-UC007-04A Cancellation not allowed**
+
+### AT-UC007-06A - Refund not required
+
+- **Branch from Main Step:** 6
+- **Condition:** Refund not required
+- **Expected Response:** Refund is marked Not Required and cancellation continues.
+
+![DGM-SEQ-UC-007 - Refund not required](sdd_assets/uc-007-cancel-booking/dgm-seq-uc-007-cancel-booking-at-uc007-06a-refund-not-required.png)
+
+**Figure 3.7-4: Sequence Diagram of UC-007 Cancel Booking - AT-UC007-06A Refund not required**
+
+### AT-UC007-06B - Refund review required
+
+- **Branch from Main Step:** 6
+- **Condition:** Refund review required
+- **Expected Response:** Refund request is under review by the platform.
+
+![DGM-SEQ-UC-007 - Refund review required](sdd_assets/uc-007-cancel-booking/dgm-seq-uc-007-cancel-booking-at-uc007-06b-refund-review-required.png)
+
+**Figure 3.7-5: Sequence Diagram of UC-007 Cancel Booking - AT-UC007-06B Refund review required**
+
+### Validation, Authorization, Transaction, and Error Handling Notes
+
+| Area | Design |
+|---|---|
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Customer; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC007-04A returns "This booking cannot be cancelled according to its current status or policy."; AT-UC007-06A returns "Refund is marked Not Required and cancellation continues."; AT-UC007-06B returns "Refund request is under review by the platform.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
+
+## Assumptions and Open Issues
+
+- ASSUMP-UC007-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC007-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC007-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
+
+# 3.8 UC-008 - View My Bookings
+
+## 3.8.1 Design Purpose
+
+This section describes the detailed design for **UC-008 View My Bookings**. The use case covers view customer booking list, status, payment status, and booking detail. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
+
+**Related SRS items:** FEAT-CUST-MYBOOK, UC-008, SCR-009, SCR-010, ENT-013, BR-BOOK-008, MSG-BOOK-008, TR-008, AT-UC008-02A.
+
+**Precondition:** Customer is authenticated.
+
+**Trigger:** Customer opens My Bookings.
+
+**Post-condition:** POS-01: Customer sees own booking list/detail only.
+
+The flow must:
+
+- Main step 1: Customer opens My Bookings Screen.
+- Main step 2: System displays own booking list with booking code, hotel, dates, booking status, payment status, and main actions.
+- Main step 3: Customer filters or selects booking.
+- Main step 4: System displays booking detail including room, guest count, payment mode, price, refund status, and allowed actions.
+- Enforce related business rules: BR-BOOK-008.
+- Return a separate scenario response for each alternative/error flow: AT-UC008-02A.
+
+## 3.8.2 Class Diagram
+
+This part presents the class diagram for UC-008 View My Bookings.
+
+![DGM-CLS-UC-008 - View My Bookings Class Diagram](sdd_assets/uc-008-view-my-bookings/dgm-cls-uc-008-view-my-bookings-class-diagram.png)
+
+**Figure 3.8-1: Class Diagram of UC-008 View My Bookings**
+
+## 3.8.3 Class Specifications
+
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### MyBookingsScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-008 View My Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
+
+### MyBookingsController Class
+
+**Description:** API/application entry controller for UC-008 View My Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
+
+### ViewMyBookingsRequest Class
+
+**Description:** Request DTO carrying input for UC-008 View My Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
+
+### MyBookingsService Class
+
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for View My Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `viewmybookings(request)` | Executes the UC-008 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
+
+### BookingRepository Class
+
+**Description:** Repository abstraction for loading and saving data required by View My Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
+
+### CustomerAuthorizationService Class
+
+**Description:** Supporting service or integration used by UC-008 View My Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
+
+### ViewMyBookingsResponse Class
+
+**Description:** Response DTO returned by UC-008 View My Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
+
+### Booking Class
+
+**Description:** Primary domain entity affected or displayed by UC-008 View My Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
+
+### RefundRecord Class
+
+**Description:** Supporting domain entity affected or displayed by UC-008 View My Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
+
+## 3.8.4 Sequence Diagram
+
+This part presents the sequence diagrams for UC-008 View My Bookings. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
+
+![DGM-SEQ-UC-008 - View My Bookings Main Flow](sdd_assets/uc-008-view-my-bookings/dgm-seq-uc-008-view-my-bookings-main-flow.png)
+
+**Figure 3.8-2: Sequence Diagram of UC-008 View My Bookings - Main Flow**
+
+### AT-UC008-02A - No bookings
+
+- **Branch from Main Step:** 2
+- **Condition:** No bookings
+- **Expected Response:** You do not have any bookings yet.
+
+![DGM-SEQ-UC-008 - No bookings](sdd_assets/uc-008-view-my-bookings/dgm-seq-uc-008-view-my-bookings-at-uc008-02a-no-bookings.png)
+
+**Figure 3.8-3: Sequence Diagram of UC-008 View My Bookings - AT-UC008-02A No bookings**
+
+### Validation, Authorization, Transaction, and Error Handling Notes
+
+| Area | Design |
+|---|---|
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Customer; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC008-02A returns "You do not have any bookings yet.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
+
+## Assumptions and Open Issues
+
+- ASSUMP-UC008-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC008-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC008-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
+
+# 3.9 UC-009 - Register Hotel Property
+
+## 3.9.1 Design Purpose
+
+This section describes the detailed design for **UC-009 Register Hotel Property**. The use case covers create a hotel profile and submit it for platform approval. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
+
+**Related SRS items:** FEAT-HOTEL-SETUP, UC-009, SCR-015, ENT-005, ENT-006, ENT-007, ENT-008, ENT-009, BR-MKT-001, BR-OWNER-001, MSG-OWNER-001, MSG-OWNER-003, MSG-OWNER-005, TR-009, AT-UC009-04A, AT-UC009-04B.
+
+**Precondition:** Property Owner is authenticated.
+
+**Trigger:** Property Owner selects Register Hotel Property.
+
+**Post-condition:** POS-01: Hotel profile is created with Pending Approval status and submitted to platform review.
+
+The flow must:
+
+- Main step 1: Property Owner opens Hotel Registration Screen.
+- Main step 2: System displays hotel profile, address, contact, images, amenities, and policy fields.
+- Main step 3: Property Owner enters hotel information and uploads required content.
+- Main step 4: System validates mandatory fields and format.
+- Main step 5: System creates hotel profile with Pending Approval status.
+- Main step 6: System notifies or records notification for Platform Administrator.
+- Main step 7: System displays submission success message.
+- Enforce related business rules: BR-MKT-001, BR-OWNER-001.
+- Return a separate scenario response for each alternative/error flow: AT-UC009-04A, AT-UC009-04B.
+
+## 3.9.2 Class Diagram
+
+This part presents the class diagram for UC-009 Register Hotel Property.
+
+![DGM-CLS-UC-009 - Register Hotel Property Class Diagram](sdd_assets/uc-009-register-hotel-property/dgm-cls-uc-009-register-hotel-property-class-diagram.png)
+
+**Figure 3.9-1: Class Diagram of UC-009 Register Hotel Property**
+
+## 3.9.3 Class Specifications
+
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### HotelRegistrationScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-009 Register Hotel Property.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
+
+### HotelRegistrationController Class
+
+**Description:** API/application entry controller for UC-009 Register Hotel Property.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
+
+### RegisterHotelPropertyRequest Class
+
+**Description:** Request DTO carrying input for UC-009 Register Hotel Property.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
+
+### HotelRegistrationService Class
+
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Register Hotel Property.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `registerhotelproperty(request)` | Executes the UC-009 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
+
+### HotelPropertyRepository Class
+
+**Description:** Repository abstraction for loading and saving data required by Register Hotel Property.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
+
+### NotificationService Class
+
+**Description:** Supporting service or integration used by UC-009 Register Hotel Property.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
+
+### RegisterHotelPropertyResponse Class
+
+**Description:** Response DTO returned by UC-009 Register Hotel Property.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
+
+### HotelProperty Class
+
+**Description:** Primary domain entity affected or displayed by UC-009 Register Hotel Property.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
+
+### HotelImage Class
+
+**Description:** Supporting domain entity affected or displayed by UC-009 Register Hotel Property.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
+
+## 3.9.4 Sequence Diagram
+
+This part presents the sequence diagrams for UC-009 Register Hotel Property. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
+
+![DGM-SEQ-UC-009 - Register Hotel Property Main Flow](sdd_assets/uc-009-register-hotel-property/dgm-seq-uc-009-register-hotel-property-main-flow.png)
+
+**Figure 3.9-2: Sequence Diagram of UC-009 Register Hotel Property - Main Flow**
+
+### AT-UC009-04A - Missing required fields
+
+- **Branch from Main Step:** 4
+- **Condition:** Missing required fields
+- **Expected Response:** Please complete required hotel property information.
+
+![DGM-SEQ-UC-009 - Missing required fields](sdd_assets/uc-009-register-hotel-property/dgm-seq-uc-009-register-hotel-property-at-uc009-04a-missing-required-fields.png)
+
+**Figure 3.9-3: Sequence Diagram of UC-009 Register Hotel Property - AT-UC009-04A Missing required fields**
+
+### AT-UC009-04B - Invalid image
+
+- **Branch from Main Step:** 4
+- **Condition:** Invalid image
+- **Expected Response:** Please upload a valid image file.
+
+![DGM-SEQ-UC-009 - Invalid image](sdd_assets/uc-009-register-hotel-property/dgm-seq-uc-009-register-hotel-property-at-uc009-04b-invalid-image.png)
+
+**Figure 3.9-4: Sequence Diagram of UC-009 Register Hotel Property - AT-UC009-04B Invalid image**
+
+### Validation, Authorization, Transaction, and Error Handling Notes
+
+| Area | Design |
+|---|---|
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Property Owner; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC009-04A returns "Please complete required hotel property information."; AT-UC009-04B returns "Please upload a valid image file.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
+
+## Assumptions and Open Issues
+
+- ASSUMP-UC009-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC009-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC009-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
+
+# 3.10 UC-010 - Manage Hotel Profile
+
+## 3.10.1 Design Purpose
+
+This section describes the detailed design for **UC-010 Manage Hotel Profile**. The use case covers update owned or assigned hotel information, images, amenities, and policies. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
+
+**Related SRS items:** FEAT-HOTEL-SETUP, UC-010, SCR-016, ENT-005, ENT-006, ENT-007, ENT-008, ENT-009, BR-OWNER-001, BR-STAFF-002, BR-MKT-001, MSG-OWNER-002, MSG-OWNER-004, MSG-OWNER-006, TR-010, AT-UC010-01A, AT-UC010-05A.
+
+**Precondition:** Actor authenticated; selected hotel access can be validated before hotel profile data is displayed.
+
+**Trigger:** Actor opens Hotel Profile Management.
+
+**Post-condition:** POS-01: Hotel profile, images, amenities, or policy information is updated according to permission and approval rules.
+
+The flow must:
+
+- Main step 1: Actor selects owned or assigned hotel.
+- Main step 2: System validates selected hotel access and displays hotel profile and approval/publication status.
+- Main step 3: Actor updates editable hotel information, images, amenities, or policies.
+- Main step 4: System validates updates.
+- Main step 5: System records changes.
+- Main step 6: System displays success message.
+- Enforce related business rules: BR-OWNER-001, BR-STAFF-002, BR-MKT-001.
+- Return a separate scenario response for each alternative/error flow: AT-UC010-01A, AT-UC010-05A.
+
+## 3.10.2 Class Diagram
+
+This part presents the class diagram for UC-010 Manage Hotel Profile.
+
+![DGM-CLS-UC-010 - Manage Hotel Profile Class Diagram](sdd_assets/uc-010-manage-hotel-profile/dgm-cls-uc-010-manage-hotel-profile-class-diagram.png)
+
+**Figure 3.10-1: Class Diagram of UC-010 Manage Hotel Profile**
+
+## 3.10.3 Class Specifications
+
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### HotelProfileManagementScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-010 Manage Hotel Profile.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
+
+### HotelProfileController Class
+
+**Description:** API/application entry controller for UC-010 Manage Hotel Profile.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
+
+### ManageHotelProfileRequest Class
+
+**Description:** Request DTO carrying input for UC-010 Manage Hotel Profile.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
+
+### HotelProfileService Class
+
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Manage Hotel Profile.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `managehotelprofile(request)` | Executes the UC-010 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
+
+### HotelPropertyRepository Class
+
+**Description:** Repository abstraction for loading and saving data required by Manage Hotel Profile.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
+
+### HotelAuthorizationService Class
+
+**Description:** Supporting service or integration used by UC-010 Manage Hotel Profile.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
+
+### ManageHotelProfileResponse Class
+
+**Description:** Response DTO returned by UC-010 Manage Hotel Profile.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
+
+### HotelProperty Class
+
+**Description:** Primary domain entity affected or displayed by UC-010 Manage Hotel Profile.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
+
+### CancellationPolicy Class
+
+**Description:** Supporting domain entity affected or displayed by UC-010 Manage Hotel Profile.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
+
+## 3.10.4 Sequence Diagram
+
+This part presents the sequence diagrams for UC-010 Manage Hotel Profile. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
+
+![DGM-SEQ-UC-010 - Manage Hotel Profile Main Flow](sdd_assets/uc-010-manage-hotel-profile/dgm-seq-uc-010-manage-hotel-profile-main-flow.png)
+
+**Figure 3.10-2: Sequence Diagram of UC-010 Manage Hotel Profile - Main Flow**
+
+### AT-UC010-01A - Unauthorized hotel
+
+- **Branch from Main Step:** 1
+- **Condition:** Unauthorized hotel
+- **Expected Response:** You can access only hotels that you own or are assigned to.
+
+![DGM-SEQ-UC-010 - Unauthorized hotel](sdd_assets/uc-010-manage-hotel-profile/dgm-seq-uc-010-manage-hotel-profile-at-uc010-01a-unauthorized-hotel.png)
+
+**Figure 3.10-3: Sequence Diagram of UC-010 Manage Hotel Profile - AT-UC010-01A Unauthorized hotel**
+
+### AT-UC010-05A - Sensitive change requires review
+
+- **Branch from Main Step:** 5
+- **Condition:** Sensitive change requires review
+- **Expected Response:** This change may require platform review before publication.
+
+![DGM-SEQ-UC-010 - Sensitive change requires review](sdd_assets/uc-010-manage-hotel-profile/dgm-seq-uc-010-manage-hotel-profile-at-uc010-05a-sensitive-change-requires-review.png)
+
+**Figure 3.10-4: Sequence Diagram of UC-010 Manage Hotel Profile - AT-UC010-05A Sensitive change requires review**
+
+### Validation, Authorization, Transaction, and Error Handling Notes
+
+| Area | Design |
+|---|---|
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Property Owner / Hotel Manager; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC010-01A returns "You can access only hotels that you own or are assigned to."; AT-UC010-05A returns "This change may require platform review before publication.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
+
+## Assumptions and Open Issues
+
+- ASSUMP-UC010-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC010-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC010-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
+
+# 3.11 UC-011 - Manage Room Type
+
+## 3.11.1 Design Purpose
+
+This section describes the detailed design for **UC-011 Manage Room Type**. The use case covers create and update private room types, base price, capacity, and facilities. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
+
+**Related SRS items:** FEAT-ROOM-INV, UC-011, SCR-017, ENT-010, BR-ROOM-003, BR-ROOM-004, BR-OWNER-001, BR-STAFF-002, MSG-ROOM-001, MSG-ROOM-002, MSG-ROOM-005, TR-011, AT-UC011-04A, AT-UC011-04B.
+
+**Precondition:** Actor authenticated; hotel owned or assigned.
+
+**Trigger:** Actor opens Room Type Management.
+
+**Post-condition:** POS-01: Room type information is created or updated for an owned/assigned hotel.
+
+The flow must:
+
+- Main step 1: Actor selects hotel and opens Room Type Management.
+- Main step 2: System displays room types and actions.
+- Main step 3: Actor creates or updates room type information.
+- Main step 4: System validates name, capacity, base price, and status.
+- Main step 5: System records room type.
+- Main step 6: System displays success message.
+- Enforce related business rules: BR-ROOM-003, BR-ROOM-004, BR-OWNER-001, BR-STAFF-002.
+- Return a separate scenario response for each alternative/error flow: AT-UC011-04A, AT-UC011-04B.
+
+## 3.11.2 Class Diagram
+
+This part presents the class diagram for UC-011 Manage Room Type.
+
+![DGM-CLS-UC-011 - Manage Room Type Class Diagram](sdd_assets/uc-011-manage-room-type/dgm-cls-uc-011-manage-room-type-class-diagram.png)
+
+**Figure 3.11-1: Class Diagram of UC-011 Manage Room Type**
+
+## 3.11.3 Class Specifications
+
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### RoomTypeManagementScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-011 Manage Room Type.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
+
+### RoomTypeController Class
+
+**Description:** API/application entry controller for UC-011 Manage Room Type.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
+
+### ManageRoomTypeRequest Class
+
+**Description:** Request DTO carrying input for UC-011 Manage Room Type.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
+
+### RoomTypeService Class
+
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Manage Room Type.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `manageroomtype(request)` | Executes the UC-011 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
+
+### RoomTypeRepository Class
+
+**Description:** Repository abstraction for loading and saving data required by Manage Room Type.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
+
+### HotelAuthorizationService Class
+
+**Description:** Supporting service or integration used by UC-011 Manage Room Type.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
+
+### ManageRoomTypeResponse Class
+
+**Description:** Response DTO returned by UC-011 Manage Room Type.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
+
+### RoomType Class
+
+**Description:** Primary domain entity affected or displayed by UC-011 Manage Room Type.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
+
+### RoomAvailability Class
+
+**Description:** Supporting domain entity affected or displayed by UC-011 Manage Room Type.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
+
+## 3.11.4 Sequence Diagram
+
+This part presents the sequence diagrams for UC-011 Manage Room Type. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
+
+![DGM-SEQ-UC-011 - Manage Room Type Main Flow](sdd_assets/uc-011-manage-room-type/dgm-seq-uc-011-manage-room-type-main-flow.png)
+
+**Figure 3.11-2: Sequence Diagram of UC-011 Manage Room Type - Main Flow**
+
+### AT-UC011-04A - Invalid room type
+
+- **Branch from Main Step:** 4
+- **Condition:** Invalid room type
+- **Expected Response:** Please check room type name, capacity, price, and status.
+
+![DGM-SEQ-UC-011 - Invalid room type](sdd_assets/uc-011-manage-room-type/dgm-seq-uc-011-manage-room-type-at-uc011-04a-invalid-room-type.png)
+
+**Figure 3.11-3: Sequence Diagram of UC-011 Manage Room Type - AT-UC011-04A Invalid room type**
+
+### AT-UC011-04B - Deactivation conflict
+
+- **Branch from Main Step:** 4
+- **Condition:** Deactivation conflict
+- **Expected Response:** This room type cannot be deactivated because active future bookings exist.
+
+![DGM-SEQ-UC-011 - Deactivation conflict](sdd_assets/uc-011-manage-room-type/dgm-seq-uc-011-manage-room-type-at-uc011-04b-deactivation-conflict.png)
+
+**Figure 3.11-4: Sequence Diagram of UC-011 Manage Room Type - AT-UC011-04B Deactivation conflict**
+
+### Validation, Authorization, Transaction, and Error Handling Notes
+
+| Area | Design |
+|---|---|
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Property Owner / Hotel Manager; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC011-04A returns "Please check room type name, capacity, price, and status."; AT-UC011-04B returns "This room type cannot be deactivated because active future bookings exist.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
+
+## Assumptions and Open Issues
+
+- ASSUMP-UC011-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC011-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC011-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
+
+# 3.12 UC-012 - Manage Physical Room
+
+## 3.12.1 Design Purpose
+
+This section describes the detailed design for **UC-012 Manage Physical Room**. The use case covers create and update individual private rooms under room types. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
+
+**Related SRS items:** FEAT-ROOM-INV, UC-012, SCR-018, ENT-011, ENT-027, BR-ROOM-001, BR-ROOM-005, BR-ROOM-006, BR-OWNER-001, BR-STAFF-002, MSG-ROOM-003, MSG-ROOM-004, MSG-ROOM-006, MSG-AUTH-007, TR-012, AT-UC012-05A, AT-UC012-05B, AT-UC012-02A.
+
+**Precondition:** Actor authenticated; hotel/room type owned or assigned.
+
+**Trigger:** Actor opens Physical Room Management.
+
+**Post-condition:** POS-01: Physical room information is created or updated for an owned/assigned hotel.
+
+The flow must:
+
+- Main step 1: Actor selects hotel and room type.
+- Main step 2: System validates actor permission for the selected hotel and room type before displaying room data.
+- Main step 3: System displays physical rooms, lifecycle status, and allowed actions.
+- Main step 4: Actor creates or updates room number/name, floor, notes, or requests an allowed lifecycle action.
+- Main step 5: System validates duplicate room number, room data, lifecycle transition, and active booking conflicts.
+- Main step 6: System records physical room changes and RoomStatusHistory when lifecycle status changes.
+- Main step 7: System displays success message.
+- Enforce related business rules: BR-ROOM-001, BR-ROOM-005, BR-ROOM-006, BR-OWNER-001, BR-STAFF-002.
+- Return a separate scenario response for each alternative/error flow: AT-UC012-05A, AT-UC012-05B, AT-UC012-02A.
+
+## 3.12.2 Class Diagram
+
+This part presents the class diagram for UC-012 Manage Physical Room.
+
+![DGM-CLS-UC-012 - Manage Physical Room Class Diagram](sdd_assets/uc-012-manage-physical-room/dgm-cls-uc-012-manage-physical-room-class-diagram.png)
+
+**Figure 3.12-1: Class Diagram of UC-012 Manage Physical Room**
+
+## 3.12.3 Class Specifications
+
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### PhysicalRoomManagementScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-012 Manage Physical Room.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
+
+### PhysicalRoomController Class
+
+**Description:** API/application entry controller for UC-012 Manage Physical Room.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
+
+### ManagePhysicalRoomRequest Class
+
+**Description:** Request DTO carrying input for UC-012 Manage Physical Room.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
+
+### PhysicalRoomService Class
+
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Manage Physical Room.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `managephysicalroom(request)` | Executes the UC-012 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
+
+### PhysicalRoomRepository Class
+
+**Description:** Repository abstraction for loading and saving data required by Manage Physical Room.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
+
+### RoomStatusWorkflowService Class
+
+**Description:** Supporting service or integration used by UC-012 Manage Physical Room.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
+
+### ManagePhysicalRoomResponse Class
+
+**Description:** Response DTO returned by UC-012 Manage Physical Room.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
+
+### PhysicalRoom Class
+
+**Description:** Primary domain entity affected or displayed by UC-012 Manage Physical Room.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
+
+### RoomStatusHistory Class
+
+**Description:** Supporting domain entity affected or displayed by UC-012 Manage Physical Room.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
+
+## 3.12.4 Sequence Diagram
+
+This part presents the sequence diagrams for UC-012 Manage Physical Room. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
+
+![DGM-SEQ-UC-012 - Manage Physical Room Main Flow](sdd_assets/uc-012-manage-physical-room/dgm-seq-uc-012-manage-physical-room-main-flow.png)
+
+**Figure 3.12-2: Sequence Diagram of UC-012 Manage Physical Room - Main Flow**
+
+### AT-UC012-05A - Duplicate room number
+
+- **Branch from Main Step:** 5
+- **Condition:** Duplicate room number
+- **Expected Response:** Room number must be unique within the hotel.
+
+![DGM-SEQ-UC-012 - Duplicate room number](sdd_assets/uc-012-manage-physical-room/dgm-seq-uc-012-manage-physical-room-at-uc012-05a-duplicate-room-number.png)
+
+**Figure 3.12-3: Sequence Diagram of UC-012 Manage Physical Room - AT-UC012-05A Duplicate room number**
+
+### AT-UC012-05B - Inactivate occupied room
+
+- **Branch from Main Step:** 5
+- **Condition:** Inactivate occupied room
+- **Expected Response:** This room cannot be inactivated because it is currently occupied.
+
+![DGM-SEQ-UC-012 - Inactivate occupied room](sdd_assets/uc-012-manage-physical-room/dgm-seq-uc-012-manage-physical-room-at-uc012-05b-inactivate-occupied-room.png)
+
+**Figure 3.12-4: Sequence Diagram of UC-012 Manage Physical Room - AT-UC012-05B Inactivate occupied room**
+
+### AT-UC012-02A - Unauthorized hotel or room type
+
+- **Branch from Main Step:** 2
+- **Condition:** Unauthorized hotel or room type
+- **Expected Response:** You are not authorized to perform this action.
+
+![DGM-SEQ-UC-012 - Unauthorized hotel or room type](sdd_assets/uc-012-manage-physical-room/dgm-seq-uc-012-manage-physical-room-at-uc012-02a-unauthorized-hotel-or-room-type.png)
+
+**Figure 3.12-5: Sequence Diagram of UC-012 Manage Physical Room - AT-UC012-02A Unauthorized hotel or room type**
+
+### Validation, Authorization, Transaction, and Error Handling Notes
+
+| Area | Design |
+|---|---|
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Property Owner / Hotel Manager; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC012-05A returns "Room number must be unique within the hotel."; AT-UC012-05B returns "This room cannot be inactivated because it is currently occupied."; AT-UC012-02A returns "You are not authorized to perform this action.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
+
+## Assumptions and Open Issues
+
+- ASSUMP-UC012-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC012-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC012-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
+
+# 3.13 UC-013 - Manage Room Availability
+
+## 3.13.1 Design Purpose
+
+This section describes the detailed design for **UC-013 Manage Room Availability**. The use case covers open, close, block, or unblock room availability by date range, according to role permissions. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
+
+**Related SRS items:** FEAT-ROOM-INV, UC-013, SCR-019, SCR-035, ENT-012, ENT-027, BR-BOOK-001, BR-ROOM-002, BR-AVAIL-001, BR-AVAIL-002, BR-STAFF-003, MSG-BOOK-001, MSG-AVAIL-001, MSG-AVAIL-002, MSG-AUTH-007, TR-013, AT-UC013-06A, AT-UC013-06B, AT-UC013-02A, AT-UC013-06C.
+
+**Precondition:** Actor authenticated and permitted for hotel.
+
+**Trigger:** Actor opens Availability Calendar.
+
+**Post-condition:** POS-01: Availability or block record is updated and marketplace availability is refreshed accordingly.
+
+The flow must:
+
+- Main step 1: Actor opens Availability Calendar.
+- Main step 2: System validates actor hotel scope and allowed availability actions before displaying availability data.
+- Main step 3: System displays room type availability, physical room status, existing bookings, and blocked dates within permitted scope.
+- Main step 4: Actor selects room/date range.
+- Main step 5: Actor chooses open/close/block/unblock and enters reason if required.
+- Main step 6: System validates date range, required reason, permission, and conflicts.
+- Main step 7: System records change.
+- Main step 8: System updates marketplace availability display.
+- Enforce related business rules: BR-BOOK-001, BR-ROOM-002, BR-AVAIL-001, BR-AVAIL-002, BR-STAFF-003.
+- Return a separate scenario response for each alternative/error flow: AT-UC013-06A, AT-UC013-06B, AT-UC013-02A, AT-UC013-06C.
+
+## 3.13.2 Class Diagram
+
+This part presents the class diagram for UC-013 Manage Room Availability.
+
+![DGM-CLS-UC-013 - Manage Room Availability Class Diagram](sdd_assets/uc-013-manage-room-availability/dgm-cls-uc-013-manage-room-availability-class-diagram.png)
+
+**Figure 3.13-1: Class Diagram of UC-013 Manage Room Availability**
+
+## 3.13.3 Class Specifications
+
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### AvailabilityCalendarScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-013 Manage Room Availability.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
+
+### RoomAvailabilityController Class
+
+**Description:** API/application entry controller for UC-013 Manage Room Availability.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
+
+### ManageRoomAvailabilityRequest Class
+
+**Description:** Request DTO carrying input for UC-013 Manage Room Availability.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
+
+### RoomAvailabilityService Class
+
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Manage Room Availability.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `manageroomavailability(request)` | Executes the UC-013 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
+
+### RoomAvailabilityRepository Class
+
+**Description:** Repository abstraction for loading and saving data required by Manage Room Availability.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
+
+### HotelAuthorizationService Class
+
+**Description:** Supporting service or integration used by UC-013 Manage Room Availability.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
+
+### ManageRoomAvailabilityResponse Class
+
+**Description:** Response DTO returned by UC-013 Manage Room Availability.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
+
+### RoomAvailability Class
+
+**Description:** Primary domain entity affected or displayed by UC-013 Manage Room Availability.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
+
+### PhysicalRoom Class
+
+**Description:** Supporting domain entity affected or displayed by UC-013 Manage Room Availability.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
+
+## 3.13.4 Sequence Diagram
+
+This part presents the sequence diagrams for UC-013 Manage Room Availability. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
+
+![DGM-SEQ-UC-013 - Manage Room Availability Main Flow](sdd_assets/uc-013-manage-room-availability/dgm-seq-uc-013-manage-room-availability-main-flow.png)
+
+**Figure 3.13-2: Sequence Diagram of UC-013 Manage Room Availability - Main Flow**
+
+### AT-UC013-06A - Invalid date
+
+- **Branch from Main Step:** 6
+- **Condition:** Invalid date
+- **Expected Response:** Check-out date must be later than check-in date.
+
+![DGM-SEQ-UC-013 - Invalid date](sdd_assets/uc-013-manage-room-availability/dgm-seq-uc-013-manage-room-availability-at-uc013-06a-invalid-date.png)
+
+**Figure 3.13-3: Sequence Diagram of UC-013 Manage Room Availability - AT-UC013-06A Invalid date**
+
+### AT-UC013-06B - Conflict with active booking
+
+- **Branch from Main Step:** 6
+- **Condition:** Conflict with active booking
+- **Expected Response:** Availability change conflicts with active booking or assignment.
+
+![DGM-SEQ-UC-013 - Conflict with active booking](sdd_assets/uc-013-manage-room-availability/dgm-seq-uc-013-manage-room-availability-at-uc013-06b-conflict-with-active-booking.png)
+
+**Figure 3.13-4: Sequence Diagram of UC-013 Manage Room Availability - AT-UC013-06B Conflict with active booking**
+
+### AT-UC013-02A - Receptionist attempts restricted change
+
+- **Branch from Main Step:** 2
+- **Condition:** Receptionist attempts restricted change
+- **Expected Response:** You are not authorized to perform this action.
+
+![DGM-SEQ-UC-013 - Receptionist attempts restricted change](sdd_assets/uc-013-manage-room-availability/dgm-seq-uc-013-manage-room-availability-at-uc013-02a-receptionist-attempts-restricted-change.png)
+
+**Figure 3.13-5: Sequence Diagram of UC-013 Manage Room Availability - AT-UC013-02A Receptionist attempts restricted change**
+
+### AT-UC013-06C - Missing required reason
+
+- **Branch from Main Step:** 6
+- **Condition:** Missing required reason
+- **Expected Response:** Please enter a required reason for this availability change.
+
+![DGM-SEQ-UC-013 - Missing required reason](sdd_assets/uc-013-manage-room-availability/dgm-seq-uc-013-manage-room-availability-at-uc013-06c-missing-required-reason.png)
+
+**Figure 3.13-6: Sequence Diagram of UC-013 Manage Room Availability - AT-UC013-06C Missing required reason**
+
+### Validation, Authorization, Transaction, and Error Handling Notes
+
+| Area | Design |
+|---|---|
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Property Owner / Hotel Manager / Receptionist; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC013-06A returns "Check-out date must be later than check-in date."; AT-UC013-06B returns "Availability change conflicts with active booking or assignment."; AT-UC013-02A returns "You are not authorized to perform this action."; AT-UC013-06C returns "Please enter a required reason for this availability change.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
+
+## Assumptions and Open Issues
+
+- ASSUMP-UC013-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC013-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC013-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
+
+# 3.14 UC-014 - View Hotel Bookings
+
+## 3.14.1 Design Purpose
+
+This section describes the detailed design for **UC-014 View Hotel Bookings**. The use case covers view bookings for owned or assigned hotels. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
+
+**Related SRS items:** FEAT-FRONTDESK, UC-014, SCR-020, SCR-021, ENT-013, BR-BOOK-009, BR-OWNER-001, BR-STAFF-002, BR-STAFF-003, MSG-BOOK-009, MSG-OWNER-002, TR-014, AT-UC014-02A, AT-UC014-04A.
+
+**Precondition:** Actor authenticated and has hotel access.
+
+**Trigger:** Actor opens Hotel Booking List.
+
+**Post-condition:** POS-01: Hotel-scoped booking list or booking detail is displayed according to actor permission.
+
+The flow must:
+
+- Main step 1: Actor opens Hotel Booking List.
+- Main step 2: System validates actor role and hotel access, then displays hotel selector, filters, and booking list for permitted hotels.
+- Main step 3: Actor applies filters or selects booking.
+- Main step 4: System displays booking detail and actions allowed for actor role.
+- Main step 5: Actor chooses next operational action if needed.
+- Enforce related business rules: BR-BOOK-009, BR-OWNER-001, BR-STAFF-002, BR-STAFF-003.
+- Return a separate scenario response for each alternative/error flow: AT-UC014-02A, AT-UC014-04A.
+
+## 3.14.2 Class Diagram
+
+This part presents the class diagram for UC-014 View Hotel Bookings.
+
+![DGM-CLS-UC-014 - View Hotel Bookings Class Diagram](sdd_assets/uc-014-view-hotel-bookings/dgm-cls-uc-014-view-hotel-bookings-class-diagram.png)
+
+**Figure 3.14-1: Class Diagram of UC-014 View Hotel Bookings**
+
+## 3.14.3 Class Specifications
+
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### HotelBookingListScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-014 View Hotel Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
+
+### HotelBookingController Class
+
+**Description:** API/application entry controller for UC-014 View Hotel Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
+
+### ViewHotelBookingsRequest Class
+
+**Description:** Request DTO carrying input for UC-014 View Hotel Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
+
+### HotelBookingQueryService Class
+
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for View Hotel Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `viewhotelbookings(request)` | Executes the UC-014 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
+
+### BookingRepository Class
+
+**Description:** Repository abstraction for loading and saving data required by View Hotel Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
+
+### HotelAuthorizationService Class
+
+**Description:** Supporting service or integration used by UC-014 View Hotel Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
+
+### ViewHotelBookingsResponse Class
+
+**Description:** Response DTO returned by UC-014 View Hotel Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
+
+### Booking Class
+
+**Description:** Primary domain entity affected or displayed by UC-014 View Hotel Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
+
+### BookingRoom Class
+
+**Description:** Supporting domain entity affected or displayed by UC-014 View Hotel Bookings.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
+
+## 3.14.4 Sequence Diagram
+
+This part presents the sequence diagrams for UC-014 View Hotel Bookings. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
+
+![DGM-SEQ-UC-014 - View Hotel Bookings Main Flow](sdd_assets/uc-014-view-hotel-bookings/dgm-seq-uc-014-view-hotel-bookings-main-flow.png)
+
+**Figure 3.14-2: Sequence Diagram of UC-014 View Hotel Bookings - Main Flow**
+
+### AT-UC014-02A - No bookings
+
+- **Branch from Main Step:** 2
+- **Condition:** No bookings
+- **Expected Response:** No bookings match the selected hotel filters.
+
+![DGM-SEQ-UC-014 - No bookings](sdd_assets/uc-014-view-hotel-bookings/dgm-seq-uc-014-view-hotel-bookings-at-uc014-02a-no-bookings.png)
+
+**Figure 3.14-3: Sequence Diagram of UC-014 View Hotel Bookings - AT-UC014-02A No bookings**
+
+### AT-UC014-04A - Unauthorized booking access
+
+- **Branch from Main Step:** 4
+- **Condition:** Unauthorized booking access
+- **Expected Response:** You can access only hotels that you own or are assigned to.
+
+![DGM-SEQ-UC-014 - Unauthorized booking access](sdd_assets/uc-014-view-hotel-bookings/dgm-seq-uc-014-view-hotel-bookings-at-uc014-04a-unauthorized-booking-access.png)
+
+**Figure 3.14-4: Sequence Diagram of UC-014 View Hotel Bookings - AT-UC014-04A Unauthorized booking access**
+
+### Validation, Authorization, Transaction, and Error Handling Notes
+
+| Area | Design |
+|---|---|
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Property Owner / Hotel Manager / Receptionist; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC014-02A returns "No bookings match the selected hotel filters."; AT-UC014-04A returns "You can access only hotels that you own or are assigned to.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
+
+## Assumptions and Open Issues
+
+- ASSUMP-UC014-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC014-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC014-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
+
+# 3.15 UC-015 - Check In Customer
+
+## 3.15.1 Design Purpose
+
+This section describes the detailed design for **UC-015 Check In Customer**. The use case covers verify confirmed booking, assign physical room if needed, and mark check-in. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
+
+**Related SRS items:** FEAT-FRONTDESK, UC-015, SCR-021, SCR-024, SCR-025, ENT-013, ENT-015, ENT-028, BR-STAY-001, BR-ROOM-001, BR-STAFF-002, BR-STAFF-003, BR-STAY-005, BR-AUDIT-001, MSG-STAY-001, MSG-STAY-003, MSG-STAY-004, MSG-AUTH-007, TR-015, AT-UC015-05A, AT-UC015-05B, AT-UC015-02A, AT-UC015-05C.
+
+**Precondition:** Actor authenticated; booking exists and hotel scope can be validated before check-in details are displayed.
+
+**Trigger:** Actor selects Check In.
+
+**Post-condition:** POS-01: Booking status becomes Checked In; identity document information is recorded if required; physical room becomes Occupied.
+
+The flow must:
+
+- Main step 1: Actor opens booking detail for check-in.
+- Main step 2: System validates actor hotel scope before displaying check-in data.
+- Main step 3: System displays booking, guest information, stay dates, room type, booked quantity, and assigned or available physical rooms.
+- Main step 4: Actor verifies guest arrival, enters required identity information, and selects or validates one physical room per booked quantity.
+- Main step 5: System validates booking status, date eligibility, identity fields, room count, and room availability.
+- Main step 6: System assigns any missing physical rooms if valid and records assignment history.
+- Main step 7: System updates booking to Checked In and assigned rooms to Occupied atomically.
+- Main step 8: System records audit and sends or records notification.
+- Main step 9: System displays check-in success.
+- Enforce related business rules: BR-STAY-001, BR-ROOM-001, BR-STAFF-002, BR-STAFF-003, BR-STAY-005, BR-AUDIT-001.
+- Return a separate scenario response for each alternative/error flow: AT-UC015-05A, AT-UC015-05B, AT-UC015-02A, AT-UC015-05C.
+
+## 3.15.2 Class Diagram
+
+This part presents the class diagram for UC-015 Check In Customer.
+
+![DGM-CLS-UC-015 - Check In Customer Class Diagram](sdd_assets/uc-015-check-in-customer/dgm-cls-uc-015-check-in-customer-class-diagram.png)
+
+**Figure 3.15-1: Class Diagram of UC-015 Check In Customer**
+
+## 3.15.3 Class Specifications
+
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### CheckInScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-015 Check In Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
+
+### CheckInController Class
+
+**Description:** API/application entry controller for UC-015 Check In Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
+
+### CheckInCustomerRequest Class
+
+**Description:** Request DTO carrying input for UC-015 Check In Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
+
+### CheckInService Class
+
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Check In Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `checkincustomer(request)` | Executes the UC-015 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
+
+### BookingRepository Class
+
+**Description:** Repository abstraction for loading and saving data required by Check In Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
+
+### RoomAssignmentService Class
+
+**Description:** Supporting service or integration used by UC-015 Check In Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
+
+### CheckInCustomerResponse Class
+
+**Description:** Response DTO returned by UC-015 Check In Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
+
+### Booking Class
+
+**Description:** Primary domain entity affected or displayed by UC-015 Check In Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
+
+### BookingRoomAssignment Class
+
+**Description:** Supporting domain entity affected or displayed by UC-015 Check In Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
+
+## 3.15.4 Sequence Diagram
+
+This part presents the sequence diagrams for UC-015 Check In Customer. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
+
+![DGM-SEQ-UC-015 - Check In Customer Main Flow](sdd_assets/uc-015-check-in-customer/dgm-seq-uc-015-check-in-customer-main-flow.png)
+
+**Figure 3.15-2: Sequence Diagram of UC-015 Check In Customer - Main Flow**
+
+### AT-UC015-05A - Not confirmed
+
+- **Branch from Main Step:** 5
+- **Condition:** Not Confirmed
+- **Expected Response:** Only confirmed bookings can be checked in.
+
+![DGM-SEQ-UC-015 - Not confirmed](sdd_assets/uc-015-check-in-customer/dgm-seq-uc-015-check-in-customer-at-uc015-05a-not-confirmed.png)
+
+**Figure 3.15-3: Sequence Diagram of UC-015 Check In Customer - AT-UC015-05A Not confirmed**
+
+### AT-UC015-05B - No available room
+
+- **Branch from Main Step:** 5
+- **Condition:** No available room
+- **Expected Response:** Selected physical room is not available for assignment.
+
+![DGM-SEQ-UC-015 - No available room](sdd_assets/uc-015-check-in-customer/dgm-seq-uc-015-check-in-customer-at-uc015-05b-no-available-room.png)
+
+**Figure 3.15-4: Sequence Diagram of UC-015 Check In Customer - AT-UC015-05B No available room**
+
+### AT-UC015-02A - Receptionist not assigned
+
+- **Branch from Main Step:** 2
+- **Condition:** Receptionist not assigned
+- **Expected Response:** You are not authorized to perform this action.
+
+![DGM-SEQ-UC-015 - Receptionist not assigned](sdd_assets/uc-015-check-in-customer/dgm-seq-uc-015-check-in-customer-at-uc015-02a-receptionist-not-assigned.png)
+
+**Figure 3.15-5: Sequence Diagram of UC-015 Check In Customer - AT-UC015-02A Receptionist not assigned**
+
+### AT-UC015-05C - Missing or invalid identity information
+
+- **Branch from Main Step:** 5
+- **Condition:** Missing or invalid identity information
+- **Expected Response:** Please enter valid identity information before check-in.
+
+![DGM-SEQ-UC-015 - Missing or invalid identity information](sdd_assets/uc-015-check-in-customer/dgm-seq-uc-015-check-in-customer-at-uc015-05c-missing-or-invalid-identity-information.png)
+
+**Figure 3.15-6: Sequence Diagram of UC-015 Check In Customer - AT-UC015-05C Missing or invalid identity information**
+
+### Validation, Authorization, Transaction, and Error Handling Notes
+
+| Area | Design |
+|---|---|
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Receptionist / Hotel Manager / Property Owner; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC015-05A returns "Only confirmed bookings can be checked in."; AT-UC015-05B returns "Selected physical room is not available for assignment."; AT-UC015-02A returns "You are not authorized to perform this action."; AT-UC015-05C returns "Please enter valid identity information before check-in.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
+
+## Assumptions and Open Issues
+
+- ASSUMP-UC015-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC015-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC015-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
+
+# 3.16 UC-016 - Check Out Customer
+
+## 3.16.1 Design Purpose
+
+This section describes the detailed design for **UC-016 Check Out Customer**. The use case covers finalize stay, confirm pay-at-property collection if needed, generate basic invoice/folio, and release room to housekeeping. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
+
+**Related SRS items:** FEAT-FRONTDESK, UC-016, SCR-021, SCR-026, NSF-008, ENT-019, ENT-025, ENT-027, ENT-028, BR-STAY-002, BR-STAY-003, BR-STAY-006, BR-HK-001, BR-FIN-002, BR-FIN-003, BR-AUDIT-001, BR-FIN-006, MSG-STAY-002, MSG-STAY-005, MSG-STAY-009, MSG-ROOM-008, TR-016, AT-UC016-05A, AT-UC016-05B, AT-UC016-06A.
+
+**Precondition:** Actor authenticated; checked-in booking exists for a hotel the actor owns or is assigned to.
+
+**Trigger:** Actor selects Check Out.
+
+**Post-condition:** POS-01: Booking status becomes Checked Out; customer receipt is available; room becomes Dirty/cleaning-required; housekeeping task is created.
+
+The flow must:
+
+- Main step 1: Actor opens checked-in booking detail.
+- Main step 2: System validates actor hotel scope and booking access before displaying checkout data.
+- Main step 3: System displays stay summary, payment mode/status, room charge, hotel-visible balance, and receipt preview without platform commission details.
+- Main step 4: Actor reviews checkout information and confirms checkout.
+- Main step 5: System validates booking status, payment collection requirement, outstanding balance, and room lifecycle readiness.
+- Main step 6: System atomically finalizes staff-visible folio/receipt, updates booking to Checked Out, changes assigned rooms to Dirty, and creates housekeeping tasks.
+- Main step 7: System records audit and sends or records notification.
+- Main step 8: System displays checkout success.
+- Enforce related business rules: BR-STAY-002, BR-STAY-003, BR-STAY-006, BR-HK-001, BR-FIN-002, BR-FIN-003, BR-AUDIT-001, BR-FIN-006.
+- Return a separate scenario response for each alternative/error flow: AT-UC016-05A, AT-UC016-05B, AT-UC016-06A.
+
+## 3.16.2 Class Diagram
+
+This part presents the class diagram for UC-016 Check Out Customer.
+
+![DGM-CLS-UC-016 - Check Out Customer Class Diagram](sdd_assets/uc-016-check-out-customer/dgm-cls-uc-016-check-out-customer-class-diagram.png)
+
+**Figure 3.16-1: Class Diagram of UC-016 Check Out Customer**
+
+## 3.16.3 Class Specifications
+
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### CheckOutScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-016 Check Out Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
+
+### CheckOutController Class
+
+**Description:** API/application entry controller for UC-016 Check Out Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
+
+### CheckOutCustomerRequest Class
+
+**Description:** Request DTO carrying input for UC-016 Check Out Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
+
+### CheckOutService Class
+
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Check Out Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `checkoutcustomer(request)` | Executes the UC-016 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
+
+### BookingRepository Class
+
+**Description:** Repository abstraction for loading and saving data required by Check Out Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
+
+### HousekeepingTaskService Class
+
+**Description:** Supporting service or integration used by UC-016 Check Out Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
+
+### CheckOutCustomerResponse Class
+
+**Description:** Response DTO returned by UC-016 Check Out Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
+
+### Booking Class
+
+**Description:** Primary domain entity affected or displayed by UC-016 Check Out Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
+
+### Invoice Class
+
+**Description:** Supporting domain entity affected or displayed by UC-016 Check Out Customer.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
+
+## 3.16.4 Sequence Diagram
+
+This part presents the sequence diagrams for UC-016 Check Out Customer. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
+
+![DGM-SEQ-UC-016 - Check Out Customer Main Flow](sdd_assets/uc-016-check-out-customer/dgm-seq-uc-016-check-out-customer-main-flow.png)
+
+**Figure 3.16-2: Sequence Diagram of UC-016 Check Out Customer - Main Flow**
+
+### AT-UC016-05A - Booking not checked in
+
+- **Branch from Main Step:** 5
+- **Condition:** Booking not Checked In
+- **Expected Response:** Only checked-in bookings can be checked out.
+
+![DGM-SEQ-UC-016 - Booking not checked in](sdd_assets/uc-016-check-out-customer/dgm-seq-uc-016-check-out-customer-at-uc016-05a-booking-not-checked-in.png)
+
+**Figure 3.16-3: Sequence Diagram of UC-016 Check Out Customer - AT-UC016-05A Booking not checked in**
+
+### AT-UC016-05B - Pay at property balance not recorded
+
+- **Branch from Main Step:** 5
+- **Condition:** Pay-at-property balance not recorded
+- **Expected Response:** Please confirm payment collection before checkout.
+
+![DGM-SEQ-UC-016 - Pay at property balance not recorded](sdd_assets/uc-016-check-out-customer/dgm-seq-uc-016-check-out-customer-at-uc016-05b-pay-at-property-balance-not-recorded.png)
+
+**Figure 3.16-4: Sequence Diagram of UC-016 Check Out Customer - AT-UC016-05B Pay at property balance not recorded**
+
+### AT-UC016-06A - Room release failed
+
+- **Branch from Main Step:** 6
+- **Condition:** Room release failed
+- **Expected Response:** The selected room status transition is not allowed.
+
+![DGM-SEQ-UC-016 - Room release failed](sdd_assets/uc-016-check-out-customer/dgm-seq-uc-016-check-out-customer-at-uc016-06a-room-release-failed.png)
+
+**Figure 3.16-5: Sequence Diagram of UC-016 Check Out Customer - AT-UC016-06A Room release failed**
+
+### Validation, Authorization, Transaction, and Error Handling Notes
+
+| Area | Design |
+|---|---|
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Receptionist / Hotel Manager / Property Owner; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC016-05A returns "Only checked-in bookings can be checked out."; AT-UC016-05B returns "Please confirm payment collection before checkout."; AT-UC016-06A returns "The selected room status transition is not allowed.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
+
+## Assumptions and Open Issues
+
+- ASSUMP-UC016-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC016-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC016-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
+
+# 3.17 UC-017 - Mark No-show
+
+## 3.17.1 Design Purpose
+
+This section describes the detailed design for **UC-017 Mark No-show**. The use case covers mark confirmed booking as no-show when customer does not arrive within allowed operational window. The design is based on the SRS/SDD only; class names and methods are conceptual design assumptions because no implementation codebase was inspected.
+
+**Related SRS items:** FEAT-FRONTDESK, UC-017, SCR-021, SCR-023, ENT-013, ENT-028, BR-STAY-004, BR-BOOK-009, BR-FIN-004, BR-STAY-007, BR-STAFF-002, BR-STAFF-003, MSG-STAY-006, MSG-STAY-007, MSG-STAY-008, MSG-AUTH-007, TR-017, AT-UC017-05A, AT-UC017-05B, AT-UC017-05C, AT-UC017-02A.
+
+**Precondition:** Actor authenticated; booking exists for a hotel the actor owns or is assigned to.
+
+**Trigger:** Actor selects Mark No-show.
+
+**Post-condition:** POS-01: Booking status becomes No-show and financial traceability is preserved.
+
+The flow must:
+
+- Main step 1: Actor opens booking detail or no-show candidate action.
+- Main step 2: System validates actor role, hotel scope, and booking access before showing no-show details.
+- Main step 3: System displays no-show eligibility, policy summary, and reason field.
+- Main step 4: Actor selects Mark No-show and enters reason.
+- Main step 5: System validates booking status, no-show eligibility, and required reason.
+- Main step 6: System updates booking to No-show.
+- Main step 7: System releases reserved availability, releases any pre-assigned physical room, and keeps finance records according to policy.
+- Main step 8: System records audit and sends or records notification.
+- Main step 9: System displays no-show success.
+- Enforce related business rules: BR-STAY-004, BR-BOOK-009, BR-FIN-004, BR-STAY-007, BR-STAFF-002, BR-STAFF-003.
+- Return a separate scenario response for each alternative/error flow: AT-UC017-05A, AT-UC017-05B, AT-UC017-05C, AT-UC017-02A.
+
+## 3.17.2 Class Diagram
+
+This part presents the class diagram for UC-017 Mark No-show.
+
+![DGM-CLS-UC-017 - Mark No-show Class Diagram](sdd_assets/uc-017-mark-no-show/dgm-cls-uc-017-mark-no-show-class-diagram.png)
+
+**Figure 3.17-1: Class Diagram of UC-017 Mark No-show**
+
+## 3.17.3 Class Specifications
+
+This part explains the key methods shown in the class diagram. The classes are conceptual design assumptions unless source code is inspected.
+
+### NoShowActionScreen Class
+
+**Description:** Boundary object for the user-visible entry point of UC-017 Mark No-show.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `openOrDisplay()` | Displays the use-case screen or user-visible entry state described by the SRS. |
+| 2 | `collectInput()` | Collects actor input before request submission. |
+| 3 | `renderResult(response)` | Displays the result, validation message, or next action to the actor. |
+
+### NoShowController Class
+
+**Description:** API/application entry controller for UC-017 Mark No-show.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `handleRequest(request)` | Receives the request from the boundary and delegates the business operation to the service. |
+| 2 | `validateRequest(request)` | Checks required request shape before business rule execution. |
+| 3 | `authorizeActor(actorContext)` | Verifies that the current actor may execute this use case within role or hotel scope. |
+
+### MarkNoShowRequest Class
+
+**Description:** Request DTO carrying input for UC-017 Mark No-show.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `hasRequiredFields()` | Returns whether mandatory fields from the SRS screen/use-case step are present. |
+| 2 | `normalizeInput()` | Normalizes filter, status, note, amount, date, or reference input before service validation. |
+| 3 | `containsActorContext()` | Confirms the request carries the authenticated actor or guest context needed for authorization. |
+
+### NoShowService Class
+
+**Description:** Application service that coordinates the main flow, business rules, persistence, and response creation for Mark No-show.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `marknoshow(request)` | Executes the UC-017 main flow and returns a response for the boundary. |
+| 2 | `applyBusinessRules(request)` | Applies the related SRS business rules and state-transition constraints. |
+| 3 | `buildResponse(result)` | Builds success, empty-state, or validation responses without exposing unauthorized data. |
+
+### BookingRepository Class
+
+**Description:** Repository abstraction for loading and saving data required by Mark No-show.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `findForUseCase(criteria)` | Loads the entity state required for validation and display. |
+| 2 | `findById(id)` | Retrieves a specific record within actor, hotel, or platform scope. |
+| 3 | `saveChanges(entity)` | Persists allowed state changes when the use case modifies data. |
+
+### NoShowPolicyService Class
+
+**Description:** Supporting service or integration used by UC-017 Mark No-show.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `verifyRuleContext(entity)` | Checks specialized policy, authorization, calculation, notification, or external status context. |
+| 2 | `performSupportingAction(entity)` | Performs notification, calculation, audit, or external reconciliation support when required. |
+| 3 | `returnResult()` | Returns the supporting result to the application service for final response composition. |
+
+### MarkNoShowResponse Class
+
+**Description:** Response DTO returned by UC-017 Mark No-show.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `includeSummary()` | Adds the display or operation summary needed by the screen. |
+| 2 | `includeUserMessage()` | Adds the user-facing success, empty-state, or validation message. |
+| 3 | `includeNextAction()` | Adds the next available action when the SRS flow continues or returns for correction. |
+
+### Booking Class
+
+**Description:** Primary domain entity affected or displayed by UC-017 Mark No-show.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isInAllowedState()` | Determines whether the entity state allows the requested use-case operation. |
+| 2 | `applyUseCaseChange()` | Applies the state or data change permitted by the validated flow. |
+| 3 | `getDisplaySummary()` | Provides safe summary data for the response or audit record. |
+
+### BookingRoomAssignment Class
+
+**Description:** Supporting domain entity affected or displayed by UC-017 Mark No-show.
+
+| No | Method | Description |
+|---:|---|---|
+| 1 | `isLinkedToUseCase()` | Determines whether the entity is related to the current use-case operation. |
+| 2 | `updateStatus()` | Updates status or lifecycle information when the validated flow requires it. |
+| 3 | `getAuditSummary()` | Provides auditable summary data for protected state changes. |
+
+## 3.17.4 Sequence Diagram
+
+This part presents the sequence diagrams for UC-017 Mark No-show. The main-flow diagram shows only the successful scenario. Each alternative/error scenario has its own diagram.
+
+![DGM-SEQ-UC-017 - Mark No-show Main Flow](sdd_assets/uc-017-mark-no-show/dgm-seq-uc-017-mark-no-show-main-flow.png)
+
+**Figure 3.17-2: Sequence Diagram of UC-017 Mark No-show - Main Flow**
+
+### AT-UC017-05A - Too early
+
+- **Branch from Main Step:** 5
+- **Condition:** Too early
+- **Expected Response:** This booking is not eligible to be marked as no-show yet.
+
+![DGM-SEQ-UC-017 - Too early](sdd_assets/uc-017-mark-no-show/dgm-seq-uc-017-mark-no-show-at-uc017-05a-too-early.png)
+
+**Figure 3.17-3: Sequence Diagram of UC-017 Mark No-show - AT-UC017-05A Too early**
+
+### AT-UC017-05B - Invalid booking status
+
+- **Branch from Main Step:** 5
+- **Condition:** Invalid booking status
+- **Expected Response:** This action is not allowed for the current booking status.
+
+![DGM-SEQ-UC-017 - Invalid booking status](sdd_assets/uc-017-mark-no-show/dgm-seq-uc-017-mark-no-show-at-uc017-05b-invalid-booking-status.png)
+
+**Figure 3.17-4: Sequence Diagram of UC-017 Mark No-show - AT-UC017-05B Invalid booking status**
+
+### AT-UC017-05C - Missing no-show reason
+
+- **Branch from Main Step:** 5
+- **Condition:** Missing no-show reason
+- **Expected Response:** Please enter a no-show reason before marking this booking.
+
+![DGM-SEQ-UC-017 - Missing no-show reason](sdd_assets/uc-017-mark-no-show/dgm-seq-uc-017-mark-no-show-at-uc017-05c-missing-no-show-reason.png)
+
+**Figure 3.17-5: Sequence Diagram of UC-017 Mark No-show - AT-UC017-05C Missing no-show reason**
+
+### AT-UC017-02A - Unauthorized hotel or booking
+
+- **Branch from Main Step:** 2
+- **Condition:** Unauthorized hotel or booking
+- **Expected Response:** You are not authorized to perform this action.
+
+![DGM-SEQ-UC-017 - Unauthorized hotel or booking](sdd_assets/uc-017-mark-no-show/dgm-seq-uc-017-mark-no-show-at-uc017-02a-unauthorized-hotel-or-booking.png)
+
+**Figure 3.17-6: Sequence Diagram of UC-017 Mark No-show - AT-UC017-02A Unauthorized hotel or booking**
+
+### Validation, Authorization, Transaction, and Error Handling Notes
+
+| Area | Design |
+|---|---|
+| Validation | Validate required input, current entity status, date/amount/reference values, and SRS business rules before any state change. |
+| Authorization | Allow only the SRS actor scope for Receptionist / Hotel Manager / Property Owner; enforce role, ownership, hotel-scope, or platform-scope preconditions before protected data is displayed or changed. |
+| Transaction | Use a single application transaction for validated state changes, persistence updates, audit records, and notification records where applicable. Read-only flows do not create domain records. |
+| Error Handling | AT-UC017-05A returns "This booking is not eligible to be marked as no-show yet."; AT-UC017-05B returns "This action is not allowed for the current booking status."; AT-UC017-05C returns "Please enter a no-show reason before marking this booking."; AT-UC017-02A returns "You are not authorized to perform this action.". |
+| Privacy | Return only fields allowed for the current role and scope; staff roles must not receive unrelated customer, platform finance, or cross-hotel data. |
+
+## Assumptions and Open Issues
+
+- ASSUMP-UC017-001: Controller, service, repository, DTO, and entity class names are conceptual SDD design names because no source implementation was inspected.
+- ASSUMP-UC017-002: Final API routes, database column names, and UI widget names may differ from these SDD class names but must preserve the traced SRS behavior.
+- OQ-UC017-001: Confirm final implementation class/package names before treating the conceptual design as code-level documentation.
 
 # 3.18 UC-018 - Approve Hotel Property
 
